@@ -10,13 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../include/cub3d.h"
 
 int	badmap(char *file)
 {
 	int	len;
 
 	len = ft_strlen(file);
+	if (len == 4)
+		return (1);
 	if (ft_strncmp(file + (len - 4), ".cub", 4))
 		return (1);
 	return (0);
