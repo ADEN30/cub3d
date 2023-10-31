@@ -108,15 +108,18 @@ t_pers		*init_pers(int x, int y, char c, t_vars *vars);
 t_ray		**init_ray(t_vars *vars);
 t_vars		*init_vars(void);
 	/*tools*/
-uint32_t	value_rgb(char *line);
+uint32_t	value_rgb(char *line, t_vars *vars);
 char		find_case(t_list *list, int x, int y);
-int			print_error(char *str);
 int			put_pixels(mlx_image_t *img, uint32_t color);
 int			largest_line(t_list *list);
+int			check_line(char *line);
 
 /*map*/
 int			create_map(int argc, char *argv[], t_vars *vars);
 int			show_map(t_vars *vars);
+
+/*print_error*/
+int			print_error(char *str);
 
 /*style*/
 uint32_t	get_rgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
@@ -131,7 +134,7 @@ void		change_plan(t_vars* vars);
 
 /*raycasting*/
 void		ft_raycasting(void *param);
-void	turn_camera(t_vars* vars);
+void		turn_camera(t_vars* vars);
 
 /*show3d*/
 int			init_3d(t_vars *vars);

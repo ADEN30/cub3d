@@ -1,11 +1,32 @@
 #include "../../include/cub3d.h"
 
-uint32_t	value_rgb(char *line)
+int	check_line(char *line)
+{
+	line[ft_strlen(line) - 1] = 0;
+	while (*line == ' ')
+		line++;
+	while (*line)
+	{
+		if (ft_isdigit(*line) || (*line == ',' && ft_isdigit(*(line + 1))))
+			line++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
+uint32_t	value_rgb(char *line, t_vars *vars)
 {
 	int	value;
 
 	value = ft_atoi(line);
-	return ((uint32_t)value);
+	if (value > 255)
+	{
+		print_error("Les valeurs de couleurs sont incorrectes\n");
+		free_vars(vars);
+		exit(1);
+	}
+	return (value);
 }
 
 char	find_case(t_list *list, int x, int y)
