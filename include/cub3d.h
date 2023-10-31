@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 12:36:39 by eberger           #+#    #+#             */
-/*   Updated: 2023/08/06 16:08:25 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -19,7 +8,7 @@
 # include <memory.h>
 # include <math.h>
 # include "MLX42.h"
-# include "libft.h"
+# include "./include/libft.h"
 
 # ifndef MAP
 #  define MAP 0
@@ -108,8 +97,17 @@ typedef struct	s_vars {
 	t_pers	*pers;
 }	t_vars;
 
-
-/*tools*/
+/*utils*/
+	/*free_all*/
+void		free_rays(t_ray **rays, t_vars *vars);
+void		free_vars(t_vars *vars);
+	/*init struct*/
+t_map		*init_map(void);
+t_style		*init_style(void);
+t_pers		*init_pers(int x, int y, char c, t_vars *vars);
+t_ray		**init_ray(t_vars *vars);
+t_vars		*init_vars(void);
+	/*tools*/
 uint32_t	value_rgb(char *line);
 char		find_case(t_list *list, int x, int y);
 int			print_error(char *str);
@@ -123,17 +121,6 @@ int			show_map(t_vars *vars);
 /*style*/
 uint32_t	get_rgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
 int			find_all_style(t_vars *vars, char **line);
-
-/*free*/
-void		free_rays(t_ray **rays, t_vars *vars);
-void		free_vars(t_vars *vars);
-
-/*init struct*/
-t_map		*init_map(void);
-t_style		*init_style(void);
-t_pers		*init_pers(int x, int y, char c, t_vars *vars);
-t_ray		**init_ray(t_vars *vars);
-t_vars		*init_vars(void);
 
 /*test*/
 int			test_map(t_vars *vars);

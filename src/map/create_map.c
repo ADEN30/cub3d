@@ -1,22 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   create_map.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 13:15:14 by eberger           #+#    #+#             */
-/*   Updated: 2023/07/26 13:35:02 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "cub3d.h"
+#include "../../include/cub3d.h"
 
 int	badmap(char *file)
 {
 	int	len;
 
 	len = ft_strlen(file);
+	if (len == 4)
+		return (1);
 	if (ft_strncmp(file + (len - 4), ".cub", 4))
 		return (1);
 	return (0);

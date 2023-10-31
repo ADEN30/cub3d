@@ -15,7 +15,7 @@ SRCS	= src/main.c \
 
 OBJS	= ${SRCS:.c=.o}
 
-LFT		= libft/libft.a
+LFT		= libft/include/libft.a
 
 MLX		= MLX42
 
@@ -48,7 +48,6 @@ ${MLX}:
 				echo "La libraire est presente"; \
 			else \
 				cd ${MLX} && cmake -B build && make -s -C build; \
-			fi
 
 clean:
 			${RM} ${OBJS}

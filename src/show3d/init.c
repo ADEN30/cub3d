@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <eberger@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 14:15:21 by eberger           #+#    #+#             */
-/*   Updated: 2023/08/07 11:00:26 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "cub3d.h"
+#include "../../include/cub3d.h"
 
 static int	init(char *path, mlx_texture_t **texture)
 {
@@ -64,6 +52,6 @@ int	init_3d(t_vars *vars)
 		if (create_roof_floor(vars))
 			return (1);
 	}
-	printf("show vue\n");
+	//printf("show vue\n");
 	return (0);
 }
