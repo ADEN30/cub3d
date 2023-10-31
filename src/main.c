@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 11:50:05 by eberger           #+#    #+#             */
-/*   Updated: 2023/08/04 14:50:26 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../include/cub3d.h"
 
 int	main(int argc, char *argv[])
@@ -19,6 +7,7 @@ int	main(int argc, char *argv[])
 	vars = init_vars();
 	if (!vars || create_map(argc, argv, vars))
 		return (free_vars(vars), system("leaks cub3d"), 1);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	vars->mlx = mlx_init(1500, 1500, "cub3d", true);
 	if (!vars->mlx)
 		return (free_vars(vars), system("leaks cub3d"), 1);

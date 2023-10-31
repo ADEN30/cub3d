@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <eberger@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/01 11:43:55 by eberger           #+#    #+#             */
-/*   Updated: 2023/08/06 14:39:26 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "cub3d.h"
+#include "../../include/cub3d.h"
 
 int	find_length(int x, int y, t_pers *pers)
 {
@@ -179,11 +167,11 @@ double	calc_angle(t_vars* vars)
 	d1 = vars->pers->rays[0]->d1;
 	d2 = vars->pers->rays[0]->d2;
 	d3 = vars->pers->rays[0]->d3;
-	printf("angle1: %.2f\n", vars->pers->rays[0]->angle);
+	printf("angle 1: %.2f\n", vars->pers->rays[0]->angle);
 	if (!d1 && !d3)
 		return (0);
 	vars->pers->rays[0]->angle = round((asin(d3 / d2) / M_PI) * 180);
-//	printf("angle2: %.2f\n", vars->pers->rays[0]->angle);
+	//printf("angle2: %.2f\n", vars->pers->rays[0]->angle);
 	return (vars->pers->rays[0]->angle);
 }
 

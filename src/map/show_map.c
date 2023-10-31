@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   show_map.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: eberger <eberger@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 10:36:45 by eberger           #+#    #+#             */
-/*   Updated: 2023/08/06 12:15:57 by eberger          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/cub3d.h"
 
 int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
@@ -36,11 +24,12 @@ int	which_case(char c, int *loc, t_vars *vars)
 	images = vars->style->images;
 	if (c == '1' && MAP == 1)
 		print_case(loc, vars, &(images->wall_image), vars->style->wall);
-	//lack error management
-	if (ft_strchr("NSWE", c))
-		vars->pers = init_pers(loc[1] * DIMENSION + DIMENSION
-			/ 2, loc[0] * DIMENSION + DIMENSION
-			/ 2, find_case(vars->map->lines, loc[1], loc[0]), vars);
+	else if (ft_strchr("NSWE", c))
+		vars->pers = init_pers(loc[1] * DIMENSION + DIMENSION / 2,
+		loc[0] * DIMENSION + DIMENSION / 2,
+		find_case(vars->map->lines, loc[1], loc[0]), vars);
+	else
+		return (1);
 	return (0);
 }
 
