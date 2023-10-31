@@ -1,6 +1,6 @@
 #include "../../include/cub3d.h"
 
-char	*define_image_path(char *line)
+static char	*define_image_path(char *line)
 {
 	int		len;
 	char	*ret;
@@ -13,7 +13,7 @@ char	*define_image_path(char *line)
 	return (ret);
 }
 
-uint32_t	define_color(char *line)
+static uint32_t	define_color(char *line, t_vars *vars)
 {
 	int	value[3];
 	int	i;
@@ -21,9 +21,15 @@ uint32_t	define_color(char *line)
 	i = 0;
 	while (*line == ' ')
 		line++;
+	if (check_line(line))
+	{
+		print_error("Les informations de la map sont incorrectes\n");
+		free_vars(vars);
+		exit(1);
+	}
 	while (i < 3)
 	{
-		value[i] = value_rgb(line);
+		value[i] = value_rgb(line, vars);
 		while (*line && *line != ',')
 			line++;
 		line++;
@@ -32,7 +38,7 @@ uint32_t	define_color(char *line)
 	return (get_rgba(value[0], value[1], value[2], 255));
 }
 
-int	check_config(t_vars *vars)
+static int	check_config(t_vars *vars)
 {
 	if (!vars->style->north_path
 		|| !vars->style->south_path
@@ -44,7 +50,7 @@ int	check_config(t_vars *vars)
 	return (0);
 }
 
-int	find_style(char *line, t_vars *vars)
+static int	find_style(char *line, t_vars *vars)
 {
 	while (line && *line && *line == ' ')
 		line++;
@@ -58,12 +64,12 @@ int	find_style(char *line, t_vars *vars)
 		vars->style->east_path = define_image_path(line + 2);
 	else if (!ft_strncmp(line, "F ", 2) && !vars->style->define_floor)
 	{
-		vars->style->floor = define_color(line + 2);
+		vars->style->floor = define_color(line + 2, vars);
 		vars->style->define_floor = 1;
 	}
 	else if (!ft_strncmp(line, "C ", 2) && !vars->style->define_roof)
 	{
-		vars->style->roof = define_color(line + 2);
+		vars->style->roof = define_color(line + 2, vars);
 		vars->style->define_roof = 1;
 	}
 	return (0);
