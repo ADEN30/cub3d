@@ -23,8 +23,8 @@
 # endif
 
 typedef struct	s_point {
-	int		x;
-	int		y;
+	double		x;
+	double		y;
 	bool	enabled;
 	double	coeff;
 }	t_point;
@@ -32,6 +32,7 @@ typedef struct	s_point {
 typedef struct	s_ray {
 	mlx_image_t	*img;
 	t_point		*points;
+	int			n_rays;
 	int			count_points;
 	int			length;
 	int			col_x;
@@ -44,6 +45,8 @@ typedef struct	s_ray {
 	double		angle;
 	double		teta;
 	double		coefdir;
+	double		a_r1;
+	double		a_r2;
 }	t_ray;
 
 typedef struct	s_pers {

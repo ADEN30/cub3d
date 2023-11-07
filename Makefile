@@ -43,19 +43,19 @@ ${LFT}:
 all:		${NAME}
 
 
-${MLX}:
-			@if [ -f ${MLX}/build/libmlx42.a ]; then \
-				echo "La libraire est presente"; \
-			else \
-				cd ${MLX} && cmake -B build && make -s -C build; \
+#${MLX}:
+#			@if [ -f ${MLX}/build/libmlx42.a ]; then \
+#				echo "La libraire est presente"; \
+#			else \
+#				cd ${MLX} && cmake -B build && make -s -C build; \
 
 clean:
-			${RM} ${OBJS}
 			make clean -C libft
+			${RM} ${OBJS}
 
 fclean:		clean
-			${RM} ${NAME}
 			make fclean -C libft
+			${RM} ${NAME}
 
 re:			fclean all
 

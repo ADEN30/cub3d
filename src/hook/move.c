@@ -82,6 +82,14 @@ void	ft_hook_move(void* param)
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
+	
+		printf("coeff 1 : %f\n", vars->pers->rays[0]->a_r1);
+		printf("coeff 2: %f\n", vars->pers->rays[0]->a_r2);
+		vars->pers->rays[0]->a_r1 = vars->pers->rays[0]->a_r1 - vars->pers->rays[0]->a_r1 / 30;
+		vars->pers->rays[0]->a_r2 = vars->pers->rays[0]->a_r2 - vars->pers->rays[0]->a_r2 / -30;
+		printf("coeff 1 : %f\n", vars->pers->rays[0]->a_r1);
+		printf("coeff 2: %f\n", vars->pers->rays[0]->a_r2);
+		printf("cos(90): %f\n", cos(M_PI/2));
 		change_plan(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))

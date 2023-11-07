@@ -64,15 +64,18 @@ t_ray	**init_ray(t_vars *vars)
 	rays = malloc(sizeof(t_ray *) * (1));
 	if (!rays)
 		return (NULL);
-	rays[0] = malloc(sizeof(t_ray) * (1));
+	rays[0] = malloc(sizeof(t_ray) * (2));
 	rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	rays[0]->count_points = 0;
 	rays[0]->angle = 0.00;
 	rays[0]->coefdir = 0.00;
+	rays[0]->a_r1 = 0.00;
+	rays[0]->a_r2 = 0.00;
 	rays[0]->dir = 0.00;
 	rays[0]->d1 = 0.00;
 	rays[0]->d2 = 0.00;
 	rays[0]->d3 = 0.00;
+	rays[0]->n_rays = 0;
 	return (rays);
 }
 
