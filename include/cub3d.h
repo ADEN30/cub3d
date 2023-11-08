@@ -7,8 +7,8 @@
 # include <fcntl.h>
 # include <memory.h>
 # include <math.h>
-# include "MLX42.h"
-# include "./include/libft.h"
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/include/libft.h"
 
 # ifndef MAP
 #  define MAP 0
