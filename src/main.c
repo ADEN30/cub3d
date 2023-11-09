@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	//mlx_loop_hook(vars->mlx, ft_raycasting, vars);
 	//if (MAP == 0)
 		mlx_loop_hook(vars->mlx, show_vue, vars);
-	//mlx_loop_hook(vars->mlx, ft_hook_move, vars);
+	mlx_loop_hook(vars->mlx, ft_hook_move, vars);
 	mlx_loop(vars->mlx);
 	return (free_vars(vars), system("leaks cub3d"), 0);
 }

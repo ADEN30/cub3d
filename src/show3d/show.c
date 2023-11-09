@@ -61,15 +61,16 @@ void	show_vue(void *param)
 	//}
 	t_vars	*vars;
 	double	d_wall;
+	double	new_d;
 
 	vars = param;
-	fprintf(stderr, "vars->pers->x = %d\n", vars->pers->x);
-	fprintf(stderr, "vars->pers->y = %d\n", vars->pers->x);
-	fprintf(stderr, "mur->x = %f\n", vars->pers->rays[0]->points[0].x);
-	fprintf(stderr, "mur->y = %f\n", vars->pers->rays[0]->points[0].y);
-	//d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
-		//vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
+	//fprintf(stderr, "vars->pers->x = %d\n", vars->pers->x);
+	//fprintf(stderr, "vars->pers->y = %d\n", vars->pers->y);
+	//fprintf(stderr, "mur->x = %f\n", vars->pers->rays[0]->points[0].x);
+	//fprintf(stderr, "mur->y = %f\n", vars->pers->rays[0]->points[0].y);
 	d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
 		vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
 	printf("Distance : %f\n", d_wall);	
+	new_d = d_wall / 32;
+	printf("D * 32: %f\n", new_d);	
 }

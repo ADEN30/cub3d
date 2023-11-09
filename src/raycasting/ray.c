@@ -295,7 +295,6 @@ void	ft_raycasting(void *param)
 		while (!test_wall(vars, w, y) && w < vars->mlx->width && y < vars->mlx->height)
 		{
 			mlx_put_pixel(vars->pers->rays[0]->img, w, y,  get_rgba(255, 0, 0, 255));
-			
 			w += 1;
 			y = round(a*(w - vars->pers->x)) + vars->pers->y;
 		}
