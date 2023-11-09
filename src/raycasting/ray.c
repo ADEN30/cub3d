@@ -17,7 +17,7 @@ double	calc_angle(t_vars* vars)
 	d1 = vars->pers->rays[0]->d1;
 	d2 = vars->pers->rays[0]->d2;
 	d3 = vars->pers->rays[0]->d3;
-	printf("angle 1: %.2f\n", vars->pers->rays[0]->angle);
+	//printf("angle 1: %.2f\n", vars->pers->rays[0]->angle);
 	if (!d1 && !d3)
 		return (0);
 	vars->pers->rays[0]->angle = round((asin(d3 / d2) / M_PI) * 180);
@@ -102,6 +102,7 @@ void	ft_raycasting_malloc(void *param)
 
 	vars = param;
 	i = 0;
+	printf("%d\n", vars->pers->rays[0]->count_points);
 	if (vars->pers->rays[0]->points)
 		free(vars->pers->rays[0]->points);
 	pixels = malloc(sizeof(t_point) * (vars->pers->rays[0]->count_points));
@@ -114,16 +115,17 @@ void	ft_raycasting_malloc(void *param)
 		y = round(a*(w - vars->pers->x)) + vars->pers->y;
 		while (!test_wall(vars, w, y) && w < vars->mlx->width && y < vars->mlx->height)
 		{
-			pixels[i].x = w;
-			pixels[i].y = y;
-			i++;
+
 			w += 1;
 			y = round(a*(w - vars->pers->x)) + vars->pers->y;
-		}
+		}	
 		if (pixels && &pixels[i])
 		{
+			pixels[i].x = w - 1;
+			pixels[i].y = round(a*(pixels[i].x - vars->pers->x)) + vars->pers->y;
 			pixels[i].coeff = a;
-			printf("%f\n", pixels[i].coeff);
+			i++;
+		//	printf("%f\n", pixels[i].coeff);
 		}
 		vars->pers->rays[0]->coefdir += 0.003;
 	}
@@ -136,7 +138,37 @@ void	ft_raycasting_malloc(void *param)
 	printf("nbr rayons: %d\n", vars->pers->rays[0]->n_rays);
 }
 
-void	change_plan(t_vars* vars)
+void	completion_plan(t_vars* vars)
+{
+	//double	old_a;
+	t_point*	pixel;
+	int		i;
+	double		x;
+	double		y;
+
+	i = 0;
+	pixel = vars->pers->rays[0]->points;
+	mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
+	vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
+	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
+	while (i < vars->pers->rays[0]->count_points)
+	{	
+		x = vars->pers->x;
+		y = pixel[i].coeff * (x);
+		while (!test_wall(vars, round(x), round(y)) && round(x) < vars->mlx->width && round(y) < vars->mlx->height)
+		{
+			
+			//printf("x[%d]: %f\n", i, x);
+			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
+			x += 1;
+			y = pixel[i].coeff * (x);	
+		}
+		i++;
+	}
+	
+}
+
+/*void	change_plan(t_vars* vars)
 {	
 	t_point* pixel;
 	int			i;
@@ -148,16 +180,81 @@ void	change_plan(t_vars* vars)
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
 	while (i < vars->pers->rays[0]->count_points)
 	{
-		x = (pixel[i].x - vars->pers->x) * cos(0.087) + (pixel[i].y - vars->pers->y) * sin(0.087) + vars->pers->x;
+		x = (pixel[i].x - vars->pers->x) * cos(0.523599) + (pixel[i].y - vars->pers->y) * sin(0.523599) + vars->pers->x;
 		
-		y = -(pixel[i].x - vars->pers->x) * sin(0.087) + (pixel[i].y - vars->pers->y) * cos(0.087) + vars->pers->y;
+		y = -(pixel[i].x - vars->pers->x) * sin(0.523599) + (pixel[i].y - vars->pers->y) * cos(0.523599) + vars->pers->y;
 		if (!test_wall(vars, round(x), round(y)) && x < vars->mlx->width && y < vars->mlx->height)	
 			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
 		pixel[i].x = x;
 		pixel[i].y = y;
+		pixel[i].coeff = (y) / (x);	
+		//printf("a[%d]: %.2f\t x= %f\t", i, pixel[i].coeff, pixel[i].x);
+		//printf("y[%d]: %f\t y'[%d]: %f\n", i, y, i, pixel[i].coeff * x);
 		i++;
 	}
 	vars->pers->rays[0]->points = pixel;
+	printf("x[pers]: %d y[pers]: %d\n", vars->pers->x, vars->pers->y);
+//	completion_plan(vars);
+}*/
+
+t_point	calc_rot(double x, double y, t_vars* vars)
+{
+	t_point pixel;
+
+	pixel.x = (x - vars->pers->x) * cos(0.0174533) + (y - vars->pers->y) * sin(0.0174533) + vars->pers->x;
+	pixel.y = -(x - vars->pers->x) * sin(0.0174533) + (y - vars->pers->y) * cos(0.0174533) + vars->pers->y;
+	return (pixel);
+}
+
+void	change_plan(t_vars* vars)
+{
+	int	i;
+	t_point*	pixel;
+	double		x;
+	double		y;
+	double		a;
+
+	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
+	pixel = vars->pers->rays[0]->points;
+	i = 0;
+
+	while (i < vars->pers->rays[0]->count_points)
+	{
+		/*x = (pixel[i].x - vars->pers->x) * cos(0.0174533) + (pixel[i].y - vars->pers->y) * sin(0.0174533) + vars->pers->x;
+		y = -(pixel[i].x - vars->pers->x) * sin(0.0174533) + (pixel[i].y - vars->pers->y) * cos(0.0174533) + vars->pers->y;*/
+		//printf("x: %f y: %f\n", pixel[i].x, pixel[i].y);
+		pixel[i] = calc_rot(pixel[i].x, pixel[i].y, vars);
+		//printf("x: %f y: %f\n", pixel[i].x, pixel[i].y);
+		a = (pixel[i].y - vars->pers->y ) / (pixel[i].x - vars->pers->x);
+		printf("a: %f\n", a);
+		x = vars->pers->x;
+		y = ceil(a * (x - vars->pers->x) + vars->pers->y);
+		if (a >= 0)
+		{
+			while (!test_wall(vars, x, y) && a > 0 && x > 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+			{
+				//printf("x[%d]: %f y[%d]: %f\n", i, round(x), i, round(y));
+				mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
+				x += 1;
+				y = ceil(a * (x - vars->pers->x) + vars->pers->y);
+			}
+		}
+		else if (a < 0)
+		{
+			while (!test_wall(vars, x, y) && a < 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+			{
+				//printf("x[%d]: %f y[%d]: %f\n", i, round(x), i, round(y));
+				mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(245, 40, 145, 255));
+				x += 1;
+				y = round(a * (x - vars->pers->x) + vars->pers->y);
+			}
+		}
+		i++;	
+	}
+	printf("x[pers]: %d y[pers]: %d\n", vars->pers->x, vars->pers->y);
+	printf("x: %f, y: %f\n", x, y);
+	printf("mlx width: %d height: %d\n", vars->mlx->width, vars->mlx->height);
+	printf("count_points: %d/t i: %d\n", vars->pers->rays[0]->count_points, i);
 }
 
 void	turn_camera(t_vars* vars)
@@ -200,11 +297,12 @@ void	ft_raycasting(void *param)
 		y = round(a*(w - vars->pers->x)) + vars->pers->y;
 		while (!test_wall(vars, w, y) && w < vars->mlx->width && y < vars->mlx->height)
 		{
-			vars->pers->rays[0]->count_points++;
 			mlx_put_pixel(vars->pers->rays[0]->img, w, y,  get_rgba(255, 0, 0, 255));
+			
 			w += 1;
 			y = round(a*(w - vars->pers->x)) + vars->pers->y;
 		}
+		vars->pers->rays[0]->count_points++;
 		vars->pers->rays[0]->n_rays += 1;
 		vars->pers->rays[0]->coefdir += 0.003;
 	}
