@@ -67,7 +67,8 @@ void	show_vue(void *param)
 	fprintf(stderr, "vars->pers->y = %d\n", vars->pers->x);
 	fprintf(stderr, "mur->x = %f\n", vars->pers->rays[0]->points[0].x);
 	fprintf(stderr, "mur->y = %f\n", vars->pers->rays[0]->points[0].y);
-	sleep(10);
+	//d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
+		//vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
 	d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
 		vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
 	printf("Distance : %f\n", d_wall);	
