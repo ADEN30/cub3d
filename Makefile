@@ -13,51 +13,51 @@ SRCS	= src/main.c \
 		  src/show3d/show.c \
 		  src/show3d/init.c \
 
-OBJS	= ${SRCS:.c=.o}
+OBJS		= $(SRCS:.c=.o)
 
-LFT		= libft/include/libft.a
+HEAD		= -I include -I MLX42/include/MLX42 -I libft/include
 
-MLX		= MLX42
+NAME		= cub3d
 
-HEAD	= -I include -I ${MLX}/include/MLX42 -I libft
+CC			= gcc
 
-NAME	= cub3d
+CFLAGS		= -Wall -Wextra -Werror -D MAP=1
 
-CC		= gcc
+LIBS		= -L ./libft -lft -L MLX42/build -lmlx42 -ldl -lglfw -pthread -lm
 
-CFLAGS	= -Wall -Wextra -Werror -D MAP=1
+LFT			= libft/include/libft.a
 
-LIBS		= -L ./libft -lft -L ${MLX}/build -lmlx42 -L"/$$HOME/.brew/opt/glfw/lib/" -lglfw 
+MLX42		= MLX42/build/libmlx42.a
 
-FRAMEWORK	= -framework Cocoa -framework OpenGL -framework IOKit
+all		:	$(NAME)
 
-.c.o:
-		${CC} ${HEAD} ${CFLAGS} -c $< -o ${<:.c=.o}
+.c.o	:
+	$(CC) $(CFLAGS) $(HEAD) -c $< -o $(<:.c=.o)
 
-${NAME}:	${LFT} ${MLX} ${OBJS}
-			${CC} ${HEAD} ${CFLAGS} ${OBJS} ${LIBS} -ldl -pthread -lm -o ${NAME}
+LFT :
+	make -C libft
 
-${LFT}:
-			make -s -C libft
+MLX42 :
+	@if [ ! -d "./MLX42" ]; then \
+		git clone https://github.com/codam-coding-college/MLX42.git; \
+	fi
+	@if [ ! -e "MLX42/build/libmlx42.a" ]; then \
+		cmake -S ./MLX42 -B ./MLX42/build; \
+		make -C ./MLX42/build -j4; \
+	fi
 
-all:		${NAME}
-
-
-#${MLX}:
-#			@if [ -f ${MLX}/build/libmlx42.a ]; then \
-#				echo "La libraire est presente"; \
-#			else \
-#				cd ${MLX} && cmake -B build && make -s -C build; \
+$(NAME)	: MLX42 LFT $(OBJS)
+	$(CC) $(CFLAGS) $(HEAD) $(OBJS) $(LIBS) -o $(NAME)
 
 clean:
-			make clean -C libft
-			${RM} ${OBJS}
+	@make clean -C libft
+	$(RM) $(OBJS)
 
-fclean:		clean
-			make fclean -C libft
-			${RM} ${NAME}
+fclean:
+	@make fclean -C libft
+	$(RM) $(OBJS)
+	$(RM) $(NAME)
 
-re:			fclean all
-
+re:	fclean all
 
 .PHONY: all clean fclean re
