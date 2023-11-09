@@ -1,12 +1,9 @@
 #include "../../include/cub3d.h"
 
-
-
 double	distance(double x1, double y1, double x2, double y2)
 {
 	return (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)));
 }
-
 
 double	calc_angle(t_vars* vars)
 {
@@ -34,7 +31,7 @@ int	test_wall(t_vars* param, double x, double y)
 	wall = param->style->images->wall_image;
 	while (i < wall->count)
 	{
-		if ((x >= wall->instances[i].x && x < wall->instances[i].x + wall->width && y >= wall->instances[i].y && y < wall->instances[i].y + wall->height))
+		if ((x >= wall->instances[i].x && x <= wall->instances[i].x + wall->width && y >= wall->instances[i].y && y <= wall->instances[i].y + wall->height))
 		{
 			if (param->pers->rays[0]->coefdir == 0.00)
 				param->pers->rays[0]->d1 = distance(x, y, param->pers->x, param->pers->y);
