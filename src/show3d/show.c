@@ -73,4 +73,5 @@ void	show_vue(void *param)
 	printf("Distance : %f\n", d_wall);	
 	new_d = d_wall / 32;
 	printf("D * 32: %f\n", new_d);	
+
 }
