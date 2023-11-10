@@ -23,21 +23,14 @@ CC			= gcc
 
 CFLAGS		= -Wall -Wextra -Werror -D MAP=1
 
-LIBS		= -L ./libft -lft -L MLX42/build -lmlx42 -ldl -lglfw -pthread -lm
-
-LFT			= libft/include/libft.a
-
-MLX42		= MLX42/build/libmlx42.a
+LIBS		= libft/libft.a MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 all		:	$(NAME)
 
 .c.o	:
 	$(CC) $(CFLAGS) $(HEAD) -c $< -o $(<:.c=.o)
 
-LFT :
-	make -C libft
-
-MLX42 :
+mlx42 :
 	@if [ ! -d "./MLX42" ]; then \
 		git clone https://github.com/codam-coding-college/MLX42.git; \
 	fi
@@ -46,8 +39,9 @@ MLX42 :
 		make -C ./MLX42/build -j4; \
 	fi
 
-$(NAME)	: MLX42 LFT $(OBJS)
-	$(CC) $(CFLAGS) $(HEAD) $(OBJS) $(LIBS) -o $(NAME)
+$(NAME)	: $(OBJS)
+	$(MAKE) -C libft
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 clean:
 	@make clean -C libft
@@ -60,4 +54,4 @@ fclean:
 
 re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re mlx42

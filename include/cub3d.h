@@ -78,6 +78,7 @@ typedef struct	s_images {
 	mlx_image_t		*floor_image;
 	mlx_image_t		*roof_image;
 	mlx_image_t		*wall_image;
+	mlx_image_t		*img;
 }	t_images;
 
 typedef struct	s_style {
