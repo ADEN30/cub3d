@@ -17,6 +17,7 @@ static int	create_floor(t_vars *vars)
 		return (1);
 	if (mlx_image_to_window(vars->mlx, floor, 0, vars->mlx->height / 2) == -1)
 		return (1);
+    floor->instances[0].z = 0;
 	put_pixels(floor, vars->style->floor);
 	return (0);
 }
@@ -31,6 +32,7 @@ static int	create_roof(t_vars *vars)
 	vars->style->images->roof_image = roof;
 	if (mlx_image_to_window(vars->mlx, roof, 0, 0) == -1)
 		return (1);
+    roof->instances[0].z = 0;
 	put_pixels(roof, vars->style->roof);
 	return (0);
 }
@@ -42,19 +44,15 @@ int	init_3d(t_vars *vars)
 
 	style = vars->style;
 	imgs = style->images;
-	//if  (MAP == 1)
-	if (MAP == 0)
+	if (init(style->north_path, &imgs->north_texture)
+		|| init(style->south_path, &imgs->south_texture)
+		|| init(style->west_path, &imgs->west_texture)
+		|| init(style->east_path, &imgs->east_texture))
+		return (1);
+	if (create_roof(vars) || create_floor(vars))
 	{
-		if (init(style->north_path, &imgs->north_texture)
-			|| init(style->south_path, &imgs->south_texture)
-			|| init(style->west_path, &imgs->west_texture)
-			|| init(style->east_path, &imgs->east_texture))
-			return (1);
-		if (create_roof(vars) || create_floor(vars))
-		{
-			print_error("Le ciel ou le sol ne peut pas etre genere.\n");
-			return(1);
-		}
+		print_error("Le ciel ou le sol ne peut pas etre genere.\n");
+		return(1);
 	}
 	return (0);
 }

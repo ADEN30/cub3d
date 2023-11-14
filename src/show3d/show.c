@@ -25,6 +25,7 @@ static void wall_column(t_vars *vars, int i, double w_height)
         if (j > ((vars->mlx->height / 2) - (w_height / 2))
             && j < ((vars->mlx->height / 2) + (w_height / 2)))
             mlx_put_pixel(vars->style->images->img, i, j, 190);
+
     }
 }
 
@@ -34,12 +35,20 @@ void    show_vue(void *param)
     double  *d_wall;
     double  *w_height;
     int     i;
+
     i = -1;
     vars = param;
     w_height = NULL;
     mlx_delete_image(vars->mlx, vars->style->images->img);
     vars->style->images->img = mlx_new_image(vars->mlx, vars->mlx->width,
         vars->mlx->height);
+    if (!vars->style->images->img)
+    {
+        print_error("No image built!");
+        exit(1);
+    }
+    mlx_image_to_window(vars->mlx, vars->style->images->img, 100, 100);
+    vars->style->images->img->instances[0].z = 1;
     d_wall = malloc(vars->pers->rays[0]->n_rays * sizeof(double));
     w_height = malloc(vars->pers->rays[0]->n_rays * sizeof(double));
     if (!d_wall || !w_height)
