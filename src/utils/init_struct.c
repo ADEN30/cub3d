@@ -98,13 +98,13 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 		ft_lstsize(vars->map->lines) * DIMENSION:
 		largest_line(vars->map->lines) * DIMENSION;
 	if (c == 'S')
-		pers->orientation = 90 * M_PI /180;
+		pers->orientation = 90;
 	else if (c == 'N')
-		pers->orientation = 270 * M_PI /180;
+		pers->orientation = 270;
 	else if (c == 'E')
-		pers->orientation = 0 * M_PI /180;
+		pers->orientation = 0;
 	else if (c == 'W')
-		pers->orientation = 180 * M_PI /180;
+		pers->orientation = 180;
 	return (pers);
 }
 

@@ -137,6 +137,7 @@ void		ft_hook_move(void* param);
 void		change_plan(t_vars* vars);
 
 /*raycasting*/
+double		distance(double x1, double y1, double x2, double y2);
 void		ft_raycasting(void *param);
 void		turn_camera(t_vars* vars);
 

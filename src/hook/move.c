@@ -54,28 +54,28 @@ void	ft_hook_move(void* param)
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->pers->y = vars->pers->y - 10;
+		vars->pers->y = vars->pers->y - 1;
 		ft_raycasting(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) || mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->pers->y = vars->pers->y + 10;
+		vars->pers->y = vars->pers->y + 1;
 		ft_raycasting(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->pers->x = vars->pers->x - 10;
+		vars->pers->x = vars->pers->x - 1;
 		ft_raycasting(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->pers->x = vars->pers->x + 10;
+		vars->pers->x = vars->pers->x + 1;
 		ft_raycasting(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))

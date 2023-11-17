@@ -48,7 +48,10 @@ int	init_3d(t_vars *vars)
 		|| init(style->south_path, &imgs->south_texture)
 		|| init(style->west_path, &imgs->west_texture)
 		|| init(style->east_path, &imgs->east_texture))
+	{
+		print_error("Impossible de charger une ou plusieurs images.\n");
 		return (1);
+	}
 	if (create_roof(vars) || create_floor(vars))
 	{
 		print_error("Le ciel ou le sol ne peut pas etre genere.\n");
