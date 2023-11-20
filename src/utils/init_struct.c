@@ -117,5 +117,7 @@ t_vars	*init_vars(void)
 	vars->map = NULL;
 	vars->pers = NULL;
 	vars->style = NULL;
+	vars->turn = 0;
+	vars->x = 0;
 	return (vars);
 }

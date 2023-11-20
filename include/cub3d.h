@@ -25,9 +25,9 @@
 typedef struct	s_point {
 	double		x;
 	double		y;
-	bool		enabled;
-	double		coeff;
-}				t_point;
+	bool	enabled;
+	double	coeff;
+}	t_point;
 
 typedef struct	s_ray {
 	mlx_image_t	*img;
@@ -47,20 +47,20 @@ typedef struct	s_ray {
 	double		coefdir;
 	double		a_r1;
 	double		a_r2;
-}				t_ray;
+}	t_ray;
 
 typedef struct	s_pers {
-	int			y;
-	int			x;
-	double		orientation;
-	t_ray		**rays;
-	int			ray_length;
-}				t_pers;
+	int		y;
+	int		x;
+	double	orientation;
+t_ray	**rays;
+	int		ray_length;
+}	t_pers;
 
 typedef struct	s_map {
-	int			fd;
-	t_list		*lines;
-}				t_map;
+	int		fd;
+	t_list	*lines;
+}	t_map;
 
 typedef struct	s_images {
 	mlx_texture_t	*north_texture;
@@ -98,6 +98,8 @@ typedef struct	s_vars {
 	t_map	*map;
 	t_style	*style;
 	t_pers	*pers;
+	double	turn;
+	int	x;
 }	t_vars;
 
 /*utils*/

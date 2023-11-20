@@ -1,9 +1,12 @@
 #include "../../include/cub3d.h"
 
+
+
 double	distance(double x1, double y1, double x2, double y2)
 {
 	return (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)));
 }
+
 
 double	calc_angle(t_vars* vars)
 {
@@ -31,12 +34,12 @@ int	test_wall(t_vars* param, double x, double y)
 	wall = param->style->images->wall_image;
 	while (i < wall->count)
 	{
-		if ((x >= wall->instances[i].x && x <= wall->instances[i].x + wall->width && y >= wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		if ((x >= wall->instances[i].x && x < wall->instances[i].x + wall->width && y >= wall->instances[i].y && y < wall->instances[i].y + wall->height))
 		{
-			if (param->pers->rays[0]->coefdir == 0.00)
+		/*	if (param->pers->rays[0]->coefdir == 0.00)
 				param->pers->rays[0]->d1 = distance(x, y, param->pers->x, param->pers->y);
 			param->pers->rays[0]->d2 = distance(x, y, param->pers->x, param->pers->y);
-		param->pers->rays[0]->d3 = distance(x, param->pers->y, x, y);
+		param->pers->rays[0]->d3 = distance(x, param->pers->y, x, y);*/
 			return (1);
 		}
 		i++;
@@ -124,7 +127,7 @@ void	ft_raycasting_malloc(void *param)
 			i++;
 		//	printf("%f\n", pixels[i].coeff);
 		}
-		vars->pers->rays[0]->coefdir += 0.003;
+		vars->pers->rays[0]->coefdir -= 0.003;
 	}
 	vars->pers->rays[0]->coefdir = 0.00;
 	vars->pers->rays[0]->angle = 0.00;
@@ -194,65 +197,70 @@ void	completion_plan(t_vars* vars)
 //	completion_plan(vars);
 }*/
 
-t_point	calc_rot(double x, double y, t_vars* vars)
+void	calc_rot(double* x, double* y, t_vars* vars, int angles)
 {
-	t_point pixel;
-
-	pixel.x = (x - vars->pers->x) * cos(0.0174533) + (y - vars->pers->y) * sin(0.0174533) + vars->pers->x;
-	pixel.y = -(x - vars->pers->x) * sin(0.0174533) + (y - vars->pers->y) * cos(0.0174533) + vars->pers->y;
-	return (pixel);
+	double	x1;
+	double	y1;
+	double	angle_rad;
+	double	dist;
+	
+	if (vars->turn == 360)
+		vars->turn = 0;
+	if (vars->turn + angles > 90 && vars->turn + angles < 270)
+	{
+			vars->x = -1;
+	}
+	else
+		vars->x = 1;
+	angle_rad = round(vars->turn + angles)*M_PI/180;
+	dist = distance(*x, *y, vars->pers->x, vars->pers->y);
+	x1 = vars->pers->x + dist * cos(angle_rad);
+	y1 = (vars->pers->y) - dist * sin(angle_rad);	
+	*x = x1;
+	*y = y1;
+//	printf("calc_rot\n");
 }
 
-void	change_plan(t_vars* vars)
+ void	change_plan(t_vars* vars)
 {
-	int	i;
-	t_point*	pixel;
+	double	i;
 	double		x;
 	double		y;
-	double		a;
-
+	double			angle;
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	pixel = vars->pers->rays[0]->points;
+	angle = 0;
 	i = 0;
-
-	while (i < vars->pers->rays[0]->count_points)
+	while (angle <= 60)
 	{
-		/*x = (pixel[i].x - vars->pers->x) * cos(0.0174533) + (pixel[i].y - vars->pers->y) * sin(0.0174533) + vars->pers->x;
-		y = -(pixel[i].x - vars->pers->x) * sin(0.0174533) + (pixel[i].y - vars->pers->y) * cos(0.0174533) + vars->pers->y;*/
-		//printf("x: %f y: %f\n", pixel[i].x, pixel[i].y);
-		pixel[i] = calc_rot(pixel[i].x, pixel[i].y, vars);
-		//printf("x: %f y: %f\n", pixel[i].x, pixel[i].y);
-		a = (pixel[i].y - vars->pers->y ) / (pixel[i].x - vars->pers->x);
-		printf("a: %f\n", a);
+	//	printf("x: %f, y: %f\n", x, y);
 		x = vars->pers->x;
-		y = ceil(a * (x - vars->pers->x) + vars->pers->y);
-		if (a >= 0)
+		y = vars->pers->y;
+		while (!test_wall(vars, x, y) && x > 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
 		{
-			while (!test_wall(vars, x, y) && a > 0 && x > 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
-			{
-				//printf("x[%d]: %f y[%d]: %f\n", i, round(x), i, round(y));
-				mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
+			mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
+			if (vars->x >= 0)
 				x += 1;
-				y = ceil(a * (x - vars->pers->x) + vars->pers->y);
-			}
+			else if (vars->x < 0)
+				x += -1;
+			calc_rot(&x, &y, vars, angle);
 		}
-		else if (a < 0)
-		{
-			while (!test_wall(vars, x, y) && a < 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
-			{
-				//printf("x[%d]: %f y[%d]: %f\n", i, round(x), i, round(y));
-				mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(245, 40, 145, 255));
-				x += 1;
-				y = round(a * (x - vars->pers->x) + vars->pers->y);
-			}
-		}
-		i++;	
+		angle += 0.1;
+		i++;
 	}
-	printf("x[pers]: %d y[pers]: %d\n", vars->pers->x, vars->pers->y);
-	printf("x: %f, y: %f\n", x, y);
-	printf("mlx width: %d height: %d\n", vars->mlx->width, vars->mlx->height);
-	printf("count_points: %d/t i: %d\n", vars->pers->rays[0]->count_points, i);
+	printf("i: %f\n", i);
 }
+
+/*void	change_plan2(t_vars* vars)
+{
+	int	i;
+	t_point* pixel;
+	
+	i = 0;
+	pixel = vars->pers->ray[0]->points;
+	calc_rot(pixel[vars->pers->rays[0]->count_points - 1].x, pixel[vars->pers->rays[0]->count_points - 1], vars);
+	calc_rot(pixel[0].x, pixel[0], vars);
+	
+}*/
 
 void	turn_camera(t_vars* vars)
 {
@@ -301,7 +309,7 @@ void	ft_raycasting(void *param)
 		}
 		vars->pers->rays[0]->count_points++;
 		vars->pers->rays[0]->n_rays += 1;
-		vars->pers->rays[0]->coefdir += 0.003;
+		vars->pers->rays[0]->coefdir -= 0.003;
 	}
 	vars->pers->rays[0]->a_r1 = vars->pers->rays[0]->coefdir - 0.003;
 	printf("pixels: %d\n", vars->pers->rays[0]->count_points);
