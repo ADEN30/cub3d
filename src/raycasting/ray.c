@@ -121,6 +121,7 @@ void	ft_raycasting_malloc(void *param)
 			pixels[i].x = w - 1;
 			pixels[i].y = round(a*(pixels[i].x - vars->pers->x)) + vars->pers->y;
 			pixels[i].coeff = a;
+			pixels[i].dir = 0;
 			i++;
 		//	printf("%f\n", pixels[i].coeff);
 		}

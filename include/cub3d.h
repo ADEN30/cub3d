@@ -27,6 +27,7 @@ typedef struct	s_point {
 	double		y;
 	bool		enabled;
 	double		coeff;
+	int			dir;
 }				t_point;
 
 typedef struct	s_ray {
@@ -145,4 +146,7 @@ void		turn_camera(t_vars* vars);
 int			init_3d(t_vars *vars);
 void		show_vue(void *param);
 
+/*define_wall*/
+int 	   next_point_diff(t_vars *vars, int i);
+int			define_wall(t_vars *vars);
 #endif
