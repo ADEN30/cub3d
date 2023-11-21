@@ -8,7 +8,7 @@ int	main(int argc, char *argv[])
 	if (!vars || create_map(argc, argv, vars))
 		return (free_vars(vars), system("leaks cub3d"), 1);
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	vars->mlx = mlx_init(1500, 1580, "cub3d", true);
+	vars->mlx = mlx_init(1500, 1500, "cub3d", true);
 	if (!vars->mlx)
 		return (free_vars(vars), system("leaks cub3d"), 1);
 	if (show_map(vars) /*|| init_3d(vars)*/)
