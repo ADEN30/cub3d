@@ -82,7 +82,7 @@ void	ft_hook_move(void* param)
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->turn += 5;	
+		vars->turn += 10;	
 		change_plan(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))

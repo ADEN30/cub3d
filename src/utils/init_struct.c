@@ -68,6 +68,7 @@ t_ray	**init_ray(t_vars *vars)
 	rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	rays[0]->count_points = 0;
 	rays[0]->angle = 0.00;
+	rays[0]->length = 0;
 	rays[0]->coefdir = 0.00;
 	rays[0]->a_r1 = 0.00;
 	rays[0]->a_r2 = 0.00;
@@ -119,5 +120,6 @@ t_vars	*init_vars(void)
 	vars->style = NULL;
 	vars->turn = 0;
 	vars->x = 0;
+	vars->bo = 0;
 	return (vars);
 }

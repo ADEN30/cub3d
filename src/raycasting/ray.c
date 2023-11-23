@@ -202,52 +202,127 @@ void	calc_rot(double* x, double* y, t_vars* vars, int angles)
 	double	x1;
 	double	y1;
 	double	angle_rad;
-	double	dist;
+	static	int	d1;
 	
-	if (vars->turn == 360)
-		vars->turn = 0;
-	if (vars->turn + angles > 90 && vars->turn + angles < 270)
+	if ( vars->bo == 1)
 	{
-			vars->x = -1;
+		d1 = 0;
+		vars->bo = 0;
 	}
-	else
-		vars->x = 1;
 	angle_rad = round(vars->turn + angles)*M_PI/180;
-	dist = distance(*x, *y, vars->pers->x, vars->pers->y);
-	x1 = vars->pers->x + dist * cos(angle_rad);
-	y1 = (vars->pers->y) - dist * sin(angle_rad);	
+	x1 = vars->pers->x + d1 * cos(angle_rad);
+	y1 = (vars->pers->y) - d1 * sin(angle_rad);	
 	*x = x1;
 	*y = y1;
+	d1++;
 //	printf("calc_rot\n");
+}
+
+int	stop(double x, double y, t_vars* vars)
+{
+	double	x1;
+	double	y1;
+
+	x1 = x;
+	y1 = vars->pers->y;
+//	printf("x1: %f y1: %f x: %f y%f\n", x1, y1, x, y);
+	calc_rot(&x1, &y1, vars, 60);
+//	printf("x1: %f y1: %f x: %f y%f\n", x1, y1, x, y);
+		if (y >= y1)
+			return (1);
+		else
+			return (0);
+
+}
+
+t_point* stock(t_vars* vars)
+{
+	t_point* pixel;
+	double	x;
+	double	y;
+	int	i;
+
+	i = 0;
+	x = vars->pers->x;
+	y = vars->pers->y;
+	pixel = malloc(sizeof(t_point) * (vars->pers->rays[0]->length));
+	while (!test_wall(vars, x, y) && x > 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+	{
+		pixel[i].x = x;
+		pixel[i].y = y;	
+		if (vars->x >= 0)
+			x += 1;
+		else if (vars->x < 0)
+			x += -1;
+		calc_rot(&x, &y, vars, 0);
+		i++;
+	}
+	return (pixel);
+}
+
+int	last_ray(double x, double y, t_vars* vars, t_point* pixel)
+{
+	int	i;
+
+	i = 0;
+	while(i < vars->pers->rays[0]->length)
+	{	
+	//	printf("y1: %f y: %f\n", round(y1), round(y));
+		if (round(pixel[i].x) == round(x) && round(pixel[i].y) == round(y) && pixel[i].y != vars->pers->y)
+		{
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	ray(double x, double y, t_vars* vars, t_point* pixel)
+{
+
+	int		i;
+	
+
+	i = 0;
+	while (!test_wall(vars, x, y) && x < vars->mlx->width && !last_ray(x, y, vars, pixel))
+	{
+		mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
+		x += 1;
+		i++;
+	}
 }
 
  void	change_plan(t_vars* vars)
 {
-	double	i;
 	double		x;
 	double		y;
-	double			angle;
+	double 		angles;
+	int			i;
+//	t_point*	pixel;
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	angle = 0;
+	vars->pers->rays[0]->length = 0;
+	angles = 0.00;
 	i = 0;
-	while (angle <= 60)
+	while (angles <= 60)
 	{
 	//	printf("x: %f, y: %f\n", x, y);
 		x = vars->pers->x;
 		y = vars->pers->y;
-		while (!test_wall(vars, x, y) && x > 0 && x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+		while (!test_wall(vars, x, y) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
 		{
 			mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
-			if (vars->x >= 0)
-				x += 1;
-			else if (vars->x < 0)
-				x += -1;
-			calc_rot(&x, &y, vars, angle);
+		//	ray(x, y, vars, pixel);
+	//		if (vars->x >= 0)
+	//			x += 1;
+	//		else if (vars->x < 0)
+	//			x += -1;
+			calc_rot(&x, &y, vars, angles);
 		}
-		angle += 0.1;
 		i++;
+		vars->bo = 1;
+		angles += 0.040;
 	}
-	printf("i: %f\n", i);
+	printf("i: %d\n", i);
 }
 
 /*void	change_plan2(t_vars* vars)
@@ -277,7 +352,6 @@ void	turn_camera(t_vars* vars)
 
 	while (i < old_count)
 	{
-		printf("a: %f\n", pixel[i].coeff);
 		mlx_put_pixel(vars->pers->rays[0]->img, pixel[i].x, pixel[i].y ,  get_rgba(255, 0, 0, 255));
 		i++;	
 	}

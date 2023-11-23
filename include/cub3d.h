@@ -100,6 +100,7 @@ typedef struct	s_vars {
 	t_pers	*pers;
 	double	turn;
 	int	x;
+	int	bo;
 }	t_vars;
 
 /*utils*/
