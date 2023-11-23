@@ -2,6 +2,7 @@
 
 int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
 {
+	(void)color;
 	if (!*img)
 	{
 		*img = mlx_new_image(vars->mlx, DIMENSION, DIMENSION);
@@ -11,8 +12,8 @@ int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
 	if (mlx_image_to_window(vars->mlx, *img, loc[1] * (*img)->width, loc[0]
 		* (*img)->height) == -1)
 		return (1);
-	//mlx_set_instance_depth((*img)->instances, 1);
-	put_pixels(*img, color);
+	//put_pixels(*img, color);
+	//mlx_set_instance_depth((*img)->instances, 10);
 	return (0);
 }
 
