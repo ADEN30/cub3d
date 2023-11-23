@@ -77,6 +77,7 @@ t_ray	**init_ray(t_vars *vars)
 	rays[0]->d2 = 0.00;
 	rays[0]->d3 = 0.00;
 	rays[0]->n_rays = 0;
+	rays[0]->points = NULL;
 	return (rays);
 }
 

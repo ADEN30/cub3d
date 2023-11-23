@@ -99,9 +99,12 @@ void	ft_raycasting_malloc(void *param)
 
 	vars = param;
 	i = 0;
+	pixels = NULL;
 	printf("%d\n", vars->pers->rays[0]->count_points);
-	if (vars->pers->rays[0]->points)
+	if (vars->pers->rays[0]->points) {
 		free(vars->pers->rays[0]->points);
+		vars->pers->rays[0]->points = NULL;
+	}
 	pixels = malloc(sizeof(t_point) * (vars->pers->rays[0]->count_points));
 	if (!pixels)
 		return ;
@@ -115,8 +118,8 @@ void	ft_raycasting_malloc(void *param)
 
 			w += 1;
 			y = round(a*(w - vars->pers->x)) + vars->pers->y;
-		}	
-		if (pixels && &pixels[i])
+		}
+		if (i < vars->pers->rays[0]->count_points)
 		{
 			pixels[i].x = w - 1;
 			pixels[i].y = round(a*(pixels[i].x - vars->pers->x)) + vars->pers->y;

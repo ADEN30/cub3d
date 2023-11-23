@@ -14,6 +14,7 @@ int	main(int argc, char *argv[])
 	if (show_map(vars) /*|| init_3d(vars)*/)
 		return (free_vars(vars), system("leaks cub3d"), 1);
     init_3d(vars);
+	//test_ray(vars);
 	ft_raycasting(vars);
 	//mlx_loop_hook(vars->mlx, ft_raycasting, vars);
 	//if (MAP == 0)

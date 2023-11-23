@@ -1,26 +1,38 @@
 #include "../../include/cub3d.h"
 
-static void wall_column(t_vars *vars, int i, double w_height)
+static int wall_column(t_vars *vars, int i, double w_height, int count)
 {
     int     j;
+    int     k;
 
+    k = -1;
     j = -1;
-    printf("x= %d\n", i);
-    while (++j < vars->mlx->height)
+    while (++k < count)
     {
-        if (j > (vars->mlx->height / 2 - (w_height / 2))
-            && j < (vars->mlx->height / 2 + (w_height / 2)))
+        while (++j < vars->mlx->height)
         {
-            if (vars->pers->rays[0]->points[i].dir == 'E')
-                mlx_put_pixel(vars->style->images->img, i, j, get_rgba(103, 52, 71, 255));
-            else if (vars->pers->rays[0]->points[i].dir == 'N')
-                mlx_put_pixel(vars->style->images->img, i, j, get_rgba(0, 0, 0, 255));
-            if (vars->pers->rays[0]->points[i].dir == 'S')
-                mlx_put_pixel(vars->style->images->img, i, j, get_rgba(163, 159, 146, 255));
-            else if (vars->pers->rays[0]->points[i].dir == 'W')
-                mlx_put_pixel(vars->style->images->img, i, j, get_rgba(0, 0, 0, 255));
+            printf("avant\n");
+            printf("i = %d\n", i);
+            printf("dir = %d\n", vars->pers->rays[0]->points[i].dir);
+            printf("apres\n");
+            if (j > (vars->mlx->height / 2 - (w_height / 2))
+                && j < (vars->mlx->height / 2 + (w_height / 2)))
+            {
+                //if (vars->pers->rays[0]->points[i].dir == 2)
+                    //mlx_put_pixel(vars->style->images->img, i + k, j, get_rgba(103, 52, 71, 255));
+                //else if (vars->pers->rays[0]->points[i].dir == 1)
+                    //mlx_put_pixel(vars->style->images->img, i + k, j, get_rgba(0, 0, 0, 255));
+                //else if (vars->pers->rays[0]->points[i].dir == 3)
+                    //mlx_put_pixel(vars->style->images->img, i + k, j, get_rgba(163, 159, 146, 255));
+                //else if (vars->pers->rays[0]->points[i].dir == 4)
+                    //mlx_put_pixel(vars->style->images->img, i + k, j, get_rgba(0, 0, 0, 255));
+                //else
+                    mlx_put_pixel(vars->style->images->img, i + k, j, get_rgba(0, 0, 0, 255));
+            }
         }
+        j = -1;
     }
+    return (i + count);
 }
 
 static double   calculate_height(t_vars *vars, int i)
@@ -45,39 +57,34 @@ static int  calculate_rays(t_vars *vars)
         return (vars->mlx->width / nb_rays);
 }
 
-void    show_vue(void *param)
+void    show_vue(t_vars *vars)
 {
-    t_vars  *v;
     int     i;
     int     j;
     int     count;
-    int     k; 
 
     i = 0;
     j = 0;
-    v = param;
-    count = calculate_rays(v);
-    if (v->style->images->img)
-        mlx_delete_image(v->mlx, v->style->images->img);
-    v->style->images->img = mlx_new_image(v->mlx, v->mlx->width,
-        v->mlx->height);
-    while (j < 50 /*v->mlx->width*/)
+    count = calculate_rays(vars);
+    if (vars->style->images->img)
+        mlx_delete_image(vars->mlx, vars->style->images->img);
+    vars->style->images->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
+    while (j < vars->mlx->width && i < vars->pers->rays[0]->n_rays)
     {
-        //printf("dir = %d\n", v->pers->rays[0]->points[i].dir);
-        if (v->pers->rays[0]->points[i].dir != 0)
+        //printf("bonjour\n");
+        //printf("i= %d\n", i);
+        if ( vars->pers->rays[0]->points[i].dir != 0)
         {
-            k = 0;
-            //printf("i= %d\n", i);
-            while (k < count && j < 50 /*v->mlx->width*/)
-            {
-                wall_column(v, j, calculate_height(v, i));
-                //printf("j= %d | k= %d\n", j, k);
-                j++;
-                k++;
-            }
+            //printf("rebonjour\n");
+            //printf("x= %d\n", j);
+            //printf("j=%d | dir = %d\n", j, vars->pers->rays[0]->points[i].dir);
+            j = wall_column(vars, j, calculate_height(vars, i), count);
+            //printf("j= %d\n", j);
+            //printf("semi-revoir\n");
         }
-            i++;
+        i++;
+        //printf("aurevoir\n");
     }
-    mlx_image_to_window(v->mlx, v->style->images->img, 0, 0);
-    v->style->images->img->instances[0].z = 1;
+    mlx_image_to_window(vars->mlx, vars->style->images->img, 0, 0);
+    vars->style->images->img->instances[0].z = 1;
 }

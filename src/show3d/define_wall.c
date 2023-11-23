@@ -12,47 +12,20 @@
 
 #include "../../include/cub3d.h"
 
-//int    next_point_diff(t_vars *vars, int i)
-//{
-    //t_point *point;
-
-    //point = vars->pers->rays[0]->points;
-    //if (point[i].x)
-    //{
-        //if (point[i + 1].x)
-        //{
-            //if ((point[i].x == point[i + 1].x)
-                //&& (point[i].y == point[i + 1].y))
-                //return (0);
-            //else
-                //return (1);
-        //}
-        //else
-        //{
-            //if ((point[i].x == point[i - 1].x)
-                //&& (point[i].y == point[i - 1].y))
-                //return (0);
-            //else
-                //return (1);
-        //}
-    //}
-    //return (0);
-//}
-
-static void define_WE(t_vars *vars, int i)
+static void define_WE(t_vars *v, t_point **p, int i)
 {
-    if (vars->pers->x < vars->pers->rays[0]->points[i].x)
-        vars->pers->rays[0]->points[i].dir = 'E';
+    if (v->pers->x < (*p)[i].x)
+        p[0][i].dir = 2;
     else
-        vars->pers->rays[0]->points[i].dir = 'W';
+        p[0][i].dir = 4;
 }
 
-static void define_NS(t_vars *vars, int i)
+static void define_NS(t_vars *v, t_point **p, int i)
 {
-    if (vars->pers->y < vars->pers->rays[0]->points[i].y)
-        vars->pers->rays[0]->points[i].dir = 'S';
+    if (v->pers->y < (*p)[i].y)
+        p[0][i].dir = 1;
     else
-        vars->pers->rays[0]->points[i].dir = 'N';
+        p[0][i].dir = 3;
 }
 
 static void check_last(t_vars *vars, int i)
@@ -63,16 +36,16 @@ static void check_last(t_vars *vars, int i)
     if (point[i].x == point[i - 1].x && point[i].y != point[i - 1].y)
     {
         if (vars->pers->x < point[i].x)
-            vars->pers->rays[0]->points[i].dir = 'E';
+            vars->pers->rays[0]->points[i].dir = 2;
         else
-            vars->pers->rays[0]->points[i].dir = 'W';
+            vars->pers->rays[0]->points[i].dir = 4;
     }
     else if (point[i].x != point[i - 1].x && point[i].y == point[i - 1].y)
     {
         if (vars->pers->y < point[i].y)
-            vars->pers->rays[0]->points[i].dir = 'S';
+            vars->pers->rays[0]->points[i].dir = 3;
         else
-            vars->pers->rays[0]->points[i].dir = 'N';
+            vars->pers->rays[0]->points[i].dir = 1;
     }
     else
         return ;
@@ -82,28 +55,23 @@ int	define_wall(t_vars *vars)
 {
     int         i;
     int         count;
-    t_point     *point;
+    t_point     **p;
 
     i = 0;
     count = 0;
-    point = vars->pers->rays[0]->points;
-    while (point[i].x)
+    p = &vars->pers->rays[0]->points;
+    while (i < vars->pers->rays[0]->n_rays - 1)
     {
-        if (point[i + 1].x)
-        {
-            if ((point[i].x == point[i + 1].x)
-                && (point[i].y != point[i + 1].y))
-                define_WE(vars, i);
-            else if ((point[i].y == point[i + 1].y)
-                && (point[i].x != point[i + 1].x))
-                define_NS(vars, i);
-            else
-                count++;
-        }
+        if ((p[0][i].x == p[0][i + 1].x)
+            && (p[0][i].y != p[0][i + 1].y))
+            define_WE(vars, p, i);
+        else if ((p[0][i].y == p[0][i + 1].y)
+            && (p[0][i].x != p[0][i + 1].x))
+            define_NS(vars, p, i);
         else
-            check_last(vars, i);
-        //printf("i= %d | dir= %c\n", i, (char)vars->pers->rays[0]->points[i].dir);
+            count++;
         i++;
     }
+    check_last(vars, i);
     return (vars->pers->rays[0]->n_rays - count);
 }

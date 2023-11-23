@@ -144,9 +144,10 @@ void		turn_camera(t_vars* vars);
 
 /*show3d*/
 int			init_3d(t_vars *vars);
-void		show_vue(void *param);
+void		show_vue(t_vars *vars);
 
 /*define_wall*/
-int 	   next_point_diff(t_vars *vars, int i);
+int			next_point_diff(t_vars *vars, int i);
 int			define_wall(t_vars *vars);
+
 #endif
