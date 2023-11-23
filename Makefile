@@ -46,7 +46,7 @@ $(NAME)	: $(OBJS)
 
 debug:$(OBJS)
 	$(MAKE) -C libft
-	$(CC) $(CFLAGS) -ggdb3 -fsanitize=address $(OBJS) $(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) -g3 -fsanitize=address $(OBJS) $(LIBS) -o $(NAME)
 
 clean:
 	@make clean -C libft
