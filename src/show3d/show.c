@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/24 16:32:30 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:27:58 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static void    wall_column(t_vars *vars, int x, double w_height, int i)
             else if (vars->pers->rays[0]->points[i].dir == 4)
                 mlx_put_pixel(vars->style->images->threed, x, j,
                  get_rgba(0, 0, 0, 255));
-            else if (vars->pers->rays[0]->points[i].dir == 5)
+        }
+        else if (vars->persV->rays[0]->points[i].dir == 5)
                 mlx_put_pixel(vars->style->images->threed, x, j,
                  get_rgba(0, 0, 0, 255));
-        }
     }
 }
 
@@ -80,7 +80,7 @@ void    show_vue(t_vars *vars)
     i = vars->mlx->width;
     x = 0;
     count = calculate_rays(vars);
-	vars->mlx = mlx_init(1500, 1500, "cub3d", true);
+	//vars->mlx = mlx_init(1500, 1500, "cub3d", true);
     if (vars->style->images->threed)
         mlx_delete_image(vars->mlx, vars->style->images->threed);
     vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);

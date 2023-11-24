@@ -13,8 +13,8 @@ int	main(int argc, char *argv[])
 		return (free_vars(vars), system("leaks cub3d"), 1);
 	if (show_map(vars))
 		return (free_vars(vars), system("leaks cub3d"), 1);
-	change_plan(vars);
 	init_3d(vars);
+	change_plan(vars);
 	//mlx_loop_hook(vars->mlx, ft_raycasting, vars);
 	//if (MAP == 0)
 		//mlx_loop_hook(vars->mlx, show_vue, vars);
