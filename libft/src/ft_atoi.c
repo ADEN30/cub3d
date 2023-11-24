@@ -23,7 +23,7 @@ int	ft_atoi(const char *str)
 	nb = 0;
 	while (str[i] && (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
 			|| str[i] == '\f' || str[i] == '\r' || str[i] == 32))
-			i++;
+		i++;
 	while (str[i] && (str[i] == 45 || str[i] == 43))
 	{
 		if (str[i + 1] && (str[i + 1] < '0' || str[i + 1] > '9'))
@@ -34,8 +34,8 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-			nb = nb * 10 + (str[i] - 48);
-			i++;
+		nb = nb * 10 + (str[i] - 48);
+		i++;
 	}
 	return (nb *= j);
 }

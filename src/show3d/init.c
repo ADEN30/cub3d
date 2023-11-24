@@ -42,19 +42,16 @@ int	init_3d(t_vars *vars)
 
 	style = vars->style;
 	imgs = style->images;
-	//if  (MAP == 1)
-	if (MAP == 0)
+	vars->style->images->threed = NULL;
+	if (init(style->north_path, &imgs->north_texture)
+		|| init(style->south_path, &imgs->south_texture)
+		|| init(style->west_path, &imgs->west_texture)
+		|| init(style->east_path, &imgs->east_texture))
+		return (1);
+	if (create_roof(vars) || create_floor(vars))
 	{
-		if (init(style->north_path, &imgs->north_texture)
-			|| init(style->south_path, &imgs->south_texture)
-			|| init(style->west_path, &imgs->west_texture)
-			|| init(style->east_path, &imgs->east_texture))
-			return (1);
-		if (create_roof(vars) || create_floor(vars))
-		{
-			print_error("Le ciel ou le sol ne peut pas etre genere.\n");
-			return(1);
-		}
+		print_error("Le ciel ou le sol ne peut pas etre genere.\n");
+		return(1);
 	}
 	return (0);
 }

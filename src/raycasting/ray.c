@@ -55,13 +55,15 @@ void	stock(t_vars* vars)
 		{
 			vars->pers->rays[0]->points[i].x = x;
 			vars->pers->rays[0]->points[i].y = y;
+			vars->pers->rays[0]->points[i].dir = 0;
 			calc_rot(&x, &y, vars, angles);
 		}
+		//printf("%d %f %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
+		//usleep(100000);
 		i++;
 		vars->bo = 1;
 		angles += 0.040;
 	}
-
 }
 
 void	print(t_vars* vars)
@@ -99,5 +101,5 @@ void	print(t_vars* vars)
 		angles += 0.040;
 	}
 	stock(vars);
-	printf("i: %d\n", i);
+	//printf("i: %d\n", i);
 }

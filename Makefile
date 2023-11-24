@@ -10,6 +10,7 @@ SRCS	= src/main.c \
 		  src/style/find_style.c \
 		  src/hook/move.c \
 		  src/raycasting/ray.c \
+		  src/show3d/define_wall.c \
 		  src/show3d/show.c \
 		  src/show3d/init.c \
 

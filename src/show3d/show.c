@@ -1,75 +1,101 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
+/*   Updated: 2023/11/24 16:32:30 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
-mlx_image_t	*find_wall(t_vars *vars, t_images **imgs)
+static void    wall_column(t_vars *vars, int x, double w_height, int i)
 {
-	mlx_image_t		**img;
-	mlx_texture_t	*texture;
-	int				i;
+    int     j;
 
-	i = 0;
-	img = malloc(sizeof(mlx_image_t) * ((*imgs)->count_north + 1));
-	if (!img)
-		return (NULL);
-	texture = (*imgs)->north_texture;
-	while (i < (*imgs)->count_north)
-	{
-		img[i] = (*imgs)->north[i];
-		i++;
-	}
-	(*imgs)->count_north++;
-	img[i] = mlx_texture_to_image(vars->mlx, texture);
-	if (!img[i])
-		return (NULL);
-	(*imgs)->north = img;
-	return (img[i]);
+    j = -1;
+    while (++j < vars->mlx->height)
+    {
+        if (j > (vars->mlx->height / 2 - (w_height / 2))
+            && j < (vars->mlx->height / 2 + (w_height / 2)))
+        {
+            if (vars->pers->rays[0]->points[i].dir == 2)
+                mlx_put_pixel(vars->style->images->threed, x, j,
+                get_rgba(103, 52, 71, 255));
+            else if (vars->pers->rays[0]->points[i].dir == 1)
+                mlx_put_pixel(vars->style->images->threed, x, j,
+                 get_rgba(163, 159, 146, 255));
+            else if (vars->pers->rays[0]->points[i].dir == 3)
+                mlx_put_pixel(vars->style->images->threed, x, j,
+                 get_rgba(255, 255, 255, 255));
+            else if (vars->pers->rays[0]->points[i].dir == 4)
+                mlx_put_pixel(vars->style->images->threed, x, j,
+                 get_rgba(0, 0, 0, 255));
+            else if (vars->pers->rays[0]->points[i].dir == 5)
+                mlx_put_pixel(vars->style->images->threed, x, j,
+                 get_rgba(0, 0, 0, 255));
+        }
+    }
 }
 
-int	print_wall_3d(t_vars *vars, int x, t_ray *ray)
-{
-	int			size;
-	int			y;
-	mlx_image_t	*wall;
-
-	wall = find_wall(vars, &vars->style->images);
-	size = vars->mlx->height / ray->length;
-	//printf(" %i / %i = %i\n", vars->mlx->height, ray->length, size);
-	y = vars->mlx->height / 2 - size / 2;
-	mlx_resize_image(wall, 1, size);
-	if (mlx_image_to_window(vars->mlx, wall, x, y) == -1)
-		return (1);
-	return (0);
-}
-
-double	distance2(double x1, double y1, double x2, double y2)
+static double	distance(double x1, double y1, double x2, double y2)
 {
 	return (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)));
 }
 
-void	show_vue(void *param)
+static double   calculate_height(t_vars *vars, int i)
 {
-	//t_vars	*vars;
-	//t_ray	**rays;
-	//int		i = 0;
+    double  d_wall;
+    double  w_height;
 
-	//vars = param;
-	//rays = vars->pers->rays;
-	//print_wall_3d(vars, i, rays[i]);
-	//while (rays[i])
-	//{
-		//print_wall_3d(vars, i, rays[i]);
-		//i++;
-	//}
-	t_vars	*vars;
-	double	d_wall;
+    d_wall = distance(vars->pers->x, vars->pers->y,
+        vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
+    w_height = 32 / (d_wall * 0.0009);
+    //printf("percu = %f\n", w_height);
+    //usleep(100000);
+    return (w_height);
+}
 
-	vars = param;
-	fprintf(stderr, "vars->pers->x = %d\n", vars->pers->x);
-	fprintf(stderr, "vars->pers->y = %d\n", vars->pers->x);
-	fprintf(stderr, "mur->x = %f\n", vars->pers->rays[0]->points[0].x);
-	fprintf(stderr, "mur->y = %f\n", vars->pers->rays[0]->points[0].y);
-	//d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
-		//vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
-	d_wall = distance2((double)vars->pers->x, (double)vars->pers->y,
-		vars->pers->rays[0]->points[0].x, vars->pers->rays[0]->points[0].y);
-	printf("Distance : %f\n", d_wall);	
+static int  calculate_rays(t_vars *vars)
+{
+    int     nb_rays;
+
+    nb_rays = define_wall(vars);
+    if (vars->mlx->width % nb_rays != 0)
+        return ((vars->mlx->width / nb_rays) + 1);
+    else
+        return (vars->mlx->width / nb_rays);
+}
+
+void    show_vue(t_vars *vars)
+{
+    int     i;
+    int     j;
+    int     x;
+    int     count;
+
+    i = vars->mlx->width;
+    x = 0;
+    count = calculate_rays(vars);
+	vars->mlx = mlx_init(1500, 1500, "cub3d", true);
+    if (vars->style->images->threed)
+        mlx_delete_image(vars->mlx, vars->style->images->threed);
+    vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
+    while (x < vars->mlx->width)
+    {
+        if (vars->pers->rays[0]->points[i].dir != 0)
+        {
+            //printf("x = %d | dir = %d\n", x, vars->pers->rays[0]->points[i].dir);
+            j = -1;
+            while (++j < count)
+                wall_column(vars, x + j, calculate_height(vars, i), i);
+            x = x + j;
+        }
+        i--;
+    }
+    mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
+    vars->style->images->threed->instances[0].z = 1;
 }

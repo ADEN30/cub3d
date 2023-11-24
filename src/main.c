@@ -11,13 +11,14 @@ int	main(int argc, char *argv[])
 	vars->mlx = mlx_init(1500, 1500, "cub3d", true);
 	if (!vars->mlx)
 		return (free_vars(vars), system("leaks cub3d"), 1);
-	if (show_map(vars) || init_3d(vars))
+	if (show_map(vars))
 		return (free_vars(vars), system("leaks cub3d"), 1);
-	
 	change_plan(vars);
+	init_3d(vars);
 	//mlx_loop_hook(vars->mlx, ft_raycasting, vars);
-	if (MAP == 0)
-		mlx_loop_hook(vars->mlx, show_vue, vars);
+	//if (MAP == 0)
+		//mlx_loop_hook(vars->mlx, show_vue, vars);
+	show_vue(vars);
 	mlx_loop_hook(vars->mlx, ft_hook_move, vars);
 	mlx_loop(vars->mlx);
 	return (free_vars(vars), system("leaks cub3d"), 0);

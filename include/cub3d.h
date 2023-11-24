@@ -25,8 +25,9 @@
 typedef struct	s_point {
 	double		x;
 	double		y;
-	bool	enabled;
-	double	coeff;
+	bool		enabled;
+	double		coeff;
+	int			dir;
 }	t_point;
 
 typedef struct	s_ray {
@@ -50,11 +51,11 @@ typedef struct	s_ray {
 }	t_ray;
 
 typedef struct	s_pers {
-	int		y;
-	int		x;
-	double	orientation;
-t_ray	**rays;
-	int		ray_length;
+	int			y;
+	int			x;
+	double		orientation;
+	t_ray		**rays;
+	int			ray_length;
 }	t_pers;
 
 typedef struct	s_map {
@@ -78,6 +79,7 @@ typedef struct	s_images {
 	mlx_image_t		*floor_image;
 	mlx_image_t		*roof_image;
 	mlx_image_t		*wall_image;
+	mlx_image_t		*threed;
 }	t_images;
 
 typedef struct	s_style {
@@ -143,7 +145,8 @@ void		ft_raycasting(void *param);
 void		turn_camera(t_vars* vars);
 
 /*show3d*/
+int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
-void		show_vue(void *param);
+void		show_vue(t_vars *vars);
 
 #endif
