@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:18:39 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/21 14:39:30 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/27 17:02:04 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	define_wall(t_vars *vars)
     {
         if (define_value(vars, i, &j, &count) == -1)
             break;
-        if ((p[0][i].y != p[0][j].y)
+		 if ((p[0][i].y != p[0][j].y)
             && (p[0][i].x != p[0][j].x))
             compensate_value(vars, i, j);
         if (((p[0][i].x == p[0][j].x)

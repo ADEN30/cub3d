@@ -65,7 +65,14 @@ typedef struct	s_map {
 	int	ouest;
 	int	nord;
 	int	sud;
-	int	lock;
+	int	size_e;
+	int	size_o;
+	int	size_n;
+	int	size_s;
+	t_point*	E;
+	t_point*	O;
+	t_point*	S;
+	t_point*	N;
 }	t_map;
 
 typedef struct	s_images {
@@ -126,6 +133,7 @@ char		find_case(t_list *list, int x, int y);
 int			put_pixels(mlx_image_t *img, uint32_t color);
 int			largest_line(t_list *list);
 int			check_line(char *line);
+int			create_NSEO(t_vars* vars);
 
 /*map*/
 int			create_map(int argc, char *argv[], t_vars *vars);
@@ -153,5 +161,6 @@ void		turn_camera(t_vars* vars);
 int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
+void	create_vue(t_vars* vars);
 
 #endif
