@@ -35,8 +35,8 @@ static void define_NESW(t_vars *v, t_point **p, int i, int j)
 static int define_value(t_vars *v, int i, int *j, int *count)
 {
     *j = i + 1;
-    while ((int)v->pers->rays[0]->points[i].x == (int)v->pers->rays[0]->points[*j].x
-        && (int)v->pers->rays[0]->points[i].y == (int)v->pers->rays[0]->points[*j].y)
+    while (v->pers->rays[0]->points[i].x == v->pers->rays[0]->points[*j].x
+        && v->pers->rays[0]->points[i].y == v->pers->rays[0]->points[*j].y)
     {
         (*j)++;
         (*count)++;
@@ -53,12 +53,12 @@ static void compensate_value(t_vars *v, int i, int j)
     int k;
 
     k = j;
-    while ((int)v->pers->rays[0]->points[j].x == (int)v->pers->rays[0]->points[k].x
-        && (int)v->pers->rays[0]->points[j].y == (int)v->pers->rays[0]->points[k].y)
+    while (v->pers->rays[0]->points[j].x == v->pers->rays[0]->points[k].x
+        && v->pers->rays[0]->points[j].y == v->pers->rays[0]->points[k].y)
         k++;
-    if ((int)v->pers->rays[0]->points[j].x == (int)v->pers->rays[0]->points[k].x)
+    if (v->pers->rays[0]->points[j].x == v->pers->rays[0]->points[k].x)
         v->pers->rays[0]->points[i].x = v->pers->rays[0]->points[j].x;
-    if ((int)v->pers->rays[0]->points[j].y == (int)v->pers->rays[0]->points[k].y)
+    if (v->pers->rays[0]->points[j].y == v->pers->rays[0]->points[k].y)
         v->pers->rays[0]->points[i].y = v->pers->rays[0]->points[j].y;
 }
 
@@ -96,16 +96,18 @@ int	define_wall(t_vars *vars)
     {
         if (define_value(vars, i, &j, &count) == -1)
             break;
-        if (((int)p[0][i].y != (int)p[0][j].y)
-            && ((int)p[0][i].x != (int)p[0][j].x))
+        if ((p[0][i].y != p[0][j].y)
+            && (p[0][i].x != p[0][j].x))
             compensate_value(vars, i, j);
-        if ((((int)p[0][i].x == (int)p[0][j].x)
-            && ((int)p[0][i].y != (int)p[0][j].y))
-            || (((int)p[0][i].y == (int)p[0][j].y)
-            && ((int)p[0][i].x != (int)p[0][j].x)))
+        if (((p[0][i].x == p[0][j].x)
+            && (p[0][i].y != p[0][j].y))
+            || ((p[0][i].y == p[0][j].y)
+            && (p[0][i].x != p[0][j].x)))
                 define_NESW(vars, p, i, j);
         //printf("dir = %d\n", vars->pers->rays[0]->points[i].dir);
         i = j;
     }
+	
+	printf("count: %d\n", count);
     return (vars->pers->rays[0]->length - count);
 }

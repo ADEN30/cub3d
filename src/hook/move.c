@@ -18,7 +18,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y - 10;
 		change_plan(vars);
-		show_vue(vars);
+	//	show_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) || mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
@@ -26,7 +26,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y + 10;
 		change_plan(vars);
-		show_vue(vars);
+	//	show_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
@@ -34,7 +34,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x - 10;
 		change_plan(vars);
-		show_vue(vars);
+	//	show_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
@@ -42,13 +42,13 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x + 10;
 		change_plan(vars);
-		show_vue(vars);
+	//	show_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->turn += 10;	
+		vars->turn += 1;	
 		change_plan(vars);
 		show_vue(vars);
 	}
@@ -56,7 +56,7 @@ void	ft_hook_move(void* param)
 	{
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-		vars->turn -= 10 ;	
+		vars->turn -= 1 ;	
 		change_plan(vars);
 		show_vue(vars);
 	}

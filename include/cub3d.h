@@ -11,7 +11,7 @@
 # include "../libft/include/libft.h"
 
 # ifndef MAP
-#  define MAP 0
+#  define MAP 1
 # endif
 
 # ifndef DIMENSION

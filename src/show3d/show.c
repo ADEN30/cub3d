@@ -35,7 +35,7 @@ static void    wall_column(t_vars *vars, int x, double w_height, int i)
                 mlx_put_pixel(vars->style->images->threed, x, j,
                  get_rgba(0, 0, 0, 255));
         }
-        else if (vars->persV->rays[0]->points[i].dir == 5)
+        else if (vars->pers->rays[0]->points[i].dir == 5)
                 mlx_put_pixel(vars->style->images->threed, x, j,
                  get_rgba(0, 0, 0, 255));
     }
@@ -80,6 +80,7 @@ void    show_vue(t_vars *vars)
     i = vars->mlx->width;
     x = 0;
     count = calculate_rays(vars);
+	printf("count: %d\n", count);
 	//vars->mlx = mlx_init(1500, 1500, "cub3d", true);
     if (vars->style->images->threed)
         mlx_delete_image(vars->mlx, vars->style->images->threed);

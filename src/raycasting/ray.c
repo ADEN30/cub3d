@@ -9,7 +9,7 @@ int	test_wall(t_vars* param, double x, double y)
 	wall = param->style->images->wall_image;
 	while (i < wall->count)
 	{
-		if ((x >= wall->instances[i].x && x < wall->instances[i].x + wall->width && y >= wall->instances[i].y && y < wall->instances[i].y + wall->height))
+		if ((x > wall->instances[i].x && x < wall->instances[i].x + wall->width && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
 			return (1);
 		i++;
 	}
@@ -17,24 +17,26 @@ int	test_wall(t_vars* param, double x, double y)
 
 }
 
-void	calc_rot(double* x, double* y, t_vars* vars, int angles)
+void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 {
 	double	x1;
 	double	y1;
 	double	angle_rad;
-	static	int	d1;
+	static	double	d1;
 	
 	if ( vars->bo == 1)
 	{
-		d1 = 0;
+		d1 = 0.000;
 		vars->bo = 0;
 	}
-	angle_rad = round(vars->turn + angles)*M_PI/180;
-	x1 = vars->pers->x + d1 * cos(angle_rad);
-	y1 = (vars->pers->y) - d1 * sin(angle_rad);	
+	angle_rad = (vars->turn + angles)*(M_PI/180);
+	x1 = (vars->pers->x ) + d1 * cos(angle_rad);
+//	printf("x1: %f, d1: %f angle: %d cos: %f result: %f\n", x1, d1, angles, cos(angle_rad), d1 * cos(angle_rad));
+	y1 = (vars->pers->y) - d1 * sin(angle_rad);
+//	printf("y1: %f\n", y1);
 	*x = x1;
 	*y = y1;
-	d1++;
+	d1 += 1;
 }
 
 void	stock(t_vars* vars)
@@ -51,19 +53,23 @@ void	stock(t_vars* vars)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
-		while (!test_wall(vars, x, y) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+		while (!test_wall(vars, x, y) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
 		{
-			vars->pers->rays[0]->points[i].x = x;
-			vars->pers->rays[0]->points[i].y = y;
+
 			vars->pers->rays[0]->points[i].dir = 0;
 			calc_rot(&x, &y, vars, angles);
 		}
-		//printf("%d %f %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
+			vars->pers->rays[0]->points[i].y = round(y);
+			vars->pers->rays[0]->points[i].x = round(x);
+
+	//	printf("%d %f %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
 		//usleep(100000);
 		i++;
 		vars->bo = 1;
-		angles += 0.040;
+		angles += 0.04;
+	//	printf("angles: %f\n", angles);
 	}
+	printf("i: %d\n", i);
 }
 
 void	print(t_vars* vars)
@@ -84,7 +90,7 @@ void	print(t_vars* vars)
 
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
 	vars->pers->rays[0]->length = 0;
-	angles = 0.00;
+	angles = 0.00000;
 	i = 0;
 	while (angles <= 60)
 	{
@@ -98,7 +104,8 @@ void	print(t_vars* vars)
 		i++;
 		vars->bo = 1;
 		vars->pers->rays[0]->length++;
-		angles += 0.040;
+		angles += 0.04;
+	//	printf("angles: %f\n", angles);
 	}
 	stock(vars);
 	printf("i: %d\n", i);
