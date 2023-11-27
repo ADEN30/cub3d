@@ -64,7 +64,7 @@ static int  calculate_rays(t_vars *vars)
     int     nb_rays;
 
     nb_rays = define_wall(vars);
-    if (vars->mlx->width % nb_rays != 0)
+    if (vars->mlx->width % nb_rays  != 0)
         return ((vars->mlx->width / nb_rays) + 1);
     else
         return (vars->mlx->width / nb_rays);
@@ -80,7 +80,6 @@ void    show_vue(t_vars *vars)
     i = vars->mlx->width;
     x = 0;
     count = calculate_rays(vars);
-	printf("count: %d\n", count);
 	//vars->mlx = mlx_init(1500, 1500, "cub3d", true);
     if (vars->style->images->threed)
         mlx_delete_image(vars->mlx, vars->style->images->threed);

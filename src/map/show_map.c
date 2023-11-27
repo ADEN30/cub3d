@@ -26,8 +26,15 @@ int	which_case(char c, int *loc, t_vars *vars)
 		if (print_case(loc, vars, &(images->wall_image), vars->style->wall))
 		return (1);
 	}
+	if ((c == '0') && MAP == 1)
+	{
+		if (print_case(loc, vars, &(images->floor_image), vars->style->floor))
+		return (1);
+	}
 	else if (ft_strchr("NSWE", c))
 	{
+		if (print_case(loc, vars, &(images->floor_image), vars->style->floor))
+		return (1);
 		vars->pers = init_pers(loc[1] * DIMENSION + DIMENSION / 2,
 		loc[0] * DIMENSION + DIMENSION / 2,
 		find_case(vars->map->lines, loc[1], loc[0]), vars);

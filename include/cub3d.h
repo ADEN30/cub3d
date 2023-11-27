@@ -61,6 +61,11 @@ typedef struct	s_pers {
 typedef struct	s_map {
 	int		fd;
 	t_list	*lines;
+	int	est;
+	int	ouest;
+	int	nord;
+	int	sud;
+	int	lock;
 }	t_map;
 
 typedef struct	s_images {

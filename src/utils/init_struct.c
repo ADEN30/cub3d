@@ -8,6 +8,10 @@ t_map	*init_map(void)
 	if (!map)
 		return (NULL);
 	map->lines = NULL;
+	map->est = 0;
+	map->ouest = 0;
+	map->nord = 0;
+	map->sud = 0;
 	return (map);
 }
 
