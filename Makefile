@@ -12,6 +12,7 @@ SRCS	= src/main.c \
 		  src/raycasting/ray.c \
 		  src/show3d/define_wall.c \
 		  src/show3d/show.c \
+		  src/show3d/search.c \
 		  src/show3d/init.c \
 
 OBJS		= $(SRCS:.c=.o)

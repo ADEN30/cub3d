@@ -22,6 +22,12 @@
 #  define MAX_RAY 200
 # endif
 
+typedef struct s_dim {
+	double		x;
+	double		y;
+	int			dir;
+}	t_dim;
+
 typedef struct	s_point {
 	double		x;
 	double		y;
@@ -145,8 +151,10 @@ void		ft_raycasting(void *param);
 void		turn_camera(t_vars* vars);
 
 /*show3d*/
+int			define_value(t_vars *v, int i, int *j, int *count);
 int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
 
+int			ft_search(t_vars *v);
 #endif

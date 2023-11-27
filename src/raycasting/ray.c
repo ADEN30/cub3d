@@ -101,5 +101,5 @@ void	print(t_vars* vars)
 		angles += 0.040;
 	}
 	stock(vars);
-	printf("i: %d\n", i);
+	//printf("i: %d\n", i);
 }

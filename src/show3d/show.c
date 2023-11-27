@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/24 18:27:58 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:26:51 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void    wall_column(t_vars *vars, int x, double w_height, int i)
                 mlx_put_pixel(vars->style->images->threed, x, j,
                  get_rgba(0, 0, 0, 255));
         }
-        else if (vars->persV->rays[0]->points[i].dir == 5)
+        else if (vars->pers->rays[0]->points[i].dir == 5)
                 mlx_put_pixel(vars->style->images->threed, x, j,
-                 get_rgba(0, 0, 0, 255));
+                 get_rgba(100, 100, 100, 255));
     }
 }
 
@@ -59,15 +59,131 @@ static double   calculate_height(t_vars *vars, int i)
     return (w_height);
 }
 
-static int  calculate_rays(t_vars *vars)
+static int  calculate_tab_length2(int j)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while (i < j)
+    {
+        count++;
+        i++;
+    }
+    return (count);
+} 
+
+static int  calculate_tab_length(int i1, int i2)
+{
+    int count;
+
+    count = 0;
+    while (i1 < i2)
+    {
+        count++;
+        i1++;
+    }
+    return (count);
+} 
+
+static void init_dim(t_dim *dim, int count)
+{
+    int i;
+
+    i = 0;
+    dim = malloc(sizeof(t_dim) * count);
+    while (i < count)
+    {
+        dim[i].x = 0;
+        dim[i].y = 0;
+        dim[i].dir = 0;
+        i++;
+    }
+}
+
+static t_dim *create_tab(t_vars *v, t_dim *dim, int count)
+{
+    int i;
+    int j;
+
+	i = 0;
+    j = 0;
+    while (i < count)
+    {
+        if (v->pers->rays[0]->points[i].x != 0
+            || v->pers->rays[0]->points[i].y != 0)
+        {
+            dim[j].x = v->pers->rays[0]->points[i].x;
+            dim[j].y = v->pers->rays[0]->points[i].y;
+            dim[j].dir = v->pers->rays[0]->points[i].dir;
+            j++;
+        }
+        i++;
+    }
+    return (dim);
+}
+
+int value_test(t_vars *v, int i, int *j, int *count)
+{
+    int k;
+
+    k = 0;
+    *j = i + 1;
+    while ( *j < v->pers->rays[0]->length
+        && (int)v->pers->rays[0]->points[i].x == (int)v->pers->rays[0]->points[*j].x
+        && (int)v->pers->rays[0]->points[i].y == (int)v->pers->rays[0]->points[*j].y
+        )
+    {
+        v->pers->rays[0]->points[*j].x = 0;
+        v->pers->rays[0]->points[*j].y = 0;
+        v->pers->rays[0]->points[*j].coeff = 0;
+        (*j)++;
+        (*count)++;
+        k++;
+    }
+    if (*j == v->pers->rays[0]->length)
+    {
+        *j = k;
+        return (-1);
+    }
+    return (*j);
+}
+
+static int  calculate_rays(t_vars *v)
 {
     int     nb_rays;
+    int     i;
+    int     j;
+    int     count;
+    t_dim   *dim;
 
-    nb_rays = define_wall(vars);
-    if (vars->mlx->width % nb_rays != 0)
-        return ((vars->mlx->width / nb_rays) + 1);
+    i = 0;
+    j = 0;
+    dim = NULL;
+    nb_rays = define_wall(v);
+    printf("Nb rays = %d\n", nb_rays);
+    count = ft_search(v);
+    printf("count = %d\n", count);
+    while (i < v->pers->rays[0]->length)
+    {
+        if (value_test(v, i, &j, &count) == -1)
+        {
+            count += calculate_tab_length2(j);
+            break ;
+        }
+        else if (((int)v->pers->rays[0]->points[i].x == (int)v->pers->rays[0]->points[j].x))
+            count += calculate_tab_length(v->pers->rays[0]->points[i].x, v->pers->rays[0]->points[j].x);
+        else if (((int)v->pers->rays[0]->points[i].y == (int)v->pers->rays[0]->points[j].y))
+            count += calculate_tab_length(v->pers->rays[0]->points[i].y, v->pers->rays[0]->points[j].y);
+        i = j;
+    }
+    init_dim(dim, count);
+    dim = create_tab(v, dim, count);
+    if (v->mlx->width % nb_rays != 0)
+        return ((v->mlx->width / nb_rays) + 1);
     else
-        return (vars->mlx->width / nb_rays);
+        return (v->mlx->width / nb_rays);
 }
 
 void    show_vue(t_vars *vars)
@@ -80,7 +196,6 @@ void    show_vue(t_vars *vars)
     i = vars->mlx->width;
     x = 0;
     count = calculate_rays(vars);
-	//vars->mlx = mlx_init(1500, 1500, "cub3d", true);
     if (vars->style->images->threed)
         mlx_delete_image(vars->mlx, vars->style->images->threed);
     vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);

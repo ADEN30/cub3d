@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   define_wall.c                                      :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:18:39 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/27 18:38:43 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/25 14:20:50 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,35 @@ static void define_NESW(t_vars *v, t_point **p, int i, int j)
     }
 }
 
-static void compensate_value(t_vars *v, int i, int j)
-{
-    int k;
-
-    k = j;
-    while (v->pers->rays[0]->points[j].x == v->pers->rays[0]->points[k].x
-        && v->pers->rays[0]->points[j].y == v->pers->rays[0]->points[k].y)
-        k++;
-    if (v->pers->rays[0]->points[j].x == v->pers->rays[0]->points[k].x)
-        v->pers->rays[0]->points[i].x = v->pers->rays[0]->points[j].x;
-    if (v->pers->rays[0]->points[j].y == v->pers->rays[0]->points[k].y)
-        v->pers->rays[0]->points[i].y = v->pers->rays[0]->points[j].y;
-}
-
-int define_value(t_vars *v, int i, int *j, int *count)
+static int define_value(t_vars *v, int i, int *j, int *count)
 {
     *j = i + 1;
     while ((int)v->pers->rays[0]->points[i].x == (int)v->pers->rays[0]->points[*j].x
         && (int)v->pers->rays[0]->points[i].y == (int)v->pers->rays[0]->points[*j].y)
     {
-        v->pers->rays[0]->points[*j].x = 0;
-        v->pers->rays[0]->points[*j].y = 0;
-        v->pers->rays[0]->points[*j].coeff = 0;
         (*j)++;
         (*count)++;
     }
+    //printf("i = %d j = %d\n", i, *j);
+    //printf("X= %d / %d | Y= %d / %d\n", (int)v->pers->rays[0]->points[i].x, (int)v->pers->rays[0]->points[*j].x, (int)v->pers->rays[0]->points[i].y, (int)v->pers->rays[0]->points[*j].y);
     if (*j >= v->pers->rays[0]->length)
         return (-1);
     return (*j);
 }
 
+static void compensate_value(t_vars *v, int i, int j)
+{
+    int k;
+
+    k = j;
+    while ((int)v->pers->rays[0]->points[j].x == (int)v->pers->rays[0]->points[k].x
+        && (int)v->pers->rays[0]->points[j].y == (int)v->pers->rays[0]->points[k].y)
+        k++;
+    if ((int)v->pers->rays[0]->points[j].x == (int)v->pers->rays[0]->points[k].x)
+        v->pers->rays[0]->points[i].x = v->pers->rays[0]->points[j].x;
+    if ((int)v->pers->rays[0]->points[j].y == (int)v->pers->rays[0]->points[k].y)
+        v->pers->rays[0]->points[i].y = v->pers->rays[0]->points[j].y;
+}
 
 int	define_wall(t_vars *vars)
 {
@@ -86,13 +84,8 @@ int	define_wall(t_vars *vars)
             || (((int)p[0][i].y == (int)p[0][j].y)
             && ((int)p[0][i].x != (int)p[0][j].x)))
                 define_NESW(vars, p, i, j);
+        //printf("dir = %d\n", vars->pers->rays[0]->points[i].dir);
         i = j;
-    } 
-    int k = -1;
-    while (++k < vars->pers->rays[0]->length)
-    {
-        if (vars->pers->rays[0]->points[k].x != 0 && vars->pers->rays[0]->points[k].y != 0)
-            printf("i = %d | x = %d | y = %d\n", k, (int)vars->pers->rays[0]->points[k].x, (int)vars->pers->rays[0]->points[k].y);
     }
     return (vars->pers->rays[0]->length - count);
 }
