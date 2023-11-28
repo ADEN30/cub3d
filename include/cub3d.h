@@ -26,7 +26,8 @@ typedef struct	s_point {
 	double		x;
 	double		y;
 	bool		enabled;
-	double		coeff;
+	double		wall_x;
+	double		wall_y;
 	int			dir;
 }	t_point;
 
@@ -162,5 +163,7 @@ int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
 void	create_vue(t_vars* vars);
+void display_tpoint(t_point* tab, int size);
+
 
 #endif

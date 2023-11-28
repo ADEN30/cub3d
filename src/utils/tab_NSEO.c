@@ -30,7 +30,7 @@ void	stock_EO(char* l1, int y, t_vars* vars)
 	{
 		if (l1[i] == '0' && l1[i + 1] == '1' && --vars->map->est > -1)
 		{
-			est[vars->map->est].x = i * vars->style->images->wall_image->width;
+			est[vars->map->est].x = (i + 1) * vars->style->images->wall_image->width;
 			est[vars->map->est].y = y * vars->style->images->wall_image->height;
 		}
 		if (l1[i] == '1' && l1[i + 1] == '0' && --vars->map->ouest > -1)
@@ -74,9 +74,9 @@ void	stock_NS(char* l1, char* l2, int y, t_vars* vars)
 		if (l1[i] == '0' && l2[i] == '1' && --vars->map->sud > -1)
 			{
 			sud[vars->map->sud].x = i * vars->style->images->wall_image->width;
-			sud[vars->map->sud].y = y * vars->style->images->wall_image->height;
+			sud[vars->map->sud].y =( y + 1) * vars->style->images->wall_image->height;
 		}
-		if (l1[i] == '1' && l1[i] == '0' && --vars->map->nord > -1)
+		if (l1[i] == '1' && l2[i] == '0' && --vars->map->nord > -1)
 		{
 			nord[vars->map->nord].x = i * vars->style->images->wall_image->width;
 			nord[vars->map->nord].y = y * vars->style->images->wall_image->height;
@@ -137,7 +137,7 @@ int	stock_NSEO(t_vars* vars)
 void display_tpoint(t_point* tab, int size)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < size)
 	{
@@ -157,6 +157,7 @@ int	create_NSEO(t_vars* vars)
 	y = 0;
 	while(old)
 	{
+	//	printf("%s    y : %d\n", (char*)old->content, y);
 		search_EO(old->content, vars);
 		if (new)
 		{
@@ -171,5 +172,13 @@ int	create_NSEO(t_vars* vars)
 	vars->map->size_n = vars->map->nord;
 	vars->map->size_s = vars->map->sud;
 	stock_NSEO(vars);
+//	printf("size_e: %d\n", vars->map->size_e);
+//	display_tpoint(vars->map->E, vars->map->size_e - 1);
+//	printf("size_o: %d\n", vars->map->size_o);
+//	display_tpoint(vars->map->O, vars->map->size_o - 1);
+//	printf("size_n: %d\n", vars->map->size_n);
+	display_tpoint(vars->map->N, vars->map->size_n - 1);
+//	printf("size_s: %d\n", vars->map->size_s);
+
 	return (1);
 }

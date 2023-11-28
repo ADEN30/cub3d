@@ -1,19 +1,26 @@
 #include "../../include/cub3d.h"
 
-int	test_wall(t_vars* param, double x, double y)
+int	test_wall(t_vars* vars, double x, double y, int j)
 {
 	size_t	i;
 	mlx_image_t*	wall;
 
 	i = 0;
-	wall = param->style->images->wall_image;
+	wall = vars->style->images->floor_image;
 	while (i < wall->count)
 	{
-		if ((x > wall->instances[i].x && x < wall->instances[i].x + wall->width && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
-			return (1);
+		if ((x >= wall->instances[i].x && x <= wall->instances[i].x + wall->width && y >= wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
+				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
+			}
+			return (0);
+		}
 		i++;
 	}
-	return (0);
+	return (1);
 
 }
 
@@ -49,25 +56,19 @@ void	stock(t_vars* vars)
 	angles = 0.00;
 	i = 0;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
-	while (angles <= 60)
+	while (angles <= 45)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
-		while (!test_wall(vars, x, y) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
+		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
 		{
-
-			vars->pers->rays[0]->points[i].dir = 0;
+			vars->pers->rays[0]->points[i].y = y;
+			vars->pers->rays[0]->points[i].x = x;
 			calc_rot(&x, &y, vars, angles);
 		}
-			vars->pers->rays[0]->points[i].y = round(y);
-			vars->pers->rays[0]->points[i].x = round(x);
-
-	//	printf("%d %f %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
-		//usleep(100000);
 		i++;
 		vars->bo = 1;
 		angles += 0.04;
-	//	printf("angles: %f\n", angles);
 	}
 	printf("i: %d\n", i);
 }
@@ -91,22 +92,22 @@ void	print(t_vars* vars)
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
 	vars->pers->rays[0]->length = 0;
 	angles = 0.00000;
-	i = 0;
-	while (angles <= 60)
+	i = -1;
+	while (angles <= 45)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
-		while (!test_wall(vars, x, y) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
 		{
 			mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
 			calc_rot(&x, &y, vars, angles);
 		}
-		i++;
 		vars->bo = 1;
 		vars->pers->rays[0]->length++;
 		angles += 0.04;
 	//	printf("angles: %f\n", angles);
 	}
+	printf("HERRRRRRRRRE\n");
 	stock(vars);
 	printf("i: %d\n", i);
 }
