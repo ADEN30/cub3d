@@ -159,7 +159,7 @@ void		ft_raycasting(void *param);
 void		turn_camera(t_vars* vars);
 
 /*show3d*/
-int			define_wall(t_vars *vars);
+char			define_wall(t_vars *vars, int i);
 int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
 void	create_vue(t_vars* vars);

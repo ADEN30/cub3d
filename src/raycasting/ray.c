@@ -38,9 +38,7 @@ void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 	}
 	angle_rad = (vars->turn + angles)*(M_PI/180);
 	x1 = (vars->pers->x ) + d1 * cos(angle_rad);
-//	printf("x1: %f, d1: %f angle: %d cos: %f result: %f\n", x1, d1, angles, cos(angle_rad), d1 * cos(angle_rad));
 	y1 = (vars->pers->y) - d1 * sin(angle_rad);
-//	printf("y1: %f\n", y1);
 	*x = x1;
 	*y = y1;
 	d1 += 1;
@@ -56,7 +54,7 @@ void	stock(t_vars* vars)
 	angles = 0.00;
 	i = 0;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
-	while (angles <= 45)
+	while (angles < 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
@@ -70,16 +68,6 @@ void	stock(t_vars* vars)
 		vars->bo = 1;
 		angles += 0.04;
 	}
-	printf("i: %d\n", i);
-}
-
-void	print(t_vars* vars)
-{
-	int	i;
-
-	i = 0;
-	while (i < vars->pers->rays[0]->length )
-		printf("%f\n", vars->pers->rays[0]->points[i++].x);
 }
 
  void	change_plan(t_vars* vars)
@@ -93,7 +81,7 @@ void	print(t_vars* vars)
 	vars->pers->rays[0]->length = 0;
 	angles = 0.00000;
 	i = -1;
-	while (angles <= 45)
+	while (angles < 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
@@ -105,9 +93,6 @@ void	print(t_vars* vars)
 		vars->bo = 1;
 		vars->pers->rays[0]->length++;
 		angles += 0.04;
-	//	printf("angles: %f\n", angles);
 	}
-	printf("HERRRRRRRRRE\n");
 	stock(vars);
-	printf("i: %d\n", i);
 }
