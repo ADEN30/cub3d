@@ -40,8 +40,8 @@ void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 static void test(t_vars **v, int i)
 {
 
-	(*v)->pers->rays[0]->points[i].x = (int)(*v)->pers->rays[0]->points[i].x;
-	(*v)->pers->rays[0]->points[i].y = (int)(*v)->pers->rays[0]->points[i].y;
+	//(*v)->pers->rays[0]->points[i].x = (int)(*v)->pers->rays[0]->points[i].x;
+	//(*v)->pers->rays[0]->points[i].y = (int)(*v)->pers->rays[0]->points[i].y;
 	(*v)->pers->rays[0]->points[i].dir = define_wall(v, i);
 }
 
@@ -66,8 +66,7 @@ void	stock(t_vars* vars)
 			calc_rot(&x, &y, vars, angles);
 		}
 		test(&vars, i);
-		printf("i= %d    %f    %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
-		//printf("i= %d dir=%d\n", i, vars->pers->rays[0]->points[i].dir);
+		//printf("i= %d    %f    %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
 		i++;
 		vars->bo = 1;
 		angles += 0.040;
