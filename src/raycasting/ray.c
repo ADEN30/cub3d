@@ -17,7 +17,7 @@ int	test_wall(t_vars* param, double x, double y)
 
 }
 
-void	calc_rot(double* x, double* y, t_vars* vars, int angles)
+void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 {
 	double	x1;
 	double	y1;
@@ -29,12 +29,20 @@ void	calc_rot(double* x, double* y, t_vars* vars, int angles)
 		d1 = 0;
 		vars->bo = 0;
 	}
-	angle_rad = round(vars->turn + angles)*M_PI/180;
+	angle_rad = round(vars->turn + angles) * M_PI / 180;
 	x1 = vars->pers->x + d1 * cos(angle_rad);
-	y1 = (vars->pers->y) - d1 * sin(angle_rad);	
+	y1 = vars->pers->y - d1 * sin(angle_rad);	
 	*x = x1;
 	*y = y1;
 	d1++;
+}
+
+static void test(t_vars **v, int i)
+{
+
+	(*v)->pers->rays[0]->points[i].x = (int)(*v)->pers->rays[0]->points[i].x;
+	(*v)->pers->rays[0]->points[i].y = (int)(*v)->pers->rays[0]->points[i].y;
+	(*v)->pers->rays[0]->points[i].dir = define_wall(v, i);
 }
 
 void	stock(t_vars* vars)
@@ -47,7 +55,7 @@ void	stock(t_vars* vars)
 	angles = 0.00;
 	i = 0;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
-	while (angles <= 60)
+	while (angles < 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
@@ -55,11 +63,11 @@ void	stock(t_vars* vars)
 		{
 			vars->pers->rays[0]->points[i].x = x;
 			vars->pers->rays[0]->points[i].y = y;
-			vars->pers->rays[0]->points[i].dir = 0;
 			calc_rot(&x, &y, vars, angles);
 		}
-		//printf("%d %f %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
-		//usleep(100000);
+		test(&vars, i);
+		printf("i= %d    %f    %f\n", i, vars->pers->rays[0]->points[i].x, vars->pers->rays[0]->points[i].y);
+		//printf("i= %d dir=%d\n", i, vars->pers->rays[0]->points[i].dir);
 		i++;
 		vars->bo = 1;
 		angles += 0.040;
@@ -86,7 +94,7 @@ void	print(t_vars* vars)
 	vars->pers->rays[0]->length = 0;
 	angles = 0.00;
 	i = 0;
-	while (angles <= 60)
+	while (angles < 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
