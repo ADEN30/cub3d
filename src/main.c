@@ -15,7 +15,6 @@ int	main(int argc, char *argv[])
 		return (free_vars(vars), system("leaks cub3d"), 1);
 	init_3d(vars);
 	change_plan(vars);
-	create_NSEO(vars);
 	create_vue(vars);
 	//mlx_loop_hook(vars->mlx, ft_raycasting, vars);
 	//if (MAP == 0)
