@@ -54,7 +54,7 @@ void	stock(t_vars* vars)
 	int			i;
 
 	angles = 0.00;
-	i = 0;
+	i = -1;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
 	while (angles < 60)
 	{

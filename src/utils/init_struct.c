@@ -23,13 +23,9 @@ t_images	*init_images(void)
 	if (!images)
 		return (NULL);
 	images->count_north = 0;
-	images->north = NULL;
 	images->count_south = 0;
-	images->south = NULL;
 	images->count_west = 0;
-	images->west = NULL;
 	images->count_east = 0;
-	images->east = NULL;
 	images->floor_image = NULL;
 	images->roof_image = NULL;
 	images->wall_image = NULL;
