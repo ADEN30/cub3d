@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 07:47:05 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/30 14:48:16 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:53:31 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ uint8_t	*get_pixel_east(t_vars *vars, double height, double x, int y, int i)
 	sleep(2);
 	px_ind = 0;
 	pos = (yi * vars->mlx->width + xi) * 3;
-	px_ind = vars->style->images->east_texture->pixels[pos * sizeof(uint32_t)];
+	px_ind = &((vars->style->images->east_texture->pixels)[pos * sizeof(uint32_t)]);
 	return (px_ind);
 }
 
