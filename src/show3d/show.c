@@ -6,40 +6,11 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/29 17:23:30 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/11/30 08:12:07 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-static char  check_dir(int i1, int i2, char c)
-{
-    if (c == 0)
-    {
-        if (i1 > i2)
-            return ('e');
-        else
-            return ('o');
-    }
-    else
-    {
-        if (i1 > i2)
-            return ('s');
-        else
-            return ('n');
-    }
-}
-
-char	define_wall(t_vars *vars, int i)
-{
-    if ((int)vars->pers->rays[0]->points[i].x % 32 == 0
-        || (int)(vars->pers->rays[0]->points[i].x + 1) % 32 == 0)
-        return (check_dir(vars->pers->rays[0]->points[i].x, vars->pers->x, 0));
-    else if ((int)vars->pers->rays[0]->points[i].y % 32 == 0
-        || (int)(vars->pers->rays[0]->points[i].y + 1) % 32 == 0)
-        return (check_dir(vars->pers->rays[0]->points[i].y, vars->pers->y, 1));
-    return (0);
-}
 
 static double	distance(double x1, double y1, double x2, double y2)
 {
@@ -57,50 +28,23 @@ static double   calculate_height(t_vars *vars, int i)
     return (w_height);
 }
 
-void select_color(char c, t_vars* vars, int x, int y)
-{
-	if (c == 'e')
-		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(103, 52, 71, 255));
-	else if (c == 'o')
- 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(163, 159, 146, 255));
-	else if (c == 's')
- 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(0, 0, 0, 255));
-	else if (c == 'n')
-		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(255, 255, 255, 255));
-}
-
 void	draw_height(t_vars* vars, double height, int x, int i)
 {
 	int	y;
-	int start;
-	
-	start = (vars->mlx->width - height) / 2;
-	y = start;
-	while (y < height + start)
-	{
-		select_color(define_wall(vars, i), vars, x, y);
-		y++;
+
+	y = -1;
+	define_wall(vars, i);
+	while (++y < vars->mlx->height - 1)
+    {
+        if (y <= vars->mlx->height / 2 - (height / 2))
+			mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(100, 150, 255, 255));
+        //if (y > (vars->mlx->height / 2 - (height / 2))
+            //&& y < (vars->mlx->height / 2 + (height / 2)))
+			//mlx_put_pixel(vars->style->images->threed, x, y, get_pixel(vars, height, x, y));
+        if (y >= vars->mlx->height / 2 + (height / 2))
+			mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(191, 170, 143, 255));
 	}
 }
-
-char	select_face(int face)
-{
-	static int	save;
-
-	save = face;
-	//if (face != 0)
-		//printf("face : %d\n", face);
-	if (face == 0)
-		return ('e');
-	else if (face == 1)
-		return ('s');
-	else if (face == 2)
-		return ('o');
-	else if (face == 3)
-		return ('n');	
-	else
-		return(select_face(save));
-} 
 
 void	create_vue(t_vars* vars)
 {

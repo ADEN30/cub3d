@@ -78,16 +78,16 @@ typedef struct	s_map {
 
 typedef struct	s_images {
 	mlx_texture_t	*north_texture;
-	mlx_image_t		**north;
+	mlx_image_t		*north;
 	int				count_north;
 	mlx_texture_t	*south_texture;
-	mlx_image_t		**south;
+	mlx_image_t		*south;
 	int				count_south;
 	mlx_texture_t	*west_texture;
-	mlx_image_t		**west;
+	mlx_image_t		*west;
 	int				count_west;
 	mlx_texture_t	*east_texture;
-	mlx_image_t		**east;
+	mlx_image_t		*east;
 	int				count_east;
 	mlx_image_t		*floor_image;
 	mlx_image_t		*roof_image;
@@ -159,11 +159,11 @@ void		ft_raycasting(void *param);
 void		turn_camera(t_vars* vars);
 
 /*show3d*/
-char			define_wall(t_vars *vars, int i);
+char		define_wall(t_vars *vars, int i);
 int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
-void	create_vue(t_vars* vars);
-void display_tpoint(t_point* tab, int size);
-
-
+void		create_vue(t_vars* vars);
+void 		display_tpoint(t_point* tab, int size);
+uint32_t	get_pixel(t_vars *vars, int p, int i, int height);
+uint8_t		*get_north_pixel(t_vars *vars, double height, int x, int y);
 #endif

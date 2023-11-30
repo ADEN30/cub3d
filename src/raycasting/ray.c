@@ -36,9 +36,11 @@ void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 		d1 = 0.000;
 		vars->bo = 0;
 	}
-	angle_rad = (vars->turn + angles)*(M_PI/180);
+	angle_rad = (vars->turn + angles) * (M_PI / 180);
 	x1 = (vars->pers->x ) + d1 * cos(angle_rad);
+//	printf("x1: %f, d1: %f angle: %d cos: %f result: %f\n", x1, d1, angles, cos(angle_rad), d1 * cos(angle_rad));
 	y1 = (vars->pers->y) - d1 * sin(angle_rad);
+//	printf("y1: %f\n", y1);
 	*x = x1;
 	*y = y1;
 	d1 += 1;
@@ -68,6 +70,15 @@ void	stock(t_vars* vars)
 		vars->bo = 1;
 		angles += 0.04;
 	}
+}
+
+void	print(t_vars* vars)
+{
+	int	i;
+
+	i = 0;
+	while (i < vars->pers->rays[0]->length )
+		printf("%f\n", vars->pers->rays[0]->points[i++].x);
 }
 
  void	change_plan(t_vars* vars)
