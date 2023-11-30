@@ -9,12 +9,13 @@ int	test_wall(t_vars* vars, double x, double y, int j)
 	wall = vars->style->images->floor_image;
 	while (i < wall->count)
 	{
-		if ((x >= wall->instances[i].x && x <= wall->instances[i].x + wall->width && y >= wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		if ((x > wall->instances[i].x && x <= wall->instances[i].x + wall->width && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
 		{
 			if (j > -1)
 			{
 				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d\n", (vars->pers->rays[0]->points[j].x), (vars->pers->rays[0]->points[j].y), wall->instances[i].x, wall->instances[i].y);
 			}
 			return (0);
 		}
@@ -56,14 +57,14 @@ void	stock(t_vars* vars)
 	angles = 0.00;
 	i = 0;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
-	while (angles <= 45)
+	while (angles <= 30)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
 		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
 		{
-			vars->pers->rays[0]->points[i].y = y;
-			vars->pers->rays[0]->points[i].x = x;
+			vars->pers->rays[0]->points[i].y = (y);
+			vars->pers->rays[0]->points[i].x = (x);
 			calc_rot(&x, &y, vars, angles);
 		}
 		i++;
@@ -93,13 +94,13 @@ void	print(t_vars* vars)
 	vars->pers->rays[0]->length = 0;
 	angles = 0.00000;
 	i = -1;
-	while (angles <= 45)
+	while (angles <= 30)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
-		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
+		while (!test_wall(vars, x, y, -1) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
 		{
-			mlx_put_pixel(vars->pers->rays[0]->img, x, y,  get_rgba(255, 0, 0, 255));
+			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
 			calc_rot(&x, &y, vars, angles);
 		}
 		vars->bo = 1;

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/28 17:39:27 by agallet          ###   ########.fr       */
+/*   Updated: 2023/11/30 19:42:44 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int  calculate_rays(t_vars *vars)
 
 	nb_rays = 0.0000;
     nb_rays = define_wall(vars);
-	printf("width : %d nb_rays: %f count ::::: %f\n", vars->mlx->width, nb_rays, (vars->mlx->width / nb_rays) + 1);
+//	printf("width : %d nb_rays: %f count ::::: %f\n", vars->mlx->width, nb_rays, (vars->mlx->width / nb_rays) + 1);
     if (vars->mlx->width % (int)nb_rays  != 0)
         return ((vars->mlx->width / nb_rays) + 1);
     else
@@ -119,7 +119,7 @@ int	search_tab(t_point pixel, t_point* map, int size, t_vars* vars)
 	int	i;
 	int	width;
 	int	height;
-	char	c;
+//	char	c;
 	
 	i = 0;
 	width = vars->style->images->wall_image->width;
@@ -129,8 +129,8 @@ int	search_tab(t_point pixel, t_point* map, int size, t_vars* vars)
 	{
 		if (pixel.x >= (map)[i].x && pixel.x <= (map)[i].x + width && pixel.y >= (map)[i].y && pixel.y <= (map)[i].y + height)
 		{
-			c = search_face(pixel.x, pixel.y, map[i], vars);
-			printf("%c\n", c);
+		//	c = search_face(pixel.x, pixel.y, map[i], vars);
+			//printf("%c\n", c);
 			return (1);
 		}
 		i++;
@@ -208,7 +208,7 @@ void	draw_height(t_vars* vars, double height, int x, char c)
 
 
 
-double	max_val(double* tab, int size)
+double	min_val(double* tab, int size)
 {
 	int	i;
 	int	j;
@@ -221,10 +221,13 @@ double	max_val(double* tab, int size)
 	values[2] = tab[2] + tab[3];
 	values[3] = tab[0] + tab[3];
 	val = values[i];
-	j = i;
+	if (size > 0)
+		j = i;
+	else
+		return (-1);
 	while (i < size)
 	{
-		printf("values[%d] : %f\n", i, round(values[i]));
+		//printf("values[%d] : %f\n", i, round(values[i]));
 		if (round(values[i]) < round(val))
 		{
 			val = values[i];
@@ -235,26 +238,9 @@ double	max_val(double* tab, int size)
 	return (j);
 }
 
-int	change_wall(double* tab)
-{
-	double values[4];
-
-	values[0] = tab[0] + tab[1];
-	values[1] = tab[1] + tab[2];
-	values[2] = tab[2] + tab[3];
-	values[3] = tab[0] + tab[3];
-	if (values[0] == values[1] && values[2] == values[3])
-		return (1);
-	return (0);
-}
-
 char	select_face(int face)
 {
-	static int	save;
 
-	save = face;
-	if (face != 0)
-		printf("face : %d\n", face);
 	if (face == 0)
 		return ('e');
 	else if (face == 1)
@@ -264,24 +250,59 @@ char	select_face(int face)
 	else if (face == 3)
 		return ('n');	
 	else
-		return(select_face(save));
-} 
+		return(0);
+}
+char	found_face(t_vars* vars, int i);
+char	change_wall(double* tab, int i)
+{
+	double values[4];
+	static	char	c;
+	static	int	start;
+
+
+	values[0] = round(tab[0] + tab[1]);
+	values[1] = round(tab[1] + tab[2]);
+	values[2] = round(tab[2] + tab[3]);
+	values[3] = round(tab[0] + tab[3]);
+	if ((values[0] == values[1] && values[2] == values[3] && c) ||
+		(values[0] == values[3] && values[1] == values[2] && c) ||
+		(values[0] == values[2] && values[1] == values[3] && c) || !start)
+	{
+		//printf("start : %d c : %c i: %d\n", start, c, i);
+		if (c && start)
+		{
+			c = 0;
+			start = 0;
+			printf("reset var : %d\n", i);
+		}
+		 if (!c && !start)
+		{
+			printf("old_face : %d %c \n", i, c);
+			c = select_face(min_val(tab, 4));
+			start = 1;
+		}
+	}
+	return (c);
+}
+
+ 
 
 char	found_face(t_vars* vars, int i)
 {
-	t_point pixel;
-	double	tab[4];
-	int	width;
-	int	height;
-	
-	width = vars->style->images->wall_image->width;
-	height = vars->style->images->wall_image->height;
-	pixel = vars->pers->rays[0]->points[i];
-	tab[0] = distance(pixel.x, pixel.y, pixel.wall_x, pixel.wall_y);
-	tab[1] = distance(pixel.x, pixel.y, pixel.wall_x, pixel.wall_y + height);	
-	tab[2] = distance(pixel.x, pixel.y, pixel.wall_x + width, pixel.wall_y + height);	
-	tab[3] = distance(pixel.x, pixel.y, pixel.wall_x + width, pixel.wall_y);
-	return (select_face(max_val(tab, 4)));
+	t_point pixel1;
+	t_point pixel2;
+	double	tab[2];
+
+	pixel1 = vars->pers->rays[0]->points[i];
+	pixel2 = vars->pers->rays[0]->points[i + 1];
+	tab[0] = distance(pixel1.x, pixel1.y, vars->pers->x, vars->pers->y);
+	tab[1] = distance(pixel2.x, pixel2.y, vars->pers->x, vars->pers->y);	
+	(void)tab;
+//	printf("pixel1.x : %f pixel1.y : %f\n", pixel1.x, pixel1.y);
+//	printf("pixel2.x : %f pixel2.y : %f\n", pixel2.x, pixel2.y);
+//	printf("result.x : %f pixel2.y : %f\n", sqrt(pow(pixel2.x - pixel1.x, 2)), sqrt(pow(pixel2.y - pixel1.y, 2)));
+//	printf("1 : %f 2 : %f\n", tab[0], tab[1]);
+	return ('n');
 }
 
 void	create_vue(t_vars* vars)
@@ -298,7 +319,7 @@ void	create_vue(t_vars* vars)
     vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	while (x < vars->mlx->width)
 	{
-		while (i < vars->pers->rays[0]->length)
+		while (i < vars->pers->rays[0]->length - 1)
 		{
 			height = calculate_height(vars, i);
 			c = found_face(vars, i);
