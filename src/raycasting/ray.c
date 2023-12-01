@@ -11,39 +11,25 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 	y = round(y);
 	while (i < wall->count)
 	{
-		if ((x == wall->instances[i].x && y == wall->instances[i].y) ||
-			(x == wall->instances[i].x && y == wall->instances[i].y + wall->height) ||
-			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y) ||
-			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y + wall->height))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x ;
-				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y ;
-				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
-			}
-			return (1);
-		}
-	else if ((x == wall->instances[i].x && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		if ((x == wall->instances[i].x && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
 		{
 			if (j > -1)
 			{
 				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 'e';
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
-		}
+		}	
 		else if ((x == wall->instances[i].x + wall->width && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
 		{
 			if (j > -1)
 			{
-				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
+				vars->pers->rays[0]->points[j].x = wall->instances[i].x + wall->width;
 				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 'o';
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -54,7 +40,7 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 's';
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -62,13 +48,28 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 		{
 			if (j > -1)
 			{
-				vars->pers->rays[0]->points[j].x = x;
-				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
+				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
+				vars->pers->rays[0]->points[j].y = wall->instances[i].y + wall->height;
 				vars->pers->rays[0]->points[j].a = 'n';
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
+		else if ((x == wall->instances[i].x && y == wall->instances[i].y) ||
+			(x == wall->instances[i].x && y == wall->instances[i].y + wall->height) ||
+			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y) ||
+			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y + wall->height))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x ;
+				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y ;
+				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
+			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			}
+			return (1);
+		}
+
 
 		i++;
 	}
@@ -108,7 +109,7 @@ void	stock(t_vars* vars)
 	angles = 0.00;
 	i = 0;
 	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
-	while (angles <= 30)
+	while (angles <= 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
@@ -145,7 +146,7 @@ void	print(t_vars* vars)
 	vars->pers->rays[0]->length = 0;
 	angles = 0.00000;
 	i = -1;
-	while (angles <= 30)
+	while (angles <= 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
