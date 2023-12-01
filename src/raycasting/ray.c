@@ -1,27 +1,78 @@
 #include "../../include/cub3d.h"
 
-int	test_wall(t_vars* vars, double x, double y, int j)
+int	test_wall(t_vars* vars,  double x, double y, int j)
 {
 	size_t	i;
 	mlx_image_t*	wall;
 
 	i = 0;
-	wall = vars->style->images->floor_image;
+	wall = vars->style->images->wall_image;
+	x = round(x);
+	y = round(y);
 	while (i < wall->count)
 	{
-		if ((x > wall->instances[i].x && x <= wall->instances[i].x + wall->width && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		if ((x == wall->instances[i].x && y == wall->instances[i].y) ||
+			(x == wall->instances[i].x && y == wall->instances[i].y + wall->height) ||
+			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y) ||
+			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y + wall->height))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x ;
+				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y ;
+				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			}
+			return (1);
+		}
+	else if ((x == wall->instances[i].x && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
+				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
+				vars->pers->rays[0]->points[j].a = 'e';
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			}
+			return (1);
+		}
+		else if ((x == wall->instances[i].x + wall->width && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
+				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
+				vars->pers->rays[0]->points[j].a = 'o';
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			}
+			return (1);
+		}
+		else if ((y == wall->instances[i].y && x > wall->instances[i].x && x < wall->instances[i].x + wall->width))
 		{
 			if (j > -1)
 			{
 				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
-				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
-				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d\n", (vars->pers->rays[0]->points[j].x), (vars->pers->rays[0]->points[j].y), wall->instances[i].x, wall->instances[i].y);
+				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
+				vars->pers->rays[0]->points[j].a = 's';
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
-			return (0);
+			return (1);
 		}
+		else if ((y == wall->instances[i].y + wall->height && x > wall->instances[i].x && x < wall->instances[i].x + wall->width))
+		{
+			if (j > -1)
+			{
+				vars->pers->rays[0]->points[j].x = x;
+				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
+				vars->pers->rays[0]->points[j].a = 'n';
+				printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
+			}
+			return (1);
+		}
+
 		i++;
 	}
-	return (1);
+	return (0);
 
 }
 

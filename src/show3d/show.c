@@ -319,10 +319,10 @@ void	create_vue(t_vars* vars)
     vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	while (x < vars->mlx->width)
 	{
-		while (i < vars->pers->rays[0]->length - 1)
+		while (i < vars->pers->rays[0]->length)
 		{
 			height = calculate_height(vars, i);
-			c = found_face(vars, i);
+			c = vars->pers->rays[0]->points[i].a;
 			draw_height(vars, height, x, c);
 			i++;
 			break ;

@@ -28,7 +28,8 @@ typedef struct	s_point {
 	bool		enabled;
 	double		wall_x;
 	double		wall_y;
-	int			dir;
+	char		a;
+	int		dir;
 }	t_point;
 
 typedef struct	s_ray {
