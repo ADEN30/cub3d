@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/30 14:12:40 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:23:49 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,14 @@ void	draw_height(t_vars* vars, double height, int x, int i)
 
 	y = -1;
 	define_wall(&vars, i);
-	//printf("dir = %c\n", vars->pers->rays[0]->points[i].dir);
-	//sleep(3);
+	//printf("i = %d dir = %c\n", i, vars->pers->rays[0]->points[i].dir);
 	while (++y < vars->mlx->height - 1)
     {
-        if (y <= vars->mlx->height / 2 - (height / 2))
+        if (y < vars->mlx->height / 2 - (height / 2))
 			mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(100, 150, 255, 255));
-        if (y > (vars->mlx->height / 2 - (height / 2))
+        if (y >= (vars->mlx->height / 2 - (height / 2))
             && y < (vars->mlx->height / 2 + (height / 2)))
-			mlx_put_pixel(vars->style->images->threed, x, y, get_pixel(vars, height, x, y, i));
+			mlx_put_pixel(vars->style->images->threed, x, y, get_pixel(vars, height, y, i));
         if (y >= vars->mlx->height / 2 + (height / 2))
 			mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(191, 170, 143, 255));
 	}

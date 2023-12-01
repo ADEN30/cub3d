@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 09:18:39 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/30 14:22:50 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:23:14 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	define_wall(t_vars **vars, int i)
         || (int)((*vars)->pers->rays[0]->points[i].y + 1) % 32 == 0)
         && ((int)(*vars)->pers->rays[0]->points[i].x % 32 == 0
         || (int)((*vars)->pers->rays[0]->points[i].x + 1) % 32 == 0))
-        (*vars)->pers->rays[0]->points[i].dir = 0;
+        (*vars)->pers->rays[0]->points[i].dir = 'n';
     else if ((int)(*vars)->pers->rays[0]->points[i].x % 32 == 0
         || (int)((*vars)->pers->rays[0]->points[i].x + 1) % 32 == 0)
         (*vars)->pers->rays[0]->points[i].dir = check_dir((*vars)->pers->rays[0]->points[i].x, (*vars)->pers->x, 0);

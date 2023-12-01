@@ -160,6 +160,6 @@ int			init_3d(t_vars *vars);
 void		show_vue(t_vars *vars);
 void		create_vue(t_vars* vars);
 void 		display_tpoint(t_point* tab, int size);
-uint32_t	get_pixel(t_vars *vars, int height, int x, int y, int i);
-uint8_t		*get_north_pixel(t_vars *vars, double height, int x, int y);
+uint32_t	get_pixel(t_vars *vars, int w_height, int y, int i);
+
 #endif

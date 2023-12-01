@@ -6,58 +6,90 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 07:47:05 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/30 14:53:31 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:58:05 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-uint8_t	*get_pixel_east(t_vars *vars, double height, double x, int y, int i)
+uint8_t	*get_pixel_north(t_vars *vars, double w_height, double y, int i)
 {
-	double		xi;
-	double		yi;
-	int			pos;
-	uint8_t		*px_ind;
+	double	x_pixel_t;
+	double	y_pixel_t;
+	int		pixel_position_t;
+	uint8_t	*pixel_color;
 
-	(void)y;
-	printf("x = %f\n", x);
-	printf("y = %d\n", y);
-	//i = ((double)(vars->style->images->east_texture->height % 32) / height) * x;
-	//j = y / height * (1500 / );
-	xi = vars->pers->rays[0]->points[i].x / 32 * vars->mlx->width;
-	yi = 0; 
-	printf("i = %f j = %f\n", xi, yi);
-	sleep(2);
-	px_ind = 0;
-	pos = (yi * vars->mlx->width + xi) * 3;
-	px_ind = &((vars->style->images->east_texture->pixels)[pos * sizeof(uint32_t)]);
-	return (px_ind);
+	x_pixel_t = ((double)vars->style->images->north_texture->height / w_height) * y;
+	y_pixel_t = (double)vars->style->images->north_texture->width / 10 * ((int)vars->pers->rays[0]->points[i].x % 10);
+	pixel_position_t = ((int)x_pixel_t * vars->style->images->north_texture->width + (int)y_pixel_t);
+	pixel_color = &((vars->style->images->north_texture->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	return (pixel_color);
 }
 
-uint32_t	get_pixel(t_vars *vars, int height, int x, int y, int i)
+uint8_t	*get_pixel_south(t_vars *vars, double w_height, double y, int i)
 {
-	//int		r;
-	//int		g;
-	//int		b;
+	double	x_pixel_t;
+	double	y_pixel_t;
+	int		pixel_position_t;
+	uint8_t	*pixel_color;
+
+	x_pixel_t = ((double)vars->style->images->south_texture->height / w_height) * y;
+	y_pixel_t = (double)vars->style->images->south_texture->width / 10 * ((int)vars->pers->rays[0]->points[i].x % 10);
+	y_pixel_t = 10 - ((int)vars->pers->rays[0]->points[i].x % 10);
+	pixel_position_t = ((int)x_pixel_t * vars->style->images->south_texture->width + (int)y_pixel_t);
+	pixel_color = &((vars->style->images->south_texture->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	return (pixel_color);
+}
+
+uint8_t	*get_pixel_east(t_vars *vars, double w_height, double y, int i)
+{
+	double	x_pixel_t;
+	double	y_pixel_t;
+	int		pixel_position_t;
+	uint8_t	*pixel_color;
+
+	x_pixel_t = ((double)vars->style->images->east_texture->height / w_height) * y;
+	y_pixel_t = (double)vars->style->images->east_texture->width / 10 * ((int)vars->pers->rays[0]->points[i].y % 10);
+	pixel_position_t = ((int)x_pixel_t * vars->style->images->east_texture->width + (int)y_pixel_t);
+	pixel_color = &((vars->style->images->east_texture->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	return (pixel_color);
+}
+
+uint8_t	*get_pixel_west(t_vars *vars, double w_height, double y, int i)
+{
+	double	x_pixel_t;
+	double	y_pixel_t;
+	int		pixel_position_t;
+	uint8_t	*pixel_color;
+
+	x_pixel_t = ((double)vars->style->images->west_texture->height / w_height) * y;
+	y_pixel_t = (double)vars->style->images->west_texture->width / 10 * ((int)vars->pers->rays[0]->points[i].y % 10);
+	pixel_position_t = ((int)x_pixel_t * vars->style->images->west_texture->width + (int)y_pixel_t);
+	pixel_color = &((vars->style->images->west_texture->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	return (pixel_color);
+}
+
+uint32_t	get_pixel(t_vars *vars, int w_height, int y, int i)
+{
+	int		r;
+	int		g;
+	int		b;
 	uint8_t	*pixel;
 
-	//y = vars->mlx->height - (height / 2);
-		pixel = get_pixel_east(vars, height, x, y, i);
-	//r = *(pixel++);
-	//g = *(pixel++);
-	//b = *(pixel++);
-	(void)i;
-	(void)y;
-	(void)height;
-	(void)x;
-	//if (vars->pers->rays[0]->points[i].dir == 'n')
-		//return (get_rgba(100, 100, 100, 255));
-	//else if (vars->pers->rays[0]->points[i].dir == 's')
-		//return (get_rgba(255, 0, 0, 255));
-	//else if (vars->pers->rays[0]->points[i].dir == 'e')
-		//return (get_rgba(0, 255, 0, 255));
-	//else if (vars->pers->rays[0]->points[i].dir == 'o')
-		//return (get_rgba(0, 0, 255, 255));
-	//return (get_rgba(0, 0, 0, 255));
-	return (pixel);
+	pixel = NULL;
+	y = y - ((vars->mlx->height - w_height) / 2);
+	if (y == w_height)
+		y = y - 1;
+	if (vars->pers->rays[0]->points[i].dir == 'n')
+		pixel = get_pixel_north(vars, w_height, y, i);
+	else if (vars->pers->rays[0]->points[i].dir == 's')
+		pixel = get_pixel_south(vars, w_height, y, i);
+	else if (vars->pers->rays[0]->points[i].dir == 'e')
+		pixel = get_pixel_east(vars, w_height, y, i);
+	else if (vars->pers->rays[0]->points[i].dir == 'o')
+		pixel = get_pixel_west(vars, w_height, y, i);
+	r = *(pixel++);
+	g = *(pixel++);
+	b = *(pixel++);
+	return (get_rgba(r, g, b, 255));
 }
