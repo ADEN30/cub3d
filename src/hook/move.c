@@ -18,8 +18,10 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y - 10;
 		change_plan(vars);
-	//	create_vue(vars);
-	//	show_vue(vars);
+		create_vue(vars);
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
+
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) || mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
@@ -27,8 +29,10 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y + 10;
 		change_plan(vars);
-	//	create_vue(vars);
-	//	show_vue(vars);
+		create_vue(vars);
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
+
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
@@ -36,8 +40,10 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x - 10;
 		change_plan(vars);
-	//	create_vue(vars);
-	//	show_vue(vars);
+		create_vue(vars);
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
+
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
@@ -45,8 +51,10 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x + 10;
 		change_plan(vars);
-	//	create_vue(vars);
-	//	show_vue(vars);
+		create_vue(vars);
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
+
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
@@ -55,7 +63,9 @@ void	ft_hook_move(void* param)
 		vars->turn += 1;	
 		change_plan(vars);
 		create_vue(vars);
-	//	show_vue(vars);
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
+
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -64,7 +74,9 @@ void	ft_hook_move(void* param)
 		vars->turn -= 1 ;	
 		change_plan(vars);
 		create_vue(vars);
-	//	show_vue(vars);
-	}
+		if (&vars->pers->rays[0]->points)
+			free(vars->pers->rays[0]->points);
 
+	}
+	
 }

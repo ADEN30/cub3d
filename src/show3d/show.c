@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/11/30 19:42:44 by agallet          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:31:10 by agallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,11 +183,11 @@ char	found_wall(t_vars* vars, int i)
 void select_color(char c, t_vars* vars, int x, int y)
 {
 	if (c == 'e')
-		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(103, 52, 71, 255));
+		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(0, 0, 0, 255));
 	else if (c == 'o')
- 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(163, 159, 146, 255));
+ 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(103, 52, 71, 255));
 	else if (c == 's')
- 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(0, 0, 0, 255));
+ 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(163, 159, 146, 255));
 	else if (c == 'n')
 		mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(255, 255, 255, 255));
 }
@@ -196,13 +196,20 @@ void	draw_height(t_vars* vars, double height, int x, char c)
 {
 	int	y;
 	int start;
+	int	save;
 	
 	start = (vars->mlx->width - height) / 2;
 	y = start;
-	while (y < height + start)
+	save = x;
+	while (x <= save + 1500 /720)
 	{
-		select_color(c, vars, x, y);
-		y++;
+		y = start;
+		while (y < height + start)
+		{
+			select_color(c, vars, x, y);
+			y++;
+		}
+		x++;
 	}
 }
 
@@ -319,11 +326,11 @@ void	create_vue(t_vars* vars)
     vars->style->images->threed = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	while (x < vars->mlx->width)
 	{
-		while (i < vars->pers->rays[0]->length)
+		while (i < 720)
 		{
 			height = calculate_height(vars, i);
 			c = vars->pers->rays[0]->points[i].a;
-			draw_height(vars, height, x, c);
+			draw_height(vars, height, x * (1500 / 720), c);
 			i++;
 			break ;
 		}

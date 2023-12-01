@@ -11,7 +11,7 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 	y = round(y);
 	while (i < wall->count)
 	{
-		if ((x == wall->instances[i].x && y > wall->instances[i].y && y <= wall->instances[i].y + wall->height))
+		if ((x == wall->instances[i].x && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
 		{
 			if (j > -1)
 			{
@@ -62,8 +62,8 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 		{
 			if (j > -1)
 			{
-				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x ;
-				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y ;
+				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x;
+				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y;
 				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
 			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
@@ -99,7 +99,7 @@ void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 	d1 += 1;
 }
 
-void	stock(t_vars* vars)
+void	change_plan(t_vars* vars)
 {
 	double		x;
 	double		y;
@@ -108,20 +108,23 @@ void	stock(t_vars* vars)
 
 	angles = 0.00;
 	i = 0;
-	vars->pers->rays[0]->points = malloc(sizeof(t_point) * vars->pers->rays[0]->length);
+	//mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
+	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 721);
 	while (angles <= 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
 		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
 		{
+			
+	//		mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
 			vars->pers->rays[0]->points[i].y = (y);
 			vars->pers->rays[0]->points[i].x = (x);
 			calc_rot(&x, &y, vars, angles);
 		}
 		i++;
 		vars->bo = 1;
-		angles += 0.04;
+		angles += 0.08333333333 ;
 	}
 	printf("i: %d\n", i);
 }
@@ -133,34 +136,4 @@ void	print(t_vars* vars)
 	i = 0;
 	while (i < vars->pers->rays[0]->length )
 		printf("%f\n", vars->pers->rays[0]->points[i++].x);
-}
-
- void	change_plan(t_vars* vars)
-{
-	double		x;
-	double		y;
-	double 		angles;
-	int			i;
-
-	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	vars->pers->rays[0]->length = 0;
-	angles = 0.00000;
-	i = -1;
-	while (angles <= 60)
-	{
-		x = vars->pers->x;
-		y = vars->pers->y;
-		while (!test_wall(vars, x, y, -1) && vars->x >= 0 && vars->x < vars->mlx->width && y > 0 && y < vars->mlx->height)
-		{
-			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
-			calc_rot(&x, &y, vars, angles);
-		}
-		vars->bo = 1;
-		vars->pers->rays[0]->length++;
-		angles += 0.04;
-	//	printf("angles: %f\n", angles);
-	}
-	printf("HERRRRRRRRRE\n");
-	stock(vars);
-	printf("i: %d\n", i);
 }
