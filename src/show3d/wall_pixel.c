@@ -35,7 +35,6 @@ uint8_t	*get_pixel_south(t_vars *vars, double w_height, double y, int i)
 
 	x_pixel_t = ((double)vars->style->images->south_texture->height / w_height) * y;
 	y_pixel_t = (double)vars->style->images->south_texture->width / 10 * ((int)vars->pers->rays[0]->points[i].x % 10);
-	y_pixel_t = 10 - ((int)vars->pers->rays[0]->points[i].x % 10);
 	pixel_position_t = ((int)x_pixel_t * vars->style->images->south_texture->width + (int)y_pixel_t);
 	pixel_color = &((vars->style->images->south_texture->pixels)[pixel_position_t * sizeof(uint32_t)]);
 	return (pixel_color);
