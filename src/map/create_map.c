@@ -57,11 +57,11 @@ int	read_map_file(t_vars *vars)
 
 	line = get_next_line(vars->map->fd);
 	if (!line || !ft_strlen(line))
-		return (print_error("Le fichier map est vide"));
+		return (print_error("Error : The map is empty"));
 	if (find_all_style(vars, &line))
-		return (print_error("Erreur de fichier "));
+		return (print_error("Error : Not a map file"));
 	if (create_list(vars, &line))
-		return (print_error("Erreur lors de la creation de la map"));
+		return (print_error("Error : 2D map could not be generated"));
 	if (test_map(vars))
 		return (1);
 	return (0);
@@ -70,16 +70,16 @@ int	read_map_file(t_vars *vars)
 int	create_map(int argc, char *argv[], t_vars *vars)
 {
 	if (argc != 2)
-		return (print_error("Nombre d'arguments incorrects"));
+		return (print_error("Error : Wrong number of arguments"));
 	if (badmap(argv[1]))
-		return (print_error("Seul les fichiers .cub sont acceptes"));
+		return (print_error("Error : Only available map format : *.cub"));
 	vars->map = init_map();
 	vars->style = init_style();
 	if (!vars->map || !vars->style)
-		return (print_error("Probleme dans la gestion de la memoire"));
+		return (print_error("Error : Not enough memory for map and/or textures allocation"));
 	vars->map->fd = open(argv[1], O_RDONLY);
 	if (vars->map->fd < 0)
-		return (print_error("Impossible d'ouvrir le fichier en argument"));
+		return (print_error("Error : Can not open the map"));
 	if (read_map_file(vars))
 		return (1);
 	return (0);

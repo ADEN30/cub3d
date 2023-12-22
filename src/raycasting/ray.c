@@ -18,7 +18,6 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 'e';
-			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}	
@@ -29,7 +28,6 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].x = wall->instances[i].x + wall->width;
 				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 'o';
-			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -40,7 +38,6 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
 				vars->pers->rays[0]->points[j].a = 's';
-			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -51,7 +48,6 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
 				vars->pers->rays[0]->points[j].y = wall->instances[i].y + wall->height;
 				vars->pers->rays[0]->points[j].a = 'n';
-			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -65,7 +61,6 @@ int	test_wall(t_vars* vars,  double x, double y, int j)
 				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x;
 				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y;
 				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
-			//	printf("x_pixel: %.2f y_pixel: %.2f x_wall: %d y_wall: %d orientation: %c\n", (x), (y), wall->instances[i].x, wall->instances[i].y, vars->pers->rays[0]->points[j].a);
 			}
 			return (1);
 		}
@@ -91,9 +86,7 @@ void	calc_rot(double* x, double* y, t_vars* vars, double angles)
 	}
 	angle_rad = (vars->turn + angles)*(M_PI/180);
 	x1 = (vars->pers->x ) + d1 * cos(angle_rad);
-//	printf("x1: %f, d1: %f angle: %d cos: %f result: %f\n", x1, d1, angles, cos(angle_rad), d1 * cos(angle_rad));
 	y1 = (vars->pers->y) - d1 * sin(angle_rad);
-//	printf("y1: %f\n", y1);
 	*x = x1;
 	*y = y1;
 	d1 += 1;
@@ -107,26 +100,25 @@ void	change_plan(t_vars* vars)
 	int			i;
 
 	angles = 0.00;
-	i = 0;
-	//mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 721);
-	while (angles <= 60)
+	i = 599;
+	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
+	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 600);
+	while (angles < 60)
 	{
 		x = vars->pers->x;
 		y = vars->pers->y;
 		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
 		{
 			
-	//		mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
+			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
 			vars->pers->rays[0]->points[i].y = (y);
 			vars->pers->rays[0]->points[i].x = (x);
 			calc_rot(&x, &y, vars, angles);
 		}
-		i++;
+		i--;
 		vars->bo = 1;
-		angles += 0.08333333333 ;
+		angles += 0.1 ;
 	}
-	printf("i: %d\n", i);
 }
 
 void	print(t_vars* vars)

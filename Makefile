@@ -4,14 +4,12 @@ SRCS	= src/main.c \
 		  src/utils/free_all.c \
 		  src/utils/init_struct.c \
 		  src/utils/tools.c \
-		  src/utils/tab_NSEO.c \
 		  src/map/create_map.c \
 		  src/map/show_map.c \
 		  src/style/color.c \
 		  src/style/find_style.c \
 		  src/hook/move.c \
 		  src/raycasting/ray.c \
-		  src/show3d/define_wall.c \
 		  src/show3d/show.c \
 		  src/show3d/init.c \
 

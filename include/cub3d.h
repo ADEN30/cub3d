@@ -15,7 +15,7 @@
 # endif
 
 # ifndef DIMENSION
-#  define DIMENSION 32
+#  define DIMENSION 16
 # endif
 
 # ifndef MAX_RAY
@@ -80,16 +80,12 @@ typedef struct	s_map {
 typedef struct	s_images {
 	mlx_texture_t	*north_texture;
 	mlx_image_t		**north;
-	int				count_north;
 	mlx_texture_t	*south_texture;
 	mlx_image_t		**south;
-	int				count_south;
 	mlx_texture_t	*west_texture;
 	mlx_image_t		**west;
-	int				count_west;
 	mlx_texture_t	*east_texture;
 	mlx_image_t		**east;
-	int				count_east;
 	mlx_image_t		*floor_image;
 	mlx_image_t		*roof_image;
 	mlx_image_t		*wall_image;

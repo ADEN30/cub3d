@@ -22,7 +22,7 @@ uint32_t	value_rgb(char *line, t_vars *vars)
 	value = ft_atoi(line);
 	if (value > 255)
 	{
-		print_error("Les valeurs de couleurs sont incorrectes\n");
+		print_error("Incorrect color values\n");
 		free_vars(vars);
 		exit(1);
 	}
@@ -46,16 +46,12 @@ int	put_pixels(mlx_image_t *img, uint32_t color)
 	unsigned int	x;
 	unsigned int	y;
 
-	x = 0;
-	while (x < img->width)
+	x = -1;
+	while (++x < img->width)
 	{
-		y = 0;
-		while (y < img->height)
-		{
+		y = -1;
+		while (++y < img->height)
 			mlx_put_pixel(img, x, y, color);
-			y++;
-		}
-		x++;
 	}
 	return (0);
 }

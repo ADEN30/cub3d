@@ -8,10 +8,10 @@ int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
 		if (!*img)
 			return (1);
 	}
+	printf("loc[0] = %d  loc[1] = %d\n", loc[0], loc[1]);
 	if (mlx_image_to_window(vars->mlx, *img, loc[1] * (*img)->width, loc[0]
 		* (*img)->height) == -1)
 		return (1);
-	//mlx_set_instance_depth((*img)->instances, 1);
 	put_pixels(*img, color);
 	return (0);
 }
@@ -35,8 +35,8 @@ int	which_case(char c, int *loc, t_vars *vars)
 	{
 		if (print_case(loc, vars, &(images->floor_image), vars->style->floor))
 		return (1);
-		vars->pers = init_pers(loc[1] * DIMENSION + DIMENSION / 2,
-		loc[0] * DIMENSION + DIMENSION / 2,
+		vars->pers = init_pers(loc[1] * DIMENSION + (DIMENSION / 2),
+		loc[0] * DIMENSION + (DIMENSION / 2),
 		find_case(vars->map->lines, loc[1], loc[0]), vars);
 	}
 	return (0);
@@ -55,7 +55,7 @@ int	show_map(t_vars *vars)
 		while (find_case(vars->map->lines, loc[1], loc[0]))
 		{
 			if (which_case(c, loc, vars))
-				return (printf("Error print case\n"), 1);
+				return (printf("Error : print case\n"), 1);
 			loc[1]++;
 			c = find_case(vars->map->lines, loc[1], loc[0]);
 		}

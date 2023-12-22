@@ -6,21 +6,21 @@ static int	case_accept(t_list *list, int x, int y)
 
 	c = find_case(list, x, y);
 	if (!ft_strchr("01NSEW ", c))
-		return (print_error("La carte ne peut contenir que 01NSEW"));
+		return (print_error("Error : The map can not contain anything other than '01NSEW' characters"));
 	if (ft_strchr("0NSEW", c))
 	{
 		if (!ft_strchr("01NSEW", find_case(list, x - 1, y))
 			|| (x == 0 && ft_strchr("0NSEW", c)))
-			return (print_error("La carte n'est pas ferme"));
+			return (print_error("Error : The map is not closed"));
 		if (!ft_strchr("01NSEW", find_case(list, x + 1, y))
 			|| (!find_case(list, x + 1, y) && ft_strchr("0NSEW", c)))
-			return (print_error("La carte n'est pas ferme"));
+			return (print_error("Error : The map is not closed"));
 		if ((!ft_strchr("01NSEW", find_case(list, x, y - 1)))
 			|| (y == 0 && ft_strchr("0NSEW", c)))
-			return (print_error("La carte n'est pas ferme"));
+			return (print_error("Error : The map is not closed"));
 		if ((!ft_strchr("01NSEW", find_case(list, x, y + 1)))
 			|| (!find_case(list, 0, y + 1) && ft_strchr("0NSEW", c)))
-			return (print_error("La carte n'est pas ferme"));
+			return (print_error("Error : The map is not closed"));
 	}
 	return (0);
 }
@@ -49,6 +49,6 @@ int	test_map(t_vars *vars)
 		y++;
 	}
 	if (start_point != 1)
-		return (print_error("La map doit avoir un unique point de depart"));
+		return (print_error("Error : The map contains more than one Character position"));
 	return (0);
 }
