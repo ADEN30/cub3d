@@ -21,7 +21,7 @@ NAME		= cub3d
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror -D MAP=1
+CFLAGS		= -Wall -Wextra -Werror -fsanitize=address -D MAP=1
 
 LIBS		= libft/libft.a MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   show.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: jmathieu <jmathieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:05:36 by jmathieu          #+#    #+#             */
-/*   Updated: 2023/12/22 16:32:57 by jmathieu         ###   ########.fr       */
+/*   Updated: 2023/12/22 18:03:23 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_height(t_vars* vars, double height, int x, char c)
 	//while (i-- > vars->mlx->height - height / 2)
 		//mlx_put_pixel(vars->style->images->threed, x, y, get_rgba(100, 150, 255, 255));
 	save = x;
-	while (x <= save + 1500 / 600)
+	while (x < save + 1500 / 600)
 	{
 		y = start;
 		while (y < height + start)
