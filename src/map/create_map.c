@@ -55,11 +55,20 @@ int	create_list(t_vars *vars, char **line)
 
 int check_assets(t_vars *vars)
 {
-	if (open(vars->style->north_path, O_RDONLY) != -1
-		&& open(vars->style->south_path, O_RDONLY) != -1
-		&& open(vars->style->east_path, O_RDONLY) != -1 
-		&& open(vars->style->west_path, O_RDONLY) != -1)
+	int fd[4];
+
+	fd[0] = open(vars->style->north_path, O_RDONLY);
+	fd[1] = open(vars->style->north_path, O_RDONLY);
+	fd[2] = open(vars->style->north_path, O_RDONLY);
+	fd[3] = open(vars->style->north_path, O_RDONLY);
+	if (fd[0] != -1 && fd[1] != -1 && fd[2] != -1 && fd[3] != -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		close(fd[2]);
+		close(fd[3]);
 		return (0);
+	}
 	return (1);	
 }
 
