@@ -142,6 +142,7 @@ int			print_error(char *str);
 
 /*style*/
 uint32_t	get_rgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a);
+int			find_style(char *line, t_vars *vars, int *check);
 int			find_all_style(t_vars *vars, char **line);
 
 /*test*/
@@ -158,9 +159,8 @@ void		turn_camera(t_vars* vars);
 /*show3d*/
 int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
-void		show_vue(t_vars *vars);
-void	create_vue(t_vars* vars);
-void display_tpoint(t_point* tab, int size);
+void		create_vue(t_vars* vars);
+void 		display_tpoint(t_point* tab, int size);
 
 
 #endif

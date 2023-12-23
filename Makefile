@@ -8,6 +8,7 @@ SRCS	= src/main.c \
 		  src/map/show_map.c \
 		  src/style/color.c \
 		  src/style/find_style.c \
+		  src/style/find_style_next.c \
 		  src/hook/move.c \
 		  src/raycasting/ray.c \
 		  src/show3d/show.c \

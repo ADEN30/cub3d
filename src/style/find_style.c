@@ -1,43 +1,5 @@
 #include "../../include/cub3d.h"
 
-static char	*define_image_path(char *line)
-{
-	int		len;
-	char	*ret;
-
-	while (*line == ' ')
-		line++;
-	len = ft_strlen(line);
-	line[len - 1] = 0;
-	ret = ft_strdup(line);
-	return (ret);
-}
-
-static uint32_t	define_color(char *line, t_vars *vars)
-{
-	int	value[3];
-	int	i;
-
-	i = 0;
-	while (*line == ' ')
-		line++;
-	if (check_line(line))
-	{
-		print_error("Les informations de la map sont incorrectes\n");
-		free_vars(vars);
-		exit(1);
-	}
-	while (i < 3)
-	{
-		value[i] = value_rgb(line, vars);
-		while (*line && *line != ',')
-			line++;
-		line++;
-		i++;
-	}
-	return (get_rgba(value[0], value[1], value[2], 255));
-}
-
 static int	check_config(t_vars *vars)
 {
 	if (!vars->style->north_path
@@ -50,38 +12,72 @@ static int	check_config(t_vars *vars)
 	return (0);
 }
 
-static int	find_style(char *line, t_vars *vars)
+int start_map(char *line)
 {
-	while (line && *line && *line == ' ')
-		line++;
-	if (!ft_strncmp(line, "NO ", 3))
-		vars->style->north_path = define_image_path(line + 2);
-	else if (!ft_strncmp(line, "SO ", 3))
-		vars->style->south_path = define_image_path(line + 2);
-	else if (!ft_strncmp(line, "WE ", 3))
-		vars->style->west_path = define_image_path(line + 2);
-	else if (!ft_strncmp(line, "EA ", 3))
-		vars->style->east_path = define_image_path(line + 2);
-	else if (!ft_strncmp(line, "F ", 2) && !vars->style->define_floor)
+	int i;
+	int j;
+
+	i = j = 0;
+	while (line[i] && line[i] != '\n')
 	{
-		vars->style->floor = define_color(line + 2, vars);
-		vars->style->define_floor = 1;
+		if (line[i] == ' ')
+			i++;
+		else if (line[i] == '1')
+		{
+			i++;
+			j++;
+		}
+		else
+			return (0);
 	}
-	else if (!ft_strncmp(line, "C ", 2) && !vars->style->define_roof)
-	{
-		vars->style->roof = define_color(line + 2, vars);
-		vars->style->define_roof = 1;
-	}
+	if (j != 0)
+		return (1);
 	return (0);
+}
+
+static int check_style(int *check)
+{
+	int i;
+
+	i = 0;
+	while (i < 6)
+	{
+		if (check[i] == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void init_check(int *check)
+{
+	check[0] = 0;
+	check[1] = 0;
+	check[2] = 0;
+	check[3] = 0;
+	check[4] = 0;
+	check[5] = 0;
 }
 
 int	find_all_style(t_vars *vars, char **line)
 {
-	while (*line && check_config(vars))
+	int	check[6];
+	init_check(check);
+	while (check_config(vars))
 	{
-		find_style(*line, vars);
-		free(*line);
-		*line = get_next_line(vars->map->fd);
+		if (*line)
+		{
+			if ((start_map(*line) && !check_style(check))
+				|| find_style(*line, vars, check))
+			{
+				free(*line);
+				return (1);
+			}
+			free(*line);
+			*line = get_next_line(vars->map->fd);
+		}
+		else
+			break;
 	}
 	return (0);
 }

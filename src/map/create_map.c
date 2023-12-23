@@ -31,7 +31,9 @@ int	create_list(t_vars *vars, char **line)
 	t_list	*lst;
 
 	lst = NULL;
-	while ((!*line || line_isprint(*line)))
+	if (!*line)
+		return (1);
+	while (line_isprint(*line))
 	{
 		free(*line);
 		*line = get_next_line(vars->map->fd);
@@ -51,6 +53,16 @@ int	create_list(t_vars *vars, char **line)
 	return (0);
 }
 
+int check_assets(t_vars *vars)
+{
+	if (open(vars->style->north_path, O_RDONLY) != -1
+		&& open(vars->style->south_path, O_RDONLY) != -1
+		&& open(vars->style->east_path, O_RDONLY) != -1 
+		&& open(vars->style->west_path, O_RDONLY) != -1)
+		return (0);
+	return (1);	
+}
+
 int	read_map_file(t_vars *vars)
 {
 	char	*line;
@@ -59,7 +71,9 @@ int	read_map_file(t_vars *vars)
 	if (!line || !ft_strlen(line))
 		return (print_error("Error : The map is empty"));
 	if (find_all_style(vars, &line))
-		return (print_error("Error : Not a map file"));
+		return (print_error("Error : Wrong information on the file"));
+	if (check_assets(vars))
+		return (print_error("Error : Wrong asset(s) path(s)"));
 	if (create_list(vars, &line))
 		return (print_error("Error : 2D map could not be generated"));
 	if (test_map(vars))
@@ -72,7 +86,7 @@ int	create_map(int argc, char *argv[], t_vars *vars)
 	if (argc != 2)
 		return (print_error("Error : Wrong number of arguments"));
 	if (badmap(argv[1]))
-		return (print_error("Error : Only available map format : *.cub"));
+		return (print_error("Error : No *.cub format"));
 	vars->map = init_map();
 	vars->style = init_style();
 	if (!vars->map || !vars->style)
