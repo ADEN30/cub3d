@@ -18,6 +18,10 @@
 #  define DIMENSION 16
 # endif
 
+# ifndef FOV
+#  define FOV 60
+# endif
+
 # ifndef MAX_RAY
 #  define MAX_RAY 200
 # endif
@@ -29,52 +33,27 @@ typedef struct	s_point {
 	double		wall_x;
 	double		wall_y;
 	char		a;
-	int		dir;
 }	t_point;
 
 typedef struct	s_ray {
 	mlx_image_t	*img;
 	t_point		*points;
-	int			n_rays;
-	int			count_points;
-	int			length;
-	int			col_x;
-	int			col_y;
-	int			distance_proj;
-	double		dir;
 	double		d1;
-	double		d2;
-	double		d3;
 	double		angle;
-	double		teta;
 	double		coefdir;
-	double		a_r1;
-	double		a_r2;
 }	t_ray;
 
 typedef struct	s_pers {
 	int			y;
 	int			x;
-	double		orientation;
+	double		angle;
 	t_ray		**rays;
-	int			ray_length;
+	//int			ray_length;
 }	t_pers;
 
 typedef struct	s_map {
 	int		fd;
 	t_list	*lines;
-	int	est;
-	int	ouest;
-	int	nord;
-	int	sud;
-	int	size_e;
-	int	size_o;
-	int	size_n;
-	int	size_s;
-	t_point*	E;
-	t_point*	O;
-	t_point*	S;
-	t_point*	N;
 }	t_map;
 
 typedef struct	s_images {
@@ -163,4 +142,5 @@ void		create_vue(t_vars* vars);
 void 		display_tpoint(t_point* tab, int size);
 
 
+void	start_plan(t_vars* vars);
 #endif

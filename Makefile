@@ -11,6 +11,7 @@ SRCS	= src/main.c \
 		  src/style/find_style_next.c \
 		  src/hook/move.c \
 		  src/raycasting/ray.c \
+		  src/raycasting/ray2.c \
 		  src/show3d/show.c \
 		  src/show3d/init.c \
 

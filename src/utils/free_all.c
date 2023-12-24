@@ -31,8 +31,8 @@ static void	free_style(t_style *style)
 	while (rays[i])
 	{
 		free(rays[i]);
-		if (rays[i]->count_points)
-			free(rays[i]->points);
+		//if (rays[i]->count_points)
+			//free(rays[i]->points);
 		i++;
 	}
 	free(rays);

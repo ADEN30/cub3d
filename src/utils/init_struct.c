@@ -8,10 +8,6 @@ t_map	*init_map(void)
 	if (!map)
 		return (NULL);
 	map->lines = NULL;
-	map->est = 0;
-	map->ouest = 0;
-	map->nord = 0;
-	map->sud = 0;
 	return (map);
 }
 
@@ -66,17 +62,9 @@ t_ray	**init_ray(t_vars *vars)
 		return (NULL);
 	rays[0] = malloc(sizeof(t_ray) * (2));
 	rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-	rays[0]->count_points = 0;
 	rays[0]->angle = 0.00;
-	rays[0]->length = 0;
 	rays[0]->coefdir = 0.00;
-	rays[0]->a_r1 = 0.00;
-	rays[0]->a_r2 = 0.00;
-	rays[0]->dir = 0.00;
 	rays[0]->d1 = 0.00;
-	rays[0]->d2 = 0.00;
-	rays[0]->d3 = 0.00;
-	rays[0]->n_rays = 0;
 	return (rays);
 }
 
@@ -94,17 +82,17 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 	if (y != -1)
 		pers->y = y;
 	pers->rays = init_ray(vars);
-	pers->ray_length = ft_lstsize(vars->map->lines) > largest_line(vars->map->lines) ?
-		ft_lstsize(vars->map->lines) * DIMENSION:
-		largest_line(vars->map->lines) * DIMENSION;
+	//pers->ray_length = ft_lstsize(vars->map->lines) > largest_line(vars->map->lines) ?
+		//ft_lstsize(vars->map->lines) * DIMENSION:
+		//largest_line(vars->map->lines) * DIMENSION;
 	if (c == 'S')
-		pers->orientation = 90;
+		pers->angle = 90;
 	else if (c == 'N')
-		pers->orientation = 270;
+		pers->angle = 270;
 	else if (c == 'W')
-		pers->orientation = 0;
+		pers->angle = 180;
 	else if (c == 'E')
-		pers->orientation = 180;
+		pers->angle = 0;
 	return (pers);
 }
 

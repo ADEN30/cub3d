@@ -49,6 +49,6 @@ int	test_map(t_vars *vars)
 		y++;
 	}
 	if (start_point != 1)
-		return (print_error("Error : The map contains more than one Character position"));
+		return (print_error("Error : The map contains more than one character position"));
 	return (0);
 }

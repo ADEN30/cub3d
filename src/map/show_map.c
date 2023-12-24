@@ -8,7 +8,6 @@ int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
 		if (!*img)
 			return (1);
 	}
-	printf("loc[0] = %d  loc[1] = %d\n", loc[0], loc[1]);
 	if (mlx_image_to_window(vars->mlx, *img, loc[1] * (*img)->width, loc[0]
 		* (*img)->height) == -1)
 		return (1);

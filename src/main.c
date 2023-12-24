@@ -14,10 +14,11 @@ int	main(int argc, char *argv[])
 	if (show_map(vars))
 		return (free_vars(vars), 1);
 	init_3d(vars);
-	change_plan(vars);
-	create_vue(vars);
-	mlx_loop_hook(vars->mlx, ft_hook_move, vars);
-	mlx_loop(vars->mlx);
-	mlx_terminate(vars->mlx);
+	start_plan(vars);
+	//change_plan(vars);
+	//create_vue(vars);
+	//mlx_loop_hook(vars->mlx, ft_hook_move, vars);
+	//mlx_loop(vars->mlx);
+	//mlx_terminate(vars->mlx);
 	return (free_vars(vars), 0);
 }

@@ -120,12 +120,3 @@ void	change_plan(t_vars* vars)
 		angles += 0.1 ;
 	}
 }
-
-void	print(t_vars* vars)
-{
-	int	i;
-
-	i = 0;
-	while (i < vars->pers->rays[0]->length )
-		printf("%f\n", vars->pers->rays[0]->points[i++].x);
-}
