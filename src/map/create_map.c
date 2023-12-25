@@ -53,24 +53,6 @@ int	create_list(t_vars *vars, char **line)
 	return (0);
 }
 
-int check_assets(t_vars *vars)
-{
-	int fd[4];
-
-	fd[0] = open(vars->style->north_path, O_RDONLY);
-	fd[1] = open(vars->style->north_path, O_RDONLY);
-	fd[2] = open(vars->style->north_path, O_RDONLY);
-	fd[3] = open(vars->style->north_path, O_RDONLY);
-	if (fd[0] != -1 && fd[1] != -1 && fd[2] != -1 && fd[3] != -1)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		close(fd[2]);
-		close(fd[3]);
-		return (0);
-	}
-	return (1);	
-}
 
 int	read_map_file(t_vars *vars)
 {
@@ -85,6 +67,8 @@ int	read_map_file(t_vars *vars)
 		return (print_error("Error : Wrong asset(s) path(s)"));
 	if (create_list(vars, &line))
 		return (print_error("Error : 2D map could not be generated"));
+	if (create_tab(vars))
+		return (print_error("Error : 2D tab could not be generated"));
 	if (test_map(vars))
 		return (1);
 	return (0);

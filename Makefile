@@ -5,6 +5,7 @@ SRCS	= src/main.c \
 		  src/utils/init_struct.c \
 		  src/utils/tools.c \
 		  src/map/create_map.c \
+		  src/map/create_tab.c \
 		  src/map/show_map.c \
 		  src/style/color.c \
 		  src/style/find_style.c \

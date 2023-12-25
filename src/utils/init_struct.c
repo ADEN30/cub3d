@@ -8,6 +8,7 @@ t_map	*init_map(void)
 	if (!map)
 		return (NULL);
 	map->lines = NULL;
+	map->tab = NULL;
 	return (map);
 }
 
@@ -82,9 +83,6 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 	if (y != -1)
 		pers->y = y;
 	pers->rays = init_ray(vars);
-	//pers->ray_length = ft_lstsize(vars->map->lines) > largest_line(vars->map->lines) ?
-		//ft_lstsize(vars->map->lines) * DIMENSION:
-		//largest_line(vars->map->lines) * DIMENSION;
 	if (c == 'S')
 		pers->angle = 90;
 	else if (c == 'N')

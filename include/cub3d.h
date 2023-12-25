@@ -54,6 +54,7 @@ typedef struct	s_pers {
 typedef struct	s_map {
 	int		fd;
 	t_list	*lines;
+	int		**tab;
 }	t_map;
 
 typedef struct	s_images {
@@ -115,6 +116,8 @@ int			create_NSEO(t_vars* vars);
 /*map*/
 int			create_map(int argc, char *argv[], t_vars *vars);
 int			show_map(t_vars *vars);
+int			check_assets(t_vars *vars);
+int			create_tab(t_vars *vars);
 
 /*print_error*/
 int			print_error(char *str);
