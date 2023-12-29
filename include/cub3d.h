@@ -55,6 +55,8 @@ typedef struct	s_map {
 	int		fd;
 	t_list	*lines;
 	int		**tab;
+	int		X;
+	int		Y;
 }	t_map;
 
 typedef struct	s_images {
@@ -145,5 +147,13 @@ void		create_vue(t_vars* vars);
 void 		display_tpoint(t_point* tab, int size);
 
 
+/* ray2*/
+int		max_xy(int x, int y);
+double	dist(t_vars *vars, double x, double y);
+void	init_tabs(double *r, double *ofs);
+int		wall_vh(t_vars* vars, double *ray, double *xy);
 void	start_plan(t_vars* vars);
+void	horizontal_intersection(t_vars *vars, double *h);
+void	vertical_intersection(t_vars *vars, double *v);
+
 #endif

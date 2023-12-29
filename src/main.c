@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	//change_plan(vars);
 	//create_vue(vars);
 	//mlx_loop_hook(vars->mlx, ft_hook_move, vars);
-	//mlx_loop(vars->mlx);
+	mlx_loop(vars->mlx);
 	//mlx_terminate(vars->mlx);
 	return (free_vars(vars), 0);
 }

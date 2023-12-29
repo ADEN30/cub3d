@@ -85,6 +85,8 @@ int	create_tab(t_vars *vars)
 	vars->map->tab = tab_alloc(x, y);
 	if (!vars->map->tab)
 		return (1);
+	vars->map->X = x;
+	vars->map->Y = y;
 	fill_tab(vars, x);
 	return (0);
 }

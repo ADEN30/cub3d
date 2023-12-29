@@ -13,6 +13,9 @@ SRCS	= src/main.c \
 		  src/hook/move.c \
 		  src/raycasting/ray.c \
 		  src/raycasting/ray2.c \
+		  src/raycasting/ray2_h.c \
+		  src/raycasting/ray2_v.c \
+		  src/raycasting/ray2_vh.c \
 		  src/show3d/show.c \
 		  src/show3d/init.c \
 
