@@ -9,6 +9,7 @@ t_map	*init_map(void)
 		return (NULL);
 	map->lines = NULL;
 	map->tab = NULL;
+	map->face = NULL;
 	return (map);
 }
 
@@ -83,9 +84,9 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 	if (y != -1)
 		pers->y = y;
 	pers->rays = init_ray(vars);
-	if (c == 'S')
+	if (c == 'N')
 		pers->angle = 90;
-	else if (c == 'N')
+	else if (c == 'S')
 		pers->angle = 270;
 	else if (c == 'W')
 		pers->angle = 180;

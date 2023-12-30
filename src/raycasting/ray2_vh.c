@@ -25,7 +25,8 @@ int wall_vh(t_vars* vars, double *r, double *xy)
 
 	mX = (int)r[0] / DIMENSION;
 	mY = (int)r[1] / DIMENSION;
-	if (mX > 0 && mX < vars->map->X && mY > 0 && mY < vars->map->Y && vars->map->tab[mY][mX] == 49)
+	if (mX >= 0 && mX <= vars->map->X && mY >= 0 && mY <= vars->map->Y
+		&& vars->map->tab[mY][mX] == 49)
 	{
 		xy[0] = r[0];
 		xy[1] = r[1];

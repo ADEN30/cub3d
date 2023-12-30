@@ -1,62 +1,95 @@
 #include "../../include/cub3d.h"
 
-void    check_move(t_vars *vars, double *x, double *y)
+char    check_move(t_vars *vars, double *x, double *y)
 {
-    //double  h[2];
-    //double  dist_h;
+    double  h[2];
+    double  dist_h;
     double  v[2];
-    //double  dist_v;
+    double  dist_v;
+    char    face[2];
 
-	//h[0] = v[0] = *x;
-	//h[1] = v[1] = *y;
-    //horizontal_intersection(vars, h);
-    //dist_h = dist(vars, h[0], h[1]);
-    v[1] = *y;
-    v[0] = *x;
-    vertical_intersection(vars, v);
-    //dist_v = dist(vars, v[0], v[1]);
-    //if (dist_h <= dist_v)
-    //{
-        //*x = h[0];
-        //*y = h[1];
-    //}
-    //else
-    //{
-        *x = v[0];
+	h[0] = v[0] = *x;
+	h[1] = v[1] = *y;
+    face[0] = face[1] = 'C';
+    horizontal_intersection(vars, h, face);
+    dist_h = dist(vars, h[0], h[1]);
+    //printf("h[0] = %f\n", h[0]);
+    //printf("h[1] = %f\n", h[1]);
+    printf("dist_h = %f\n", dist_h);
+    printf("\n");
+    vertical_intersection(vars, v, face);
+    dist_v = dist(vars, v[0], v[1]);
+    //printf("v[0] = %f\n", v[0]);
+    //printf("v[1] = %f\n", v[1]);
+    printf("dist_v = %f\n", dist_v);
+    if (dist_h <= dist_v || dist_v == 0)
+    {
+        if (face[1] == 'N')
+            *y = h[1];
+        else
+            *y = h[1];
+        *x = h[0];
+        printf("face[1] = %c\n", face[1]);
+        return (face[1]);
+    }
+    else if (dist_v < dist_h || dist_h == 0)
+    {
+        if (face[0] == 'W')
+            *x = v[0] + 0.0001;
+        else
+            *x = v[0];
         *y = v[1];
-    //}
-    printf("x = %f | y = %f\n", *x, *y);
+        printf("face[0] = %c\n", face[0]);
+        return (face[0]);
+    }
+    return ('C');
 }
 
-void    print_ray(t_vars *vars, double x, double y)
+int normalizeAngle(int angle)
 {
-    mlx_put_pixel(vars->pers->rays[0]->img, x, y, get_rgba(255, 0, 0, 255));
+    while (angle < 0)
+        angle += 360;
+    while (angle >= 360)
+        angle -= 360;
+    return angle;
 }
 
 void	start_plan(t_vars* vars)
 {
 	double		x;
 	double		y;
-	//double 		angles;
-	//int			i;
+	int			i;
 
-	//angles = vars->pers->angle;
-	//i = 5;
+	i = 9;
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	//vars->pers->rays[0]->points = malloc(sizeof(t_point) * 6);
-    //printf("angle + FOV/2 = %f\n", angles + (FOV / 2));
-    mlx_put_pixel(vars->pers->rays[0]->img, round(vars->pers->x), round(vars->pers->y), get_rgba(255, 0, 0, 255));
-	//while (vars->pers->angle  < angles + (FOV / 2))
-	//{
+	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 10);
+	vars->map->face = ft_calloc(sizeof(char), (10 + 1));
+    if (!vars->pers->rays[0]->points || !vars->map->face)
+        EXIT_FAILURE;
+    //printf("\n");
+    //printf("angle = %f\n", vars->pers->angle);
+    vars->pers->angle = vars->pers->angle + 30;
+    //printf("angle = %f\n", vars->pers->angle);
+    printf("vars->pers->x = %d\n", vars->pers->x);
+    printf("vars->pers->y = %d\n", vars->pers->y);
+    //printf("\n");
+    mlx_put_pixel(vars->pers->rays[0]->img, vars->pers->x, vars->pers->y, get_rgba(255, 0, 0, 255));
+	while (i >= 0)
+	{
+        printf("\n");
+        vars->pers->angle = normalizeAngle(vars->pers->angle);
         printf("angle = %f\n", vars->pers->angle);
         y = vars->pers->y;
         x = vars->pers->x;
-        check_move(vars, &x, &y);
-        print_ray(vars, x, y);
-        //vars->pers->rays[0]->points[i].y = y;
-        //vars->pers->rays[0]->points[i].x = x;
-        //i--;
-       //vars->pers->angle += 10;
-	//}
-    //vars->pers->angle = angles - (FOV / 2);
+        vars->map->face[i] = check_move(vars, &x, &y);
+        printf("x = %d\n", (int)x);
+        printf("y = %d\n", (int)y);
+        mlx_put_pixel(vars->pers->rays[0]->img, (int)x, (int)y, get_rgba(255, 0, 0, 255));
+        vars->pers->rays[0]->points[i].y = y;
+        vars->pers->rays[0]->points[i].x = x;
+        i--;
+        vars->pers->angle -= 1;
+        printf("\n");
+	}
+    vars->pers->angle = vars->pers->angle + 30;
 }
