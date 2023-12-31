@@ -147,17 +147,20 @@ int			init_3d(t_vars *vars);
 void		create_vue(t_vars* vars);
 void 		display_tpoint(t_point* tab, int size);
 
-
 /* ray2*/
-int		normalizeAngle(int angle);
+int		isnegative(double angle);
+void	never_v(t_vars *vars, double *r, int *i);
+void	never_h(t_vars *vars, double *r, int *i);
+int		wall_vh(t_vars* vars, double *ray, double *xy);
+
 int		max_xy(int x, int y);
 double	dist(t_vars *vars, double x, double y);
 void	init_tabs(double *r, double *ofs);
-int		wall_v(t_vars* vars, double *ray, double *xy, char *face);
-int		wall_h(t_vars* vars, double *ray, double *xy, char *face);
-int		wall_vh(t_vars* vars, double *ray, double *xy);
+
 void	start_plan(t_vars* vars);
+
 void	horizontal_intersection(t_vars *vars, double *h, char *face);
+
 void	vertical_intersection(t_vars *vars, double *v, char *face);
 
 #endif

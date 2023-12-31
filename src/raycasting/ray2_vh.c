@@ -1,31 +1,45 @@
 
 #include "../../include/cub3d.h"
 
-double dist(t_vars *vars, double x, double y)
+int	isnegative(double angle)
 {
-    double dx;
-    double dy;
-    dx = x - (double)vars->pers->x;
-    dy = y - (double)vars->pers->y;
-    return sqrt(dx * dx + dy * dy);
+	if (angle < 0)
+	{
+		printf("///NEGATIVE///\n");
+		return (1);
+	}
+	return (0);
 }
 
-void init_tabs(double *r, double *ofs)
+void never_v(t_vars *vars, double *r, int *i)
 {
-	r[0] = 0;
-	r[1] = 0;
-	ofs[0] = 0;
-	ofs[1] = 0;
+	r[1] = vars->pers->y;
+	r[0] = vars->pers->x;
+	*i = max_xy(vars->map->X, vars->map->Y);
+}
+
+void never_h(t_vars *vars, double *r, int *i)
+{
+	r[1] = vars->pers->y;
+	r[0] = vars->pers->x;
+	*i = max_xy(vars->map->X, vars->map->Y);
 }
 
 int wall_vh(t_vars* vars, double *r, double *xy)
 {
 	int mX;
 	int mY;
-
+	
 	mX = (int)r[0] / DIMENSION;
 	mY = (int)r[1] / DIMENSION;
-	if (mX >= 0 && mX <= vars->map->X && mY >= 0 && mY <= vars->map->Y
+	if (mX > vars->map->X || mY > vars->map->Y || mX < 0 || mY < 0)
+	{
+		xy[0] = vars->pers->x;
+		xy[1] = vars->pers->y;
+		printf("///OUT OF BOUNDERIES///\n");
+		return (2);
+	}
+	else if (mX >= 0 && mX <= vars->map->X && mY >= 0 && mY <= vars->map->Y
 		&& vars->map->tab[mY][mX] == 49)
 	{
 		xy[0] = r[0];
@@ -33,11 +47,4 @@ int wall_vh(t_vars* vars, double *r, double *xy)
 		return (1);
 	}
     return 0;
-}
-
-int max_xy(int x, int y)
-{
-	if (x > y)
-		return (x);
-	return (y);
 }

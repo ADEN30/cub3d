@@ -85,11 +85,11 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 		pers->y = y;
 	pers->rays = init_ray(vars);
 	if (c == 'N')
-		pers->angle = 90;
+		pers->angle = 90 * M_PI / 180;
 	else if (c == 'S')
-		pers->angle = 270;
+		pers->angle = 270 * M_PI / 180;
 	else if (c == 'W')
-		pers->angle = 180;
+		pers->angle = 180 * M_PI / 180;
 	else if (c == 'E')
 		pers->angle = 0;
 	return (pers);
