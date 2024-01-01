@@ -40,10 +40,12 @@ void	start_plan(t_vars* vars)
 	double		y;
 	int			i;
 
-	i = 599;
+	i = 799;
+    vars->pers->deltax = cos(vars->pers->angle) * 5;
+    vars->pers->deltay = sin(vars->pers->angle) * 5;
 	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 600);
-	vars->map->face = ft_calloc(sizeof(char), (600 + 1));
+	vars->pers->rays[0]->points = malloc(sizeof(t_point) *800);
+	vars->map->face = ft_calloc(sizeof(char), (800 + 1));
     if (!vars->pers->rays[0]->points || !vars->map->face)
         EXIT_FAILURE;
     mlx_put_pixel(vars->pers->rays[0]->img, vars->pers->x, vars->pers->y, get_rgba(255, 0, 0, 255));
@@ -56,7 +58,7 @@ void	start_plan(t_vars* vars)
         vars->pers->rays[0]->points[i].y = y;
         vars->pers->rays[0]->points[i].x = x;
         i--;
-        vars->pers->angle -= 0.1 * M_PI / 180;
+        vars->pers->angle -= 0.075 * M_PI / 180;
 	}
     vars->pers->angle = vars->pers->angle + (30 * M_PI / 180);
 }

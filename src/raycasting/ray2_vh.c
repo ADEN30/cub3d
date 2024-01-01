@@ -1,16 +1,6 @@
 
 #include "../../include/cub3d.h"
 
-int	isnegative(double angle)
-{
-	if (angle < 0)
-	{
-		printf("///NEGATIVE///\n");
-		return (1);
-	}
-	return (0);
-}
-
 void never_vh(t_vars *vars, double *r)
 {
 	r[1] = vars->pers->y;

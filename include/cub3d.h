@@ -15,7 +15,7 @@
 # endif
 
 # ifndef DIMENSION
-#  define DIMENSION 32
+#  define DIMENSION 16
 # endif
 
 # ifndef FOV
@@ -47,6 +47,8 @@ typedef struct	s_pers {
 	int			y;
 	int			x;
 	double		angle;
+	double		deltax;
+	double		deltay;
 	t_ray		**rays;
 	//int			ray_length;
 }	t_pers;
@@ -135,7 +137,12 @@ int			test_map(t_vars *vars);
 
 /*hook*/
 void		ft_hook_move(void* param);
+void		ft_hook_move2(void* param);
+void		clear_pixel2(t_ray **ray);
 void		change_plan(t_vars* vars);
+void		start_plan(t_vars* vars);
+void		create_vue(t_vars* vars);
+void		change_vue(t_vars* vars);
 
 /*raycasting*/
 void		ft_raycasting(void *param);
@@ -144,22 +151,22 @@ void		turn_camera(t_vars* vars);
 /*show3d*/
 int			define_wall(t_vars *vars);
 int			init_3d(t_vars *vars);
-void		create_vue(t_vars* vars);
+void		show_view(t_vars *vars);
 void 		display_tpoint(t_point* tab, int size);
+uint32_t	get_pixel(t_vars *vars, int w_height, int y, int i);
 
 /* ray2*/
-int		isnegative(double angle);
-void	never_vh(t_vars *vars, double *r);
-void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
+void		never_vh(t_vars *vars, double *r);
+void		find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
 
-int		max_xy(int x, int y);
-double	dist(t_vars *vars, double x, double y);
-void	init_tabs(double *r, double *ofs);
+int			max_xy(int x, int y);
+double		dist(t_vars *vars, double x, double y);
+void		init_tabs(double *r, double *ofs);
 
-void	start_plan(t_vars* vars);
+void		start_plan(t_vars* vars);
 
-void	horizontal_intersection(t_vars *vars, double *h, char *face);
+void		horizontal_intersection(t_vars *vars, double *h, char *face);
 
-void	vertical_intersection(t_vars *vars, double *v, char *face);
+void		vertical_intersection(t_vars *vars, double *v, char *face);
 
 #endif

@@ -79,6 +79,8 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 		return (NULL);
 	pers->x = 0;
 	pers->y = 0;
+	pers->deltax = 0;
+	pers->deltay = 0;
 	if (x != -1)
 		pers->x = x;
 	if (y != -1)

@@ -11,6 +11,8 @@ SRCS	= src/main.c \
 		  src/style/find_style.c \
 		  src/style/find_style_next.c \
 		  src/hook/move.c \
+		  src/hook/move2.c \
+		  src/hook/move2p.c \
 		  src/raycasting/ray.c \
 		  src/raycasting/ray2.c \
 		  src/raycasting/ray2_tools.c \
@@ -18,6 +20,8 @@ SRCS	= src/main.c \
 		  src/raycasting/ray2_v.c \
 		  src/raycasting/ray2_vh.c \
 		  src/show3d/show.c \
+		  src/show3d/show2.c \
+		  src/show3d/wall_pixel.c \
 		  src/show3d/init.c \
 
 OBJS		= $(SRCS:.c=.o)

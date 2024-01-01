@@ -17,8 +17,8 @@ void	ft_hook_move(void* param)
 		mlx_delete_image(vars->mlx, vars->pers->rays[0]->img);
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y - 5;
-		start_plan(vars);
-		//create_vue(vars);
+		change_plan(vars);
+		create_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN) || mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
@@ -26,7 +26,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->y = vars->pers->y + 5;
 		start_plan(vars);
-		//create_vue(vars);
+		create_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
@@ -34,7 +34,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x - 5 ;
 		start_plan(vars);
-		//create_vue(vars);
+		create_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
@@ -42,7 +42,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->pers->x = vars->pers->x + 5;
 		start_plan(vars);
-		//create_vue(vars);
+		create_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
@@ -50,7 +50,7 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->turn += 1;	
 		start_plan(vars);
-		//create_vue(vars);
+		create_vue(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -58,6 +58,6 @@ void	ft_hook_move(void* param)
 		vars->pers->rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 		vars->turn -= 1 ;	
 		start_plan(vars);
-		//create_vue(vars);
+		create_vue(vars);
 	}
 }
