@@ -45,27 +45,16 @@ void vertical_intersection(t_vars *vars, double *v, char *face)
 {
     double  ray[2];
 	double	ofs[2];
-	int		i;
     
-	i = 0;
 	init_tabs(ray, ofs);
     if (vars->pers->angle == M_PI / 2 || vars->pers->angle == 3 * M_PI / 2)
-		never_v(vars, ray, &i);
+	{
+		never_vh(vars, ray);
+		return ;
+	}
 	else if (vars->pers->angle > M_PI / 2 && vars->pers->angle < 3 * M_PI / 2)
 		looking_left(vars, ray, ofs, face);
 	else if (vars->pers->angle < M_PI / 2 || vars->pers->angle > 3 * M_PI / 2)
 		looking_right(vars, ray, ofs, face);
-	while (i < max_xy(vars->map->X, vars->map->Y))
-	{
-		if (wall_vh(vars, ray, v) == 2)
-			return ;
-		else if (wall_vh(vars, ray, v))
-			return ;
-		else
-		{
-			ray[0] += ofs[0];
-			ray[1] += ofs[1];
-			i += 1;
-		}
-	}
+	find_wall_vh(vars, v, ray, ofs);
 }

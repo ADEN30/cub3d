@@ -45,27 +45,16 @@ void horizontal_intersection(t_vars *vars, double *h, char *face)
 {
     double  ray[2];
 	double	ofs[2];
-	int		i;
     
-	i = 0;
 	init_tabs(ray, ofs);
     if (vars->pers->angle == 0 || vars->pers->angle == M_PI)
-		never_h(vars, ray, &i);
+	{
+		never_vh(vars, ray);
+		return ;
+	}
     else if (vars->pers->angle < M_PI)
 		looking_up(vars, ray, ofs, face);
     else if (vars->pers->angle > M_PI)
 		looking_down(vars, ray, ofs, face);
-	while (i < max_xy(vars->map->X, vars->map->Y))
-	{
-		if (wall_vh(vars, ray, h) == 2)
-			return ;
-		else if (wall_vh(vars, ray, h))
-			return ;
-		else
-		{
-			ray[0] += ofs[0];
-			ray[1] += ofs[1];
-			i += 1;
-		}
-	}
+	find_wall_vh(vars, h, ray, ofs);
 }

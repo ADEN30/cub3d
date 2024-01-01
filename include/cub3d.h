@@ -149,9 +149,8 @@ void 		display_tpoint(t_point* tab, int size);
 
 /* ray2*/
 int		isnegative(double angle);
-void	never_v(t_vars *vars, double *r, int *i);
-void	never_h(t_vars *vars, double *r, int *i);
-int		wall_vh(t_vars* vars, double *ray, double *xy);
+void	never_vh(t_vars *vars, double *r);
+void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
 
 int		max_xy(int x, int y);
 double	dist(t_vars *vars, double x, double y);

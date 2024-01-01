@@ -11,40 +11,47 @@ int	isnegative(double angle)
 	return (0);
 }
 
-void never_v(t_vars *vars, double *r, int *i)
+void never_vh(t_vars *vars, double *r)
 {
 	r[1] = vars->pers->y;
 	r[0] = vars->pers->x;
-	*i = max_xy(vars->map->X, vars->map->Y);
 }
 
-void never_h(t_vars *vars, double *r, int *i)
+int wall_vh(t_vars* vars, double *r, double *xy, int *mp)
 {
-	r[1] = vars->pers->y;
-	r[0] = vars->pers->x;
-	*i = max_xy(vars->map->X, vars->map->Y);
-}
-
-int wall_vh(t_vars* vars, double *r, double *xy)
-{
-	int mX;
-	int mY;
-	
-	mX = (int)r[0] / DIMENSION;
-	mY = (int)r[1] / DIMENSION;
-	if (mX > vars->map->X || mY > vars->map->Y || mX < 0 || mY < 0)
-	{
-		xy[0] = vars->pers->x;
-		xy[1] = vars->pers->y;
-		printf("///OUT OF BOUNDERIES///\n");
-		return (2);
-	}
-	else if (mX >= 0 && mX <= vars->map->X && mY >= 0 && mY <= vars->map->Y
-		&& vars->map->tab[mY][mX] == 49)
+	if (mp[0] >= 0 && mp[0] <= vars->map->X && mp[1] >= 0 && mp[1] <= vars->map->Y
+		&& vars->map->tab[mp[1]][mp[0]] == 49)
 	{
 		xy[0] = r[0];
 		xy[1] = r[1];
 		return (1);
 	}
     return 0;
+}
+
+void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
+{
+	int i;
+	int	mp[2];
+
+	i = 0;
+	while (i < max_xy(vars->map->X, vars->map->Y))
+	{
+		mp[0] = (int)ray[0] / DIMENSION;
+		mp[1] = (int)ray[1] / DIMENSION;
+		if (mp[0] >= vars->map->X || mp[1] >= vars->map->Y || mp[0] < 0 || mp[1] < 0)
+		{
+			xy[0] = vars->pers->x;
+			xy[1] = vars->pers->y;
+			return ;
+		}
+		if (wall_vh(vars, ray, xy, mp))
+			return ;
+		else
+		{
+			ray[0] += ofs[0];
+			ray[1] += ofs[1];
+			i += 1;
+		}
+	}
 }
