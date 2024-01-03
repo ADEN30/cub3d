@@ -20,12 +20,11 @@ t_images	*init_images(void)
 	images = malloc(sizeof(t_images));
 	if (!images)
 		return (NULL);
-	images->north = NULL;
-	images->south = NULL;
-	images->west = NULL;
-	images->east = NULL;
-	images->floor_image = NULL;
-	images->roof_image = NULL;
+	images->east_texture = NULL;
+	images->north_texture = NULL;
+	images->south_texture = NULL;
+	images->west_texture = NULL;
+	images->threed = NULL;
 	images->wall_image = NULL;
 	return (images);
 }
@@ -45,13 +44,10 @@ t_style	*init_style(void)
 	style->west_path = NULL;
 	style->east_path = NULL;
 	style->define_floor = 0;
-	style->floor = 0;
 	style->define_roof = 0;
+	style->floor = 0;
 	style->roof = 0;
-	if (MAP == 1)
-		style->wall = get_rgba(0, 0, 0, 255);
-	else
-		style->wall = get_rgba(0, 0, 0, 0);
+	style->wall = get_rgba(255, 255, 255, 255);
 	return (style);
 }
 
@@ -65,8 +61,6 @@ t_ray	**init_ray(t_vars *vars)
 	rays[0] = malloc(sizeof(t_ray) * (2));
 	rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
 	rays[0]->angle = 0.00;
-	rays[0]->coefdir = 0.00;
-	rays[0]->d1 = 0.00;
 	return (rays);
 }
 
@@ -109,6 +103,5 @@ t_vars	*init_vars(void)
 	vars->style = NULL;
 	vars->turn = 0;
 	vars->x = 0;
-	vars->bo = 0;
 	return (vars);
 }

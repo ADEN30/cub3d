@@ -12,49 +12,26 @@ int	badmap(char *file)
 	return (0);
 }
 
-int	line_isprint(char *line)
+int check_assets(t_vars *vars)
 {
-	int	i;
+	int fd[4];
 
-	i = 0;
-	while (line && line[i])
+	fd[0] = open(vars->style->north_path, O_RDONLY);
+	fd[1] = open(vars->style->north_path, O_RDONLY);
+	fd[2] = open(vars->style->north_path, O_RDONLY);
+	fd[3] = open(vars->style->north_path, O_RDONLY);
+	if (fd[0] != -1 && fd[1] != -1 && fd[2] != -1 && fd[3] != -1)
 	{
-		if (ft_isprint(line[i]))
-			return (0);
-		i++;
+		close(fd[0]);
+		close(fd[1]);
+		close(fd[2]);
+		close(fd[3]);
+		return (0);
 	}
-	return (1);
+	return (1);	
 }
 
-int	create_list(t_vars *vars, char **line)
-{
-	t_list	*lst;
-
-	lst = NULL;
-	if (!*line)
-		return (1);
-	while (line_isprint(*line))
-	{
-		free(*line);
-		*line = get_next_line(vars->map->fd);
-	}
-	while (*line && !line_isprint(*line))
-	{
-		(*line)[ft_strlen(*line) - 1] = 0;
-		if (lst)
-			ft_lstadd_back(&lst, ft_lstnew(*line));
-		else
-			lst = ft_lstnew(*line);
-		*line = get_next_line(vars->map->fd);
-	}
-	if (*line)
-		free(*line);
-	vars->map->lines = lst;
-	return (0);
-}
-
-
-int	read_map_file(t_vars *vars)
+int	read_map_file(t_vars *vars, char *argv)
 {
 	char	*line;
 
@@ -65,11 +42,9 @@ int	read_map_file(t_vars *vars)
 		return (print_error("Error : Wrong information on the file"));
 	if (check_assets(vars))
 		return (print_error("Error : Wrong asset(s) path(s)"));
-	if (create_list(vars, &line))
-		return (print_error("Error : 2D map could not be generated"));
-	if (create_tab(vars))
+	if (create_tab(vars, &line, argv))
 		return (print_error("Error : 2D tab could not be generated"));
-	if (test_map(vars))
+	if (check_map(vars))
 		return (1);
 	return (0);
 }
@@ -87,7 +62,7 @@ int	create_map(int argc, char *argv[], t_vars *vars)
 	vars->map->fd = open(argv[1], O_RDONLY);
 	if (vars->map->fd < 0)
 		return (print_error("Error : Can not open the map"));
-	if (read_map_file(vars))
+	if (read_map_file(vars, argv[1]))
 		return (1);
 	return (0);
 }

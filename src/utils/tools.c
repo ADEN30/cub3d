@@ -1,5 +1,19 @@
 #include "../../include/cub3d.h"
 
+int	line_isprint(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line && line[i])
+	{
+		if (ft_isprint(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	check_line(char *line)
 {
 	line[ft_strlen(line) - 1] = 0;
@@ -29,18 +43,6 @@ uint32_t	value_rgb(char *line, t_vars *vars)
 	return (value);
 }
 
-char	find_case(t_list *list, int x, int y)
-{
-	char	*chr;
-
-	while (y-- && list)
-		list = list->next;
-	if (!list)
-		return (0);
-	chr = list->content;
-	return (chr[x]);
-}
-
 int	put_pixels(mlx_image_t *img, uint32_t color)
 {
 	unsigned int	x;
@@ -54,20 +56,4 @@ int	put_pixels(mlx_image_t *img, uint32_t color)
 			mlx_put_pixel(img, x, y, color);
 	}
 	return (0);
-}
-
-int	largest_line(t_list *list)
-{
-	t_list	*tmp;
-	int		len;
-
-	len = 0;
-	tmp = list;
-	while (tmp)
-	{
-		if ((int)ft_strlen(tmp->content) > len)
-			len = ft_strlen(tmp->content);
-		tmp = tmp->next;
-	}
-	return (len);
 }

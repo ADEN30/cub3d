@@ -1,122 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.f    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 12:32:08 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/03 19:25:08 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../../include/cub3d.h"
 
-int	test_wall(t_vars* vars,  double x, double y, int j)
+char    change_xy(double *x, double *y, double *xy, char face)
 {
-	size_t	i;
-	mlx_image_t*	wall;
-
-	i = 0;
-	wall = vars->style->images->wall_image;
-	x = round(x);
-	y = round(y);
-	while (i < wall->count)
-	{
-		if ((x == wall->instances[i].x && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].x = wall->instances[i].x;
-				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
-				vars->pers->rays[0]->points[j].a = 'e';
-			}
-			return (1);
-		}	
-		else if ((x == wall->instances[i].x + wall->width && y > wall->instances[i].y && y < wall->instances[i].y + wall->height))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].x = wall->instances[i].x + wall->width;
-				vars->pers->rays[0]->points[j].wall_y = wall->instances[i].y;
-				vars->pers->rays[0]->points[j].a = 'o';
-			}
-			return (1);
-		}
-		else if ((y == wall->instances[i].y && x > wall->instances[i].x && x < wall->instances[i].x + wall->width))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
-				vars->pers->rays[0]->points[j].y = wall->instances[i].y;
-				vars->pers->rays[0]->points[j].a = 's';
-			}
-			return (1);
-		}
-		else if ((y == wall->instances[i].y + wall->height && x > wall->instances[i].x && x < wall->instances[i].x + wall->width))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].wall_x = wall->instances[i].x;
-				vars->pers->rays[0]->points[j].y = wall->instances[i].y + wall->height;
-				vars->pers->rays[0]->points[j].a = 'n';
-			}
-			return (1);
-		}
-		else if ((x == wall->instances[i].x && y == wall->instances[i].y) ||
-			(x == wall->instances[i].x && y == wall->instances[i].y + wall->height) ||
-			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y) ||
-			(x == wall->instances[i].x + wall->width && y == wall->instances[i].y + wall->height))
-		{
-			if (j > -1)
-			{
-				vars->pers->rays[0]->points[j].x = vars->pers->rays[0]->points[j - 1].x;
-				vars->pers->rays[0]->points[j].y = vars->pers->rays[0]->points[j - 1].y;
-				vars->pers->rays[0]->points[j].a = vars->pers->rays[0]->points[j - 1].a;
-			}
-			return (1);
-		}
-
-
-		i++;
-	}
-	return (0);
-
+    *y = xy[1];
+    *x = xy[0];
+    return (face);
 }
 
-void	calc_rot(double* x, double* y, t_vars* vars, double angles)
+void    define_angle(t_vars * vars)
 {
-	double	x1;
-	double	y1;
-	double	angle_rad;
-	static	double	d1;
-	
-	if ( vars->bo == 1)
-	{
-		d1 = 0.000;
-		vars->bo = 0;
-	}
-	angle_rad = (vars->turn + angles)*(M_PI/180);
-	x1 = (vars->pers->x ) + d1 * cos(angle_rad);
-	y1 = (vars->pers->y) - d1 * sin(angle_rad);
-	*x = x1;
-	*y = y1;
-	d1 += 1;
+    if (vars->pers->angle < 0)
+        vars->pers->angle =  2 * M_PI + vars->pers->angle;
+    if (vars->pers->angle > 2 * M_PI)
+        vars->pers->angle = vars->pers->angle - 2 * M_PI;
 }
 
-void	change_plan(t_vars* vars)
+char    check_move(t_vars *vars, double *x, double *y, int i)
+{
+    double  h[2];
+    double  dst[2];
+    double  v[2];
+    char    face[2];
+    double  ra;
+
+	h[0] = v[0] = *x;
+	h[1] = v[1] = *y;
+    ra = vars->pers->angle;
+    vars->pers->angle = vars->pers->angle + (1 * M_PI / 180) * 30;
+    define_angle(vars);
+    horizontal_intersection(vars, h, face);
+    dst[0] = dist(vars, h[0], h[1]);
+    vertical_intersection(vars, v, face);
+    dst[1] = dist(vars, v[0], v[1]);
+    vars->pers->rays[0]->points[i].angle = vars->pers->angle;
+    vars->pers->angle = ra;
+    if ((dst[0] <= dst[1] && dst[0] != 0) || dst[1] == 0)
+        return (change_xy(x, y, h, face[1]));
+    else if ((dst[1] < dst[0] && dst[1] != 0) || dst[0] == 0)
+        return (change_xy(x, y, v, face[0]));
+    return ('0');
+}
+
+void	find_wall(t_vars* vars)
 {
 	double		x;
 	double		y;
-	double 		angles;
 	int			i;
 
-	angles = 0.00;
-	i = 599;
-	mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
-	vars->pers->rays[0]->points = malloc(sizeof(t_point) * 600);
-	while (angles < 60)
+	i = 799;
+	vars->pers->rays[0]->points = ft_calloc(sizeof(t_point), 800);
+	vars->map->face = ft_calloc(sizeof(char), (800 + 1));
+    if (!vars->pers->rays[0]->points || !vars->map->face)
+    {
+		print_error("Error while printing rays on minimap\n");
+		free_vars(vars);
+		exit(1);
+    }
+	while (i >= 0)
 	{
-		x = vars->pers->x;
-		y = vars->pers->y;
-		while (!test_wall(vars, x, y, i) && vars->x >= 0 && vars->x <= vars->mlx->width && y >= 0 && y <= vars->mlx->height)
-		{
-			
-			mlx_put_pixel(vars->pers->rays[0]->img, round(x), round(y),  get_rgba(255, 0, 0, 255));
-			vars->pers->rays[0]->points[i].y = (y);
-			vars->pers->rays[0]->points[i].x = (x);
-			calc_rot(&x, &y, vars, angles);
-		}
-		i--;
-		vars->bo = 1;
-		angles += 0.1 ;
+        y = vars->pers->y;
+        x = vars->pers->x;
+        vars->map->face[i] = check_move(vars, &x, &y, i);
+        vars->pers->rays[0]->points[i].y = y;
+        vars->pers->rays[0]->points[i].x = x;
+        i--;
+        vars->pers->angle -= 0.075 * M_PI / 180;
 	}
+    vars->pers->angle = vars->pers->angle + (60 * M_PI / 180);
+    printf("angle = %f\n", vars->pers->angle * 180 / M_PI);
+    printf("x = %f\n", vars->pers->x);
+    printf("y = %f\n", vars->pers->y);
+    printf("delta x = %f\n", vars->pers->deltax);
+    printf("delta y = %f\n", vars->pers->deltay);
+    printf("\n");
 }

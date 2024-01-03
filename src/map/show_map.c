@@ -1,64 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/02 18:21:19 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/02 19:52:32 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../../include/cub3d.h"
 
-int	print_case(int *loc, t_vars *vars, mlx_image_t **img, uint32_t color)
+void	print_rays_on_minimap(t_vars* vars)
+{
+	int			i;
+	int32_t		rays;
+
+	i = 799;
+	rays = mlx_image_to_window(vars->mlx, vars->pers->rays[0]->img, 0, 0);
+	if (rays == -1)
+	{
+		print_error("Error while printing rays on minimap\n");
+		free_vars(vars);
+		exit(1);
+	}
+    mlx_put_pixel(vars->pers->rays[0]->img, vars->pers->x, vars->pers->y,
+		get_rgba(255, 0, 0, 255));
+	while (i >= 0)
+	{
+        mlx_put_pixel(vars->pers->rays[0]->img,
+			round(vars->pers->rays[0]->points[i].x),
+			round(vars->pers->rays[0]->points[i].y),
+			get_rgba(255, 0, 0, 255));
+        i--;
+	}
+}
+
+int	print_case(t_vars *vars, mlx_image_t **img, uint32_t color, int *xy)
 {
 	if (!*img)
 	{
 		*img = mlx_new_image(vars->mlx, DIMENSION, DIMENSION);
 		if (!*img)
-			return (1);
+		{
+			print_error("Error while creating image\n");
+			free_vars(vars);
+			exit(1);
+		}
 	}
-	if (mlx_image_to_window(vars->mlx, *img, loc[1] * (*img)->width, loc[0]
-		* (*img)->height) == -1)
-		return (1);
+	if (mlx_image_to_window(vars->mlx, vars->style->images->wall_image,
+		xy[0] * DIMENSION, xy[1] * DIMENSION) == -1)
+	{
+		print_error("Error while printing image\n");
+		free_vars(vars);
+		exit(1);
+	}
 	put_pixels(*img, color);
 	return (0);
 }
 
-int	which_case(char c, int *loc, t_vars *vars)
+int	which_case(t_vars *vars, int *xy)
 {
-	t_images	*images;
-
-	images = vars->style->images;
-	if (c == '1' && MAP == 1)
+	if (vars->map->tab[xy[1]][xy[0]] == 1)
 	{
-		if (print_case(loc, vars, &(images->wall_image), vars->style->wall))
-		return (1);
+		if (print_case(vars, &(vars->style->images->wall_image),
+			get_rgba(0, 0, 0, 255), xy))
+			return (1);
 	}
-	if ((c == '0') && MAP == 1)
+	else if (vars->map->tab[xy[1]][xy[0]] == 0)
 	{
-		if (print_case(loc, vars, &(images->floor_image), vars->style->floor))
-		return (1);
-	}
-	else if (ft_strchr("NSWE", c))
-	{
-		if (print_case(loc, vars, &(images->floor_image), vars->style->floor))
-		return (1);
-		vars->pers = init_pers(loc[1] * DIMENSION + (DIMENSION / 2),
-		loc[0] * DIMENSION + (DIMENSION / 2),
-		find_case(vars->map->lines, loc[1], loc[0]), vars);
+		if (print_case(vars, &(vars->style->images->wall_image),
+			get_rgba(255, 255, 255, 255), xy))
+			return (1);
 	}
 	return (0);
 }
 
-int	show_map(t_vars *vars)
+void	show_minimap(t_vars *vars)
 {
-	int		loc[2];
-	char	c;
+	int		xy[2];
 
-	loc[0] = 0;
-	while (find_case(vars->map->lines, 0, loc[0]))
+	xy[1] = -1;
+	while (++(xy[1]) < vars->map->Y)
 	{
-		loc[1] = 0;
-		c = find_case(vars->map->lines, loc[1], loc[0]);
-		while (find_case(vars->map->lines, loc[1], loc[0]))
+		xy[0] = -1;
+		while (++(xy[0]) < vars->map->X)
 		{
-			if (which_case(c, loc, vars))
-				return (printf("Error : print case\n"), 1);
-			loc[1]++;
-			c = find_case(vars->map->lines, loc[1], loc[0]);
+			if (which_case(vars, xy))
+			{
+				print_error("Error while printing minimap\n");
+				free_vars(vars);
+				exit(1);
+			}
 		}
-		loc[0]++;
 	}
-	return (0);
+	print_rays_on_minimap(vars);
 }

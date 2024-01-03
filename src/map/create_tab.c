@@ -1,44 +1,21 @@
 #include "../../include/cub3d.h"
 
-int check_assets(t_vars *vars)
+void	fill_tab(t_vars *vars, char **line)
 {
-	int fd[4];
-
-	fd[0] = open(vars->style->north_path, O_RDONLY);
-	fd[1] = open(vars->style->north_path, O_RDONLY);
-	fd[2] = open(vars->style->north_path, O_RDONLY);
-	fd[3] = open(vars->style->north_path, O_RDONLY);
-	if (fd[0] != -1 && fd[1] != -1 && fd[2] != -1 && fd[3] != -1)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		close(fd[2]);
-		close(fd[3]);
-		return (0);
-	}
-	return (1);	
-}
-
-void	fill_tab(t_vars *vars, int x)
-{
-	t_list *lst;
-	char	*tab;
 	int		i;
 	int		j;
 
 	j = 0;
-	tab = NULL;
-	lst = vars->map->lines;
-	while (lst)
+	while (j < vars->map->Y)
 	{
 		i = 0;
-		tab = (char *)lst->content;
-		while (tab[i] && i < x)
+		while (i < vars->map->X)
 		{
-			vars->map->tab[j][i] = tab[i];
+			vars->map->tab[j][i] = (int)line[0][i];
 			i++;
 		}
-		lst = lst->next;
+		free(*line);
+		*line = get_next_line(vars->map->fd);
 		j++;
 	}
 }
@@ -49,12 +26,12 @@ int **tab_alloc(int x, int y)
 	int		i;
 
 	i = 0;
-	tab = malloc(y * sizeof(int *));
+	tab = ft_calloc(y, sizeof(int *));
 	if (tab == NULL)
 		return (NULL);
 	while (i < y)
 	{
-		tab[i] = malloc(x * sizeof(int));
+		tab[i] = ft_calloc(x, sizeof(int));
 		if (tab[i] == NULL)
 		{
 			while (i > 0)
@@ -67,26 +44,68 @@ int **tab_alloc(int x, int y)
 	return (tab);
 }
 
-int	create_tab(t_vars *vars)
+char *starting_map(t_vars *vars)
 {
-	t_list	*lst;
+	int		j;
+	char	*line;
+
+	line = get_next_line(vars->map->fd);
+	while (*line)
+	{
+		j = 0;
+		while (line[j] == ' ' || line[j] == '1')
+			j++;
+		if (line[j] == '\n' && j > 0)
+			break ;
+		else
+		{
+			free(line);
+			line = get_next_line(vars->map->fd);
+		}
+	}
+	return (line);
+}
+
+void define_xy(t_vars *vars, char **tmp, int *x, int *y)
+{
+	int	xi;
+
+	xi = 0;
+	*x = ft_strlen(*tmp);
+	while (*tmp && !line_isprint(*tmp))
+	{
+		xi = ft_strlen(*tmp);
+		if (xi > *x)
+			*x = xi;
+		free(*tmp);
+		*tmp = get_next_line(vars->map->fd);
+		(*y)++;
+	}
+	if (*tmp)
+		free(*tmp);
+	*x -= 1;
+	close(vars->map->fd);
+}
+
+int	create_tab(t_vars *vars, char **line, char *argv)
+{
 	int		x;
 	int		y;
 
-	lst = vars->map->lines;
 	x = y = 0;
-	while (lst)
+	while (line_isprint(*line))
 	{
-		if (x < (int)ft_strlen((char *)(lst->content)))
-			x = (int)ft_strlen((char *)lst->content);
-		y++;
-		lst = lst->next;
+		free(*line);
+		*line = get_next_line(vars->map->fd);
 	}
+	define_xy(vars, line, &x, &y);
+	vars->map->fd = open(argv, O_RDONLY);
+	*line = starting_map(vars);
 	vars->map->tab = tab_alloc(x, y);
 	if (!vars->map->tab)
 		return (1);
 	vars->map->X = x;
 	vars->map->Y = y;
-	fill_tab(vars, x);
+	fill_tab(vars, line);
 	return (0);
 }

@@ -7,22 +7,19 @@ SRCS	= src/main.c \
 		  src/map/create_map.c \
 		  src/map/create_tab.c \
 		  src/map/show_map.c \
+		  src/map/init_player.c \
 		  src/style/color.c \
 		  src/style/find_style.c \
 		  src/style/find_style_next.c \
 		  src/hook/move.c \
-		  src/hook/move2.c \
-		  src/hook/move2p.c \
+		  src/hook/movep.c \
 		  src/raycasting/ray.c \
-		  src/raycasting/ray2.c \
-		  src/raycasting/ray2_tools.c \
-		  src/raycasting/ray2_h.c \
-		  src/raycasting/ray2_v.c \
-		  src/raycasting/ray2_vh.c \
+		  src/raycasting/ray_tools.c \
+		  src/raycasting/ray_h.c \
+		  src/raycasting/ray_v.c \
+		  src/raycasting/ray_vh.c \
 		  src/show3d/show.c \
-		  src/show3d/show2.c \
 		  src/show3d/wall_pixel.c \
-		  src/show3d/init.c \
 
 OBJS		= $(SRCS:.c=.o)
 
