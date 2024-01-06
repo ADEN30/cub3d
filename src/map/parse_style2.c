@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_style2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/06 15:45:26 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/06 15:46:56 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
 static char	*define_image_path(char *line)
@@ -38,7 +50,7 @@ static uint32_t	define_color(char *line, t_vars *vars)
 	return (get_rgba(value[0], value[1], value[2], 255));
 }
 
-int	last_style(char *line, t_vars *vars, int *check)
+static int	last_style(char *line, t_vars *vars, int *check)
 {
 	if (!ft_strncmp(line, "F ", 2) && !vars->style->define_floor)
 	{
@@ -64,10 +76,10 @@ int	last_style(char *line, t_vars *vars, int *check)
 		else
 			return (1);
 	}
-	return (0);
+	return (1);
 }
 
-int	next_style(char *line, t_vars *vars, int *check)
+static int	next_style(char *line, t_vars *vars, int *check)
 {
 	if (!ft_strncmp(line, "WE ", 3))
 	{
@@ -92,7 +104,7 @@ int	next_style(char *line, t_vars *vars, int *check)
 			return (1);
 	}
 	else
-		return(last_style(line, vars, check));
+		return (last_style(line, vars, check));
 }
 
 int	find_style(char *line, t_vars *vars, int *check)

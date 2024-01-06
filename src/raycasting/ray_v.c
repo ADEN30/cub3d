@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_v.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 11:19:05 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/06 15:35:23 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void looking_left(t_vars *vars, double *r, double *ofs, char *face)
+static void	looking_left(t_vars *vars, double *r, double *ofs, char *face)
 {
-	double tg;
+	double	tg;
 
 	tg = tan(vars->pers->angle);
 	r[0] = (((int)vars->pers->x / DIMENSION) * DIMENSION) - 0.0001;
@@ -21,9 +32,9 @@ void looking_left(t_vars *vars, double *r, double *ofs, char *face)
 	face[0] = 'W';
 }
 
-void looking_right(t_vars *vars, double *r, double *ofs, char *face)
+static void	looking_right(t_vars *vars, double *r, double *ofs, char *face)
 {
-	double tg;
+	double	tg;
 
 	tg = tan(vars->pers->angle);
 	r[0] = (((int)vars->pers->x / DIMENSION) * DIMENSION) + DIMENSION;
@@ -41,13 +52,13 @@ void looking_right(t_vars *vars, double *r, double *ofs, char *face)
 	face[0] = 'E';
 }
 
-void vertical_intersection(t_vars *vars, double *v, char *face)
+void	vertical_intersection(t_vars *vars, double *v, char *face)
 {
-    double  ray[2];
+	double	ray[2];
 	double	ofs[2];
-    
+
 	init_tabs(ray, ofs);
-    if (vars->pers->angle == M_PI / 2 || vars->pers->angle == 3 * M_PI / 2)
+	if (vars->pers->angle == M_PI / 2 || vars->pers->angle == 3 * M_PI / 2)
 	{
 		never_vh(vars, ray);
 		return ;

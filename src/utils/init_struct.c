@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/05 12:45:27 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/06 13:09:45 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
 t_map	*init_map(void)
@@ -7,13 +19,15 @@ t_map	*init_map(void)
 	map = malloc(sizeof(t_map));
 	if (!map)
 		return (NULL);
-	map->lines = NULL;
 	map->tab = NULL;
-	map->face = NULL;
+	map->cp_tab = NULL;
+	map->x = 0;
+	map->y = 0;
+	map->fd = -1;
 	return (map);
 }
 
-t_images	*init_images(void)
+static t_images	*init_images(void)
 {
 	t_images	*images;
 
@@ -24,8 +38,10 @@ t_images	*init_images(void)
 	images->north_texture = NULL;
 	images->south_texture = NULL;
 	images->west_texture = NULL;
+	images->minimap = NULL;
+	images->rays = NULL;
+	images->charac = NULL;
 	images->threed = NULL;
-	images->wall_image = NULL;
 	return (images);
 }
 
@@ -47,39 +63,19 @@ t_style	*init_style(void)
 	style->define_roof = 0;
 	style->floor = 0;
 	style->roof = 0;
-	style->wall = get_rgba(255, 255, 255, 255);
 	return (style);
 }
 
-t_ray	**init_ray(t_vars *vars)
-{
-	t_ray	**rays;
-
-	rays = malloc(sizeof(t_ray *) * (1));
-	if (!rays)
-		return (NULL);
-	rays[0] = malloc(sizeof(t_ray) * (2));
-	rays[0]->img = mlx_new_image(vars->mlx, vars->mlx->width, vars->mlx->height);
-	rays[0]->angle = 0.00;
-	return (rays);
-}
-
-t_pers	*init_pers(int x, int y, char c, t_vars *vars)
+t_pers	*init_pers(int x, int y, char c)
 {
 	t_pers	*pers;
 
 	pers = malloc(sizeof(t_pers));
 	if (!pers)
 		return (NULL);
-	pers->x = 0;
-	pers->y = 0;
-	pers->deltax = 0;
-	pers->deltay = 0;
-	if (x != -1)
-		pers->x = x;
-	if (y != -1)
-		pers->y = y;
-	pers->rays = init_ray(vars);
+	pers->x = x;
+	pers->y = y;
+	pers->points = NULL;
 	if (c == 'N')
 		pers->angle = 90 * M_PI / 180;
 	else if (c == 'S')
@@ -88,6 +84,8 @@ t_pers	*init_pers(int x, int y, char c, t_vars *vars)
 		pers->angle = 180 * M_PI / 180;
 	else if (c == 'E')
 		pers->angle = 0;
+	pers->deltax = cos(pers->angle);
+	pers->deltay = sin(pers->angle);
 	return (pers);
 }
 
@@ -98,10 +96,9 @@ t_vars	*init_vars(void)
 	vars = malloc(sizeof(t_vars));
 	if (!vars)
 		return (NULL);
+	vars->mlx = NULL;
 	vars->map = NULL;
-	vars->pers = NULL;
 	vars->style = NULL;
-	vars->turn = 0;
-	vars->x = 0;
+	vars->pers = NULL;
 	return (vars);
 }

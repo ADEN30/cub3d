@@ -1,38 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_tab.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/06 15:15:49 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/06 15:22:06 by jmathieu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
-void	fill_tab(t_vars *vars, char **line)
+static void	fill_tab(t_vars *vars, char **line)
 {
-	int		i;
-	int		j;
+	int		x;
+	int		y;
 
-	j = 0;
-	while (j < vars->map->Y)
+	y = 0;
+	while (line[0] && y < vars->map->y)
 	{
-		i = 0;
-		while (i < vars->map->X)
+		x = 0;
+		while (x < vars->map->x)
 		{
-			vars->map->tab[j][i] = (int)line[0][i];
-			i++;
+			if (!line[0][x] || line[0][x] == '\n')
+			{
+				while (x < vars->map->x)
+				{
+					vars->map->tab[y][x] = 32;
+					x++;
+				}
+				break ;
+			}
+			vars->map->tab[y][x] = (int)line[0][x];
+			x++;
 		}
 		free(*line);
 		*line = get_next_line(vars->map->fd);
-		j++;
+		y++;
 	}
 }
 
-int **tab_alloc(int x, int y)
+static int	**copy_map(t_vars *vars)
+{
+	int		x;
+	int		y;
+	int		**map;
+
+	y = -1;
+	map = ft_calloc(vars->map->y, sizeof(int *));
+	if (!map)
+		return (NULL);
+	while (++y < vars->map->y)
+	{
+		x = -1;
+		map[y] = ft_calloc(vars->map->x, sizeof(int));
+		if (!map[y])
+		{
+			while (y > 0)
+				free(map[--y]);
+			free(map);
+			return (NULL);
+		}
+		while (++x < vars->map->x)
+			map[y][x] = vars->map->tab[y][x];
+	}
+	return (map);
+}
+
+static int	**tab_alloc(t_vars *vars)
 {
 	int	**tab;
-	int		i;
+	int	i;
 
 	i = 0;
-	tab = ft_calloc(y, sizeof(int *));
-	if (tab == NULL)
+	tab = ft_calloc(vars->map->y,  sizeof(int *));
+	if (!tab)
 		return (NULL);
-	while (i < y)
+	while (i < vars->map->y)
 	{
-		tab[i] = ft_calloc(x, sizeof(int));
-		if (tab[i] == NULL)
+		tab[i] = ft_calloc(vars->map->x, sizeof(int));
+		if (!tab[i])
 		{
 			while (i > 0)
 				free(tab[--i]);
@@ -44,7 +92,7 @@ int **tab_alloc(int x, int y)
 	return (tab);
 }
 
-char *starting_map(t_vars *vars)
+static char	*starting_map(t_vars *vars)
 {
 	int		j;
 	char	*line;
@@ -66,46 +114,25 @@ char *starting_map(t_vars *vars)
 	return (line);
 }
 
-void define_xy(t_vars *vars, char **tmp, int *x, int *y)
+int	create_tab(t_vars *vars, char *argv)
 {
-	int	xi;
+	char	*line;
 
-	xi = 0;
-	*x = ft_strlen(*tmp);
-	while (*tmp && !line_isprint(*tmp))
-	{
-		xi = ft_strlen(*tmp);
-		if (xi > *x)
-			*x = xi;
-		free(*tmp);
-		*tmp = get_next_line(vars->map->fd);
-		(*y)++;
-	}
-	if (*tmp)
-		free(*tmp);
-	*x -= 1;
-	close(vars->map->fd);
-}
-
-int	create_tab(t_vars *vars, char **line, char *argv)
-{
-	int		x;
-	int		y;
-
-	x = y = 0;
-	while (line_isprint(*line))
-	{
-		free(*line);
-		*line = get_next_line(vars->map->fd);
-	}
-	define_xy(vars, line, &x, &y);
 	vars->map->fd = open(argv, O_RDONLY);
-	*line = starting_map(vars);
-	vars->map->tab = tab_alloc(x, y);
+	if (vars->map->fd == -1)
+		return (1);
+	line = starting_map(vars);
+	if (!line)
+		return (1);
+	vars->map->tab = tab_alloc(vars);
 	if (!vars->map->tab)
 		return (1);
-	vars->map->X = x;
-	vars->map->Y = y;
-	fill_tab(vars, line);
+	fill_tab(vars, &line);
+	if (line)
+		free(line);
+	close(vars->map->fd);
+	vars->map->cp_tab = copy_map(vars);
+	if (!vars->map->cp_tab)
+		return (1);
 	return (0);
 }
