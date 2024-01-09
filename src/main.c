@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:49:58 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/06 17:10:25 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:30:34 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	main(int argc, char *argv[])
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	if (init_graphic(vars))
 		return (free_vars(vars), 1);
-	if (show_minimap(vars))
-		return (free_vars(vars), 1);
 	find_wall(vars);
-	rays_on_minimap(vars);
 	show_view(vars);
 	mlx_loop_hook(vars->mlx, move, vars);
 	mlx_loop(vars->mlx);

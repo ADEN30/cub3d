@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_v.c                                            :+:      :+:    :+:   */
+/*   ray_v_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:05 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 13:48:39 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:01:54 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	looking_left(t_vars *vars, double *r, double *ofs, char *face)
 {

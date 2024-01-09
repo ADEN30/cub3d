@@ -1,10 +1,14 @@
-NO assets/north.png
-SO assets/south.png
-WE assets/west.png
-EA assets/east.png
 
-F 220,100,0
 C 225,30,0
+
+      WE assets/west.png
+
+  NO assets/north.png
+                              EA assets/east.png
+
+SO assets/south.png
+
+   F 220  ,100,0
 
         1111111111111111111111111
         1000000000110000000000001

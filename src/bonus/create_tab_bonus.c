@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_tab.c                                       :+:      :+:    :+:   */
+/*   create_tab_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:15:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 08:36:54 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:58:23 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	fill_tab(t_vars *vars, char **line)
 {

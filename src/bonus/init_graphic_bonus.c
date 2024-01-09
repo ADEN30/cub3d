@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_graphic.c                                     :+:      :+:    :+:   */
+/*   init_graphic_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:04:29 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/07 15:59:11 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/07 15:59:13 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static int	init(char *path, mlx_texture_t **texture)
 {
@@ -61,12 +61,30 @@ int	init_player_textures(t_vars *vars)
 	return (0);
 }
 
+static int	new_image(t_vars *vars, mlx_image_t **image)
+{
+	if (vars->map->y * MINI > MAX_HEIGHT)
+		return (print_error("Error : Map is too high\n"));
+	if (vars->map->x * MINI > MAX_WIDTH)
+		return (print_error("Error : Map is too large\n"));
+	else
+	{
+		*image = mlx_new_image(vars->mlx, vars->map->x * MINI,
+				vars->map->y * MINI);
+		if (!(*image))
+			return (print_error("Error : Can not create a new image\n"));
+	}
+	return (0);
+}
+
 int	init_graphic(t_vars *vars)
 {
 	t_images	*img;
 
 	img = vars->style->images;
 	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
+	if (new_image(vars, &img->minimap) || new_image(vars, &img->rays))
+		return (1);
 	if (!img->threed)
 		return (print_error("Error : Can not create a new image\n"));
 	if (init_player_textures(vars))

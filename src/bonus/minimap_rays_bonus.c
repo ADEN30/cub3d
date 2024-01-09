@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minimap_rays.c                                     :+:      :+:    :+:   */
+/*   minimap_rays_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 15:38:18 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/06 22:52:24 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/07 15:59:57 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/07 15:59:58 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	h_error(int *err, int *dxy, int *x0, int *sxy)
 {
@@ -69,7 +69,7 @@ void	rays_on_minimap(t_vars *vars)
 	i = 0;
 	mlx_put_pixel(vars->style->images->rays, vars->pers->x, vars->pers->y,
 		get_rgba(255, 0, 0, 255));
-	while (i <= 799)
+	while (i < MAX_WIDTH)
 	{
 		drawrays(vars, vars->pers->x, vars->pers->y, i);
 		i++;
@@ -81,4 +81,5 @@ void	rays_on_minimap(t_vars *vars)
 		free_vars(vars);
 		exit(1);
 	}
+	vars->style->images->rays->instances->z = 1;
 }

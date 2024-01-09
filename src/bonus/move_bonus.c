@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:10:41 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:07:20 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:02:58 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	move_a(t_vars *vars)
 {
@@ -28,6 +28,7 @@ static void	move_a(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -47,6 +48,7 @@ static void	move_d(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -66,6 +68,7 @@ static void	move_w(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -85,6 +88,7 @@ static void	move_s(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	rays_on_minimap(vars);
 	show_view(vars);
 }
 

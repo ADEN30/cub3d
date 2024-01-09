@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wall_pixel.c                                       :+:      :+:    :+:   */
+/*   wall_pixel_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:37:09 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/08 21:24:10 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/09 13:53:27 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 uint8_t	*get_pixel_north(mlx_texture_t *north, t_point *point, double y)
 {
@@ -19,8 +19,8 @@ uint8_t	*get_pixel_north(mlx_texture_t *north, t_point *point, double y)
 	int		pixel_position_t;
 	uint8_t	*pixel_color;
 
-	x_pixel_t = ((double)north->height / point->h) * y;
-	y_pixel_t = (int)point->x % MINI;
+	x_pixel_t = (((double)north->width / point->h) * y);
+	y_pixel_t = ((int)point->x % MINI);
 	pixel_position_t = ((int)x_pixel_t * north->width + (int)y_pixel_t);
 	pixel_color = &((north->pixels)[pixel_position_t * sizeof(uint32_t)]);
 	return (pixel_color);
@@ -33,7 +33,7 @@ uint8_t	*get_pixel_south(mlx_texture_t *south, t_point *point, double y)
 	int		pixel_position_t;
 	uint8_t	*pixel_color;
 
-	x_pixel_t = ((double)south->height / point->h) * y;
+	x_pixel_t = ((double)south->width / point->h) * y;
 	y_pixel_t = ((int)point->x % MINI);
 	pixel_position_t = ((int)x_pixel_t * south->width + (int)y_pixel_t);
 	pixel_color = &((south->pixels)[pixel_position_t * sizeof(uint32_t)]);

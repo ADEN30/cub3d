@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_minimap.c                                     :+:      :+:    :+:   */
+/*   show_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 18:21:19 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/06 16:21:17 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:01:42 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	put_pixels_dimension(t_vars *vars, int x, int y, uint32_t color)
 {
@@ -19,11 +19,11 @@ static void	put_pixels_dimension(t_vars *vars, int x, int y, uint32_t color)
 	int yi;
 
 	img = vars->style->images;
-	yi = y * DIMENSION;
-	while (yi < (y * DIMENSION) + DIMENSION)
+	yi = y * MINI;
+	while (yi < (y * MINI) + MINI)
 	{
-		xi = x * DIMENSION;
-		while (xi < (x * DIMENSION) + DIMENSION)
+		xi = x * MINI;
+		while (xi < (x * MINI) + MINI)
 		{
 			mlx_put_pixel(img->minimap, xi, yi, color);
 			xi++;

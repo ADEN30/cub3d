@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_all.c                                         :+:      :+:    :+:   */
+/*   free_all_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 12:43:41 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:06:09 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/07 15:59:19 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/07 15:59:20 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	free_map(t_map *map)
 {
@@ -41,6 +41,10 @@ static void	free_textures(t_images *images, mlx_t *mlx)
 			mlx_delete_texture(images->west_texture);
 		if (images->east_texture)
 			mlx_delete_texture(images->east_texture);
+		if (images->minimap)
+			mlx_delete_image(mlx, images->minimap);
+		if (images->rays)
+			mlx_delete_image(mlx, images->rays);
 		if (images->threed)
 			mlx_delete_image(mlx, images->threed);
 		free(images);

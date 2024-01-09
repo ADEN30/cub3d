@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show_view.c                                        :+:      :+:    :+:   */
+/*   show_view_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 13:47:45 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 15:04:36 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/08 21:36:19 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static t_point	*get_point(t_vars *vars, int i)
 {

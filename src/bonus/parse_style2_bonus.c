@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_style2.c                                     :+:      :+:    :+:   */
+/*   parse_style2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:45:26 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 09:30:20 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:02:29 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static char	*define_image_path(char *line)
 {
