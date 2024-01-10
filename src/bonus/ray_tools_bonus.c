@@ -1,18 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   ray_tools_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 12:37:40 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/05 12:37:41 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/05 11:18:47 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/07 16:02:00 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
-uint32_t	get_rgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
+int	max_xy(int x, int y)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	if (x > y)
+		return (x);
+	return (y);
+}
+
+double	dist(t_vars *vars, double x, double y)
+{
+	double	dx;
+	double	dy;
+
+	dx = x - (double)vars->pers->x;
+	dy = y - (double)vars->pers->y;
+	return (sqrt(dx * dx + dy * dy));
+}
+
+void	init_tabs(double *r, double *ofs)
+{
+	r[0] = 0;
+	r[1] = 0;
+	ofs[0] = 0;
+	ofs[1] = 0;
 }

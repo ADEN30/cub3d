@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 11:01:30 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 12:35:14 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/07 15:54:46 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/10 15:35:35 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -19,15 +19,15 @@
 # include <fcntl.h>
 # include <memory.h>
 # include <math.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "../libft/include/libft.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
+# include "../../libft/include/libft.h"
 
 # ifndef MAX_WIDTH
-#  define MAX_WIDTH 800
+#  define MAX_WIDTH 1280
 # endif
 
 # ifndef MAX_HEIGHT
-#  define MAX_HEIGHT 600
+#  define MAX_HEIGHT 720
 # endif
 
 # ifndef FOV
@@ -66,6 +66,8 @@ typedef struct s_images {
 	mlx_texture_t	*south_texture;
 	mlx_texture_t	*west_texture;
 	mlx_texture_t	*east_texture;
+	mlx_image_t		*minimap;
+	mlx_image_t		*rays;
 	mlx_image_t		*threed;
 }	t_images;
 
@@ -112,6 +114,7 @@ int			create_tab(t_vars *vars, char *argv);
 int			init_graphic(t_vars *vars);
 	/*init_graphic2*/
 int			check_dimensions(t_vars *vars);
+int			init_textures(t_vars *vars);
 	/*parse_map*/
 int			parse_map(int argc, char *argv[], t_vars *vars);
 	/*parse_map_check*/
@@ -143,6 +146,10 @@ double		dist(t_vars *vars, double x, double y);
 void		init_tabs(double *r, double *ofs);
 
 /*show3d*/
+	/*minimap_rays*/
+void		rays_on_minimap(t_vars *vars);
+	/*show_minimap*/
+int			show_minimap(t_vars *vars);
 	/*show_view*/
 void		show_view(t_vars *vars);
 	/*wall_pixel*/

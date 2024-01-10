@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
+/*   ray_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:02:56 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 09:38:18 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:02:10 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	change_xy(t_vars *vars, int i, double *xy, double dst)
 {
@@ -60,7 +60,7 @@ static char	check_move(t_vars *vars, double x, double y, int i)
 void	find_wall(t_vars *vars)
 {
 	int		i;
-	double	decrease_angle;
+	double	ratio;
 
 	i = 0;
 	vars->pers->points = ft_calloc(sizeof(t_point), MAX_WIDTH);
@@ -70,13 +70,13 @@ void	find_wall(t_vars *vars)
 		free_vars(vars);
 		exit(1);
 	}
-	decrease_angle = 60 / (double) MAX_WIDTH;
+	ratio = 60 / (double) MAX_WIDTH;
 	while (i < MAX_WIDTH)
 	{
 		vars->pers->points[i].face
 			= check_move(vars, vars->pers->x, vars->pers->y, i);
 		i++;
-		vars->pers->angle -= decrease_angle * M_PI / 180;
+		vars->pers->angle -= ratio * M_PI / 180;
 	}
 	vars->pers->angle = vars->pers->angle + (60 * M_PI / 180);
 }

@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   mouse_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/05 12:37:40 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/05 12:37:41 by jmathieu         ###   ########.fr       */
+/*   Created: 2024/01/07 16:00:16 by jmathieu          #+#    #+#             */
+/*   Updated: 2024/01/07 16:00:18 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
-uint32_t	get_rgba(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
+void	mouse(void *param)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	t_vars	*vars;
+
+	vars = param;
+	(void)vars;
+	//typedef void (*mlx_cursorfunc)(double xpos, double ypos, void* param);
+	//mlx_get_mouse_pos(vars->mlx, &vars->pers->x, &vars->pers->y);
 }

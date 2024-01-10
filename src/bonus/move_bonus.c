@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:10:41 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 08:56:36 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/10 16:02:36 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "cub3d_bonus.h"
 
 static void	move_a(t_vars *vars)
 {
@@ -30,6 +30,7 @@ static void	move_a(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	//rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -51,6 +52,7 @@ static void	move_d(t_vars *vars)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	//rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -62,14 +64,17 @@ static void	move_w(t_vars *vars)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;
 	else if (vars->pers->angle > 2 * M_PI)
 		vars->pers->angle = vars->pers->angle - 2 * M_PI;
-	xy[0] = vars->pers->x + vars->pers->deltax * vars->spd;
-	xy[1] = vars->pers->y - vars->pers->deltay * vars->spd;
+	xy[0] = vars->pers->x + vars->pers->deltax
+		* vars->spd;
+	xy[1] = vars->pers->y - vars->pers->deltay
+		* vars->spd;
 	if (check_collision(vars, xy[0], xy[1]))
 		return ;
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	//rays_on_minimap(vars);
 	show_view(vars);
 }
 
@@ -81,14 +86,17 @@ static void	move_s(t_vars *vars)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;
 	else if (vars->pers->angle > 2 * M_PI)
 		vars->pers->angle = vars->pers->angle - 2 * M_PI;
-	xy[0] = vars->pers->x - vars->pers->deltax * vars->spd;
-	xy[1] = vars->pers->y + vars->pers->deltay * vars->spd;
+	xy[0] = vars->pers->x - vars->pers->deltax
+		* vars->spd;
+	xy[1] = vars->pers->y + vars->pers->deltay
+		* vars->spd;
 	if (check_collision(vars, xy[0], xy[1]))
 		return ;
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
 	delete_images(vars);
+	//rays_on_minimap(vars);
 	show_view(vars);
 }
 
