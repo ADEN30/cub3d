@@ -27,7 +27,7 @@
 # endif
 
 # ifndef MAX_WIDTH
-#  define MAX_WIDTH 800
+#  define MAX_WIDTH 128
 # endif
 
 # ifndef MAX_HEIGHT

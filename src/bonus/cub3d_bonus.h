@@ -54,6 +54,7 @@ typedef struct s_point {
 	double		angle;
 	int			ray;
 	char		face;
+	int			test;
 }	t_point;
 
 typedef struct s_pers {

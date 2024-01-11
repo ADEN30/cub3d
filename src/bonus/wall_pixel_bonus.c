@@ -18,11 +18,32 @@ uint8_t	*get_pixel_north(mlx_texture_t *north, t_point *point, double y)
 	double	y_pixel_t;
 	int		pixel_position_t;
 	uint8_t	*pixel_color;
-
-	x_pixel_t = (((double)north->width / point->h) * y);
-	y_pixel_t = ((int)point->x % MINI);
-	pixel_position_t = ((int)x_pixel_t * north->width + (int)y_pixel_t);
-	pixel_color = &((north->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	(void)y_pixel_t;
+	(void) y;
+	x_pixel_t = ((int)(point->x * 16) % 128 * 4);
+	//y_pixel_t = ((int)(point->y * 16) / 128) * 4;
+	y_pixel_t = /*(int)point->h / 720 +*/ point->test/*- ((int)point->h / 720 * 128)*/;
+	//printf("y = %f\n", y);
+	//printf("test: %d\n", point->test / 128 /4);
+	pixel_position_t = (((int)x_pixel_t + (int)y_pixel_t));
+	//printf("piel_position: %d\n", pixel_position_t );
+	//printf("piel_position[%d]: %d\n", pixel_position_t, north->pixels[pixel_position_t] );
+	//printf("piel_position[%d]: %d\n", pixel_position_t + 1, north->pixels[pixel_position_t + 1] );
+	if (pixel_position_t / 128 / 4 < 128 )
+	{
+		//printf("GOOD\n");
+		pixel_color = &((north->pixels)[pixel_position_t]);
+	}
+	/*else
+	{
+		x_pixel_t = ((double)north->width / point->h) * y;
+		y_pixel_t = ((int)point->x % MINI);
+		pixel_position_t = ((int)x_pixel_t * north->width + (int)y_pixel_t);
+		//printf("piel_position[%d]: %d\n", pixel_position_t, north->pixels[pixel_position_t] );
+	//printf("piel_position[%d]: %d\n", pixel_position_t + 1, north->pixels[pixel_position_t + 1] );
+		pixel_color = &((north->pixels)[pixel_position_t * sizeof(uint32_t)]);
+	}*/
+	
 	return (pixel_color);
 }
 
