@@ -34,6 +34,13 @@ uint8_t	*get_pixel_north(mlx_texture_t *north, t_point *point, double y)
 		//printf("GOOD\n");
 		pixel_color = &((north->pixels)[pixel_position_t]);
 	}
+	else
+	{
+		point->test = 0;
+		y_pixel_t = point->test;
+		pixel_position_t = (((int)x_pixel_t + (int)y_pixel_t));
+		pixel_color = &((north->pixels)[pixel_position_t]);
+	}
 	/*else
 	{
 		x_pixel_t = ((double)north->width / point->h) * y;

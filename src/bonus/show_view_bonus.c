@@ -33,6 +33,8 @@ void	draw_all(t_vars *vars, int i)
 	t_point	*point;
 	int		y;
 
+
+
 	y = -1;
 	point = get_point(vars, i);
 	while (++y < MAX_HEIGHT)
@@ -40,10 +42,9 @@ void	draw_all(t_vars *vars, int i)
 		if (y >= (MAX_HEIGHT / 2 - (point->h / 2))
 			&& y < (MAX_HEIGHT / 2 + (point->h / 2)))
 		{
-			//printf("y %d\n", y);
 			mlx_put_pixel(vars->style->images->threed, i, y,
 				get_pixel(vars, point, y));
-			point->test += 128;
+			point->test = point->h * 4;
 		}
 		else if (y < MAX_HEIGHT / 2 - (point->h / 2))
 			mlx_put_pixel(vars->style->images->threed, i, y,
@@ -64,8 +65,8 @@ static void	calc_height(t_vars *vars, int i)
 	ofsangle = vars->pers->angle - vars->pers->points[i].angle;
 	vars->pers->points[i].dst = vars->pers->points[i].dst
 		* cos(ofsangle);
-	printf("dst: %f\n", vars->pers->points[i].dst);
-	vars->pers->points[i].h = (MAX_HEIGHT / (vars->pers->points[i].dst * 0.25));
+	//printf("dst: %f\n", vars->pers->points[i].dst);
+	vars->pers->points[i].h = (MAX_HEIGHT / (vars->pers->points[i].dst * 0.1));
 }
 
 void	show_view(t_vars *vars)
@@ -80,7 +81,7 @@ void	show_view(t_vars *vars)
 		calc_height(vars, i);
 		draw_all(vars, i);
 		vars->pers->points->test = 0;
-		printf("point->h %f\n", vars->pers->points[i].h);
+	//	printf("point->h %f\n", vars->pers->points[i].h);
 		i++;
 	}
 	cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
