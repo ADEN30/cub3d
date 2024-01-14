@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 15:35:40 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:23:15 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,11 @@
 static void	define_speed(t_vars *vars)
 {
 	if (vars->dim == 64)
-		vars->spd = 0.8;
+		vars->spd = 5;
 	else if (vars->dim == 128)
-		vars->spd = 1.6;
+		vars->spd = 10;
 	else if (vars->dim == 256)
-		vars->spd = 3.2;
-}
-
-static void	define_ratio(t_vars *vars)
-{
-	if (vars->dim == 64)
-		vars->ratio = 0.0125;
-	else if (vars->dim == 128)
-		vars->ratio = 0.01;
-	else if (vars->dim == 256)
-		vars->ratio = 0.005;
+		vars->spd = 20;
 }
 
 int check_dimensions(t_vars *vars)
@@ -37,6 +27,8 @@ int check_dimensions(t_vars *vars)
 	t_images	*imgs;
 
 	imgs = vars->style->images;
+	if (imgs->north_texture->width != imgs->north_texture->height)
+		return (1);
 	if (imgs->north_texture->width != imgs->south_texture->width
 		|| imgs->north_texture->height != imgs->south_texture->height)
 		return (1);
@@ -47,7 +39,7 @@ int check_dimensions(t_vars *vars)
 		|| imgs->north_texture->height != imgs->east_texture->height)
 		return (1);
 	vars->dim = imgs->north_texture->width;
-	define_ratio(vars);
+	vars->ratio = 0.8215 / vars->dim;
 	define_speed(vars);
 	return (0);	
 }

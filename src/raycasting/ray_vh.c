@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:10 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 09:47:17 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:55:53 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	wall_vh(t_vars *vars, double *r, double *xy, int *mp)
 	return (0);
 }
 
-void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
+int	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
 {
 	int	i;
 	int	mp[2];
@@ -46,10 +46,10 @@ void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
 		{
 			xy[0] = vars->pers->x;
 			xy[1] = vars->pers->y;
-			return ;
+			return (1);
 		}
 		if (wall_vh(vars, ray, xy, mp))
-			return ;
+			return (0);
 		else
 		{
 			ray[0] += ofs[0];
@@ -57,4 +57,5 @@ void	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
 			i += 1;
 		}
 	}
+	return (0);
 }

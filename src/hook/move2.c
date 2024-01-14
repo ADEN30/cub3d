@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:30:51 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 09:59:04 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:01:49 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	check_collision(t_vars *vars, double x, double y)
 
 	adjust[0] = vars->pers->x;
 	adjust[1] = vars->pers->y;
-	if (x > (vars->map->x - 1) * vars->dim || y > (vars->map->y - 1) * vars->dim
-		|| x < vars->dim || y < vars->dim)
+	if (x > (vars->map->x - 1) * vars->dim || y > (vars->map->y - 1)
+		* vars->dim || x < vars->dim || y < vars->dim)
 	{
 		if (x > vars->dim && x < (vars->map->x - 1) * vars->dim)
 			adjust[0] = x;
@@ -50,7 +50,6 @@ static void	rotate_left(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 
@@ -66,7 +65,6 @@ static void	rotate_right(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 
@@ -76,12 +74,4 @@ void	move2(t_vars *vars)
 		rotate_left(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(vars);
-}
-
-void	delete_images(t_vars *vars)
-{
-	if (vars->style->images->threed)
-		mlx_delete_image(vars->mlx, vars->style->images->threed);
-	vars->style->images->threed = mlx_new_image(vars->mlx,
-			MAX_WIDTH, MAX_HEIGHT);
 }

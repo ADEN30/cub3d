@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:57 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 16:01:11 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 11:24:50 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void drawrays(t_vars *vars, int x0, int y0, int i)
 	define_sxy(vars, i, sxy);
 	while (1)
 	{
-		mlx_put_pixel(vars->style->images->rays, x0 / (vars->dim / 8),
+		mlx_put_pixel(vars->style->images->threed, x0 / (vars->dim / 8),
 			y0 / (vars->dim / 8), get_rgba(1, 215, 88, 255));
 		if (x0 == (int) vars->pers->points[i].x
 			&& y0 == (int) vars->pers->points[i].y)
@@ -64,22 +64,19 @@ static void drawrays(t_vars *vars, int x0, int y0, int i)
 void	rays_on_minimap(t_vars *vars)
 {
 	int		i;
-	int32_t	cs;
+	//int32_t	cs;
 
 	i = 0;
-	mlx_put_pixel(vars->style->images->rays, vars->pers->x, vars->pers->y,
-		get_rgba(255, 0, 0, 255));
 	while (i < MAX_WIDTH)
 	{
 		drawrays(vars, vars->pers->x, vars->pers->y, i);
 		i++;
 	}
-	cs = mlx_image_to_window(vars->mlx, vars->style->images->rays, 0, 0);
-	if (cs == -1)
-	{
-		print_error("Error : Can not put pixels on minimap\n");
-		free_vars(vars);
-		exit(1);
-	}
-	vars->style->images->rays->instances->z = 1;
+	//cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
+	//if (cs == -1)
+	//{
+		//print_error("Error : Can not put pixels on minimap\n");
+		//free_vars(vars);
+		//exit(1);
+	//}
 }

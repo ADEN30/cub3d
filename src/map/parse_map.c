@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:14:15 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 07:39:24 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:30:31 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	read_map_file(t_vars *vars, char *argv)
 		return (print_error("Error : Wrong asset(s) path(s)\n"));
 	if (check_next_line(vars, &line))
 		return (print_error("Error : No map definition in file\n"));
+	(void)argv;
 	define_xy(vars, &line);
 	if (create_tab(vars, argv))
 		return (print_error("Error : Map's tab could not be created\n"));

@@ -6,13 +6,13 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:49:58 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 11:02:20 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:01:10 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	main(int argc, char *argv[])
+int	main(int argc, char **argv)
 {
 	t_vars	*vars;
 

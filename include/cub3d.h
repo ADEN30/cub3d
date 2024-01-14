@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:01:30 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 12:35:14 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:04:50 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,12 @@ uint32_t	define_color(char *line, t_vars *vars);
 	/*ray*/
 void		find_wall(t_vars *vars);
 	/*ray_h*/
-void		horizontal_intersection(t_vars *vars, double *h, char *face);
+int			horizontal_intersection(t_vars *vars, double *h, char *face);
 	/*ray_v*/
-void		vertical_intersection(t_vars *vars, double *v, char *face);
+int			vertical_intersection(t_vars *vars, double *v, char *face);
 	/*ray_vh*/
 void		never_vh(t_vars *vars, double *r);
-void		find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
+int			find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
 	/*ray_tools*/
 int			max_xy(int x, int y);
 double		dist(t_vars *vars, double x, double y);

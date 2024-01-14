@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:19 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 15:59:20 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:32:49 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void	free_map(t_map *map)
 {
+	int i;
+
+	i = map->y;
 	if (map->cp_tab)
 	{
-		while (map->y > 0)
-			free(map->cp_tab[--map->y]);
+		while (i > 0)
+			free(map->cp_tab[--i]);
 		free(map->cp_tab);
 	}
 	if (map->tab)
@@ -41,10 +44,6 @@ static void	free_textures(t_images *images, mlx_t *mlx)
 			mlx_delete_texture(images->west_texture);
 		if (images->east_texture)
 			mlx_delete_texture(images->east_texture);
-		if (images->minimap)
-			mlx_delete_image(mlx, images->minimap);
-		if (images->rays)
-			mlx_delete_image(mlx, images->rays);
 		if (images->threed)
 			mlx_delete_image(mlx, images->threed);
 		free(images);

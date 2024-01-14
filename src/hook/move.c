@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:10:41 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 08:56:36 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:43:33 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	move_a(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 
@@ -50,7 +49,6 @@ static void	move_d(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 
@@ -69,7 +67,6 @@ static void	move_w(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 
@@ -88,7 +85,6 @@ static void	move_s(t_vars *vars)
 	if (vars->pers->points)
 		free(vars->pers->points);
 	find_wall(vars);
-	delete_images(vars);
 	show_view(vars);
 }
 

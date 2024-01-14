@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:00 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 15:35:58 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:54:19 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static t_images	*init_images(void)
 	images->north_texture = NULL;
 	images->south_texture = NULL;
 	images->west_texture = NULL;
-	images->minimap = NULL;
-	images->rays = NULL;
 	images->threed = NULL;
 	return (images);
 }

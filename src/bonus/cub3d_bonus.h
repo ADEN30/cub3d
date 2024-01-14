@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:54:46 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 15:35:35 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:54:09 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include "../../libft/include/libft.h"
 
 # ifndef MAX_WIDTH
-#  define MAX_WIDTH 1280
+#  define MAX_WIDTH 800
 # endif
 
 # ifndef MAX_HEIGHT
-#  define MAX_HEIGHT 720
+#  define MAX_HEIGHT 600
 # endif
 
 # ifndef FOV
@@ -66,8 +66,6 @@ typedef struct s_images {
 	mlx_texture_t	*south_texture;
 	mlx_texture_t	*west_texture;
 	mlx_texture_t	*east_texture;
-	mlx_image_t		*minimap;
-	mlx_image_t		*rays;
 	mlx_image_t		*threed;
 }	t_images;
 
@@ -149,7 +147,7 @@ void		init_tabs(double *r, double *ofs);
 	/*minimap_rays*/
 void		rays_on_minimap(t_vars *vars);
 	/*show_minimap*/
-int			show_minimap(t_vars *vars);
+void		show_minimap(t_vars *vars);
 	/*show_view*/
 void		show_view(t_vars *vars);
 	/*wall_pixel*/

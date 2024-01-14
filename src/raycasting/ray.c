@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:02:56 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 09:38:18 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:18:25 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ static void	define_angle(t_vars *vars)
 		vars->pers->angle = vars->pers->angle - 2 * M_PI;
 }
 
+static void	reverse_angle(t_vars *vars, int i, double *ra)
+{
+	vars->pers->points[i].angle = vars->pers->angle;
+	vars->pers->angle = *ra;
+}
+
 static char	check_move(t_vars *vars, double x, double y, int i)
 {
 	double	h[2];
@@ -44,12 +50,13 @@ static char	check_move(t_vars *vars, double x, double y, int i)
 	ra = vars->pers->angle;
 	vars->pers->angle = vars->pers->angle + M_PI / 180 * 30;
 	define_angle(vars);
-	horizontal_intersection(vars, h, face);
+	if (horizontal_intersection(vars, h, face))
+		face[1] = '0';
 	dst[0] = dist(vars, h[0], h[1]);
-	vertical_intersection(vars, v, face);
+	if (vertical_intersection(vars, v, face))
+		face[0] = '0';
 	dst[1] = dist(vars, v[0], v[1]);
-	vars->pers->points[i].angle = vars->pers->angle;
-	vars->pers->angle = ra;
+	reverse_angle(vars, i, &ra);
 	if ((dst[0] <= dst[1] && dst[0] != 0) || dst[1] == 0)
 		return (change_xy(vars, i, h, dst[0]), face[1]);
 	else if ((dst[1] <= dst[0] && dst[1] != 0) || dst[0] == 0)

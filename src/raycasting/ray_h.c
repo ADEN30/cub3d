@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:00 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 08:54:17 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:04:23 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	looking_down(t_vars *vars, double *r, double *ofs, char *face)
 	face[1] = 'S';
 }
 
-void	horizontal_intersection(t_vars *vars, double *h, char *face)
+int	horizontal_intersection(t_vars *vars, double *h, char *face)
 {
 	double	ray[2];
 	double	ofs[2];
@@ -61,11 +61,13 @@ void	horizontal_intersection(t_vars *vars, double *h, char *face)
 	if (vars->pers->angle == 0 || vars->pers->angle == M_PI)
 	{
 		never_vh(vars, ray);
-		return ;
+		return (0);
 	}
 	else if (vars->pers->angle < M_PI)
 		looking_up(vars, ray, ofs, face);
 	else if (vars->pers->angle > M_PI)
 		looking_down(vars, ray, ofs, face);
-	find_wall_vh(vars, h, ray, ofs);
+	if (find_wall_vh(vars, h, ray, ofs))
+		return (1);
+	return (0);
 }

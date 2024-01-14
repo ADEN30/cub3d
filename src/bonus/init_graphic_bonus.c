@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:11 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 16:00:45 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:44:30 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,37 +59,27 @@ int	init_player(t_vars *vars)
 	return (0);
 }
 
-static int	new_image(t_vars *vars, mlx_image_t **image)
-{
-	if ((vars->map->y * vars->dim) / (vars->dim / 8) > MAX_HEIGHT)
-		return (print_error("Error : Map is too high\n"));
-	if ((vars->map->x * vars->dim) / (vars->dim / 8) > MAX_WIDTH)
-		return (print_error("Error : Map is too large\n"));
-	else
-	{
-		*image = mlx_new_image(vars->mlx, vars->map->x * vars->dim,
-				vars->map->y * vars->dim);
-		if (!(*image))
-			return (print_error("Error : Can not create a new image\n"));
-	}
-	return (0);
-}
-
 int	init_graphic(t_vars *vars)
 {
 	t_images	*img;
+	int32_t		cs;
 
 	img = vars->style->images;
-	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
-	if (!img->threed)
-		return (print_error("Error : Can not create a new image\n"));
 	if (init_textures(vars))
 		return (print_error("Error : Can not load textures\n"));
 	if (check_dimensions(vars))
 		return (print_error("Error : Textures sizes are not identical\n"));
-	if (new_image(vars, &img->minimap) || new_image(vars, &img->rays))
-		return (1);
+	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
+	if (!img->threed)
+		return (print_error("Error : Can not create a new image\n"));
 	if (init_player(vars))
 		return (1);
+	cs = mlx_image_to_window(vars->mlx, img->threed, 0, 0);
+	if (cs == -1)
+	{
+		print_error("Error : Can not print pixels\n");
+		free_vars(vars);
+		exit(1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 09:13:09 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:44:19 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	init_player_textures(t_vars *vars)
 int	init_graphic(t_vars *vars)
 {
 	t_images	*img;
+	int32_t		cs;
 
 	img = vars->style->images;
 	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
@@ -73,5 +74,12 @@ int	init_graphic(t_vars *vars)
 		return (print_error("Error : Can not create a new image\n"));
 	if (init_player_textures(vars))
 		return (1);
+	cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
+	if (cs == -1)
+	{
+		print_error("Error : Can not print pixels\n");
+		free_vars(vars);
+		exit(1);
+	}
 	return (0);
 }

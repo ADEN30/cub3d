@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:43:41 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:06:09 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:30:11 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void	free_map(t_map *map)
 {
+	int i;
+
+	i = map->y;
 	if (map->cp_tab)
 	{
-		while (map->y > 0)
-			free(map->cp_tab[--map->y]);
+		while (i > 0)
+			free(map->cp_tab[--i]);
 		free(map->cp_tab);
 	}
 	if (map->tab)
