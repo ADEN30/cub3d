@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/14 15:44:19 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:36:26 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	init(char *path, mlx_texture_t **texture)
 	return (0);
 }
 
-int	init_textures(t_vars *vars)
+static int	init_textures(t_vars *vars)
 {
 	t_images	*imgs;
 	t_style		*style;
@@ -35,26 +35,38 @@ int	init_textures(t_vars *vars)
 	return (0);
 }
 
+static int	minimap_dimensions(t_vars *vars)
+{
+	mlx_texture_t	*txt;
+
+	txt = vars->style->images->north_texture;
+	if ((vars->map->x * txt->width >= MAX_WIDTH)
+		|| (vars->map->y * txt->height >= MAX_HEIGHT))
+		return (1);
+	return (0);
+}
+
 int	init_player_textures(t_vars *vars)
 {
-	int	x;
-	int	y;
+	int	xy[2];
 
-	y = -1;
+	xy[1] = -1;
 	if (init_textures(vars))
 		return (print_error("Error : Can not load textures\n"));
 	if (check_dimensions(vars))
 		return (print_error("Error : Textures sizes are not identical\n"));
-	while (++y < vars->map->y)
+	if (minimap_dimensions(vars))
+		return (print_error("Error : Map is too big, it can not be generated\n"));
+	while (++xy[1] < vars->map->y)
 	{
-		x = -1;
-		while (++x < vars->map->x)
+		xy[0] = -1;
+		while (++xy[0] < vars->map->x)
 		{
-			if (ft_strchr("NSEW", (char) vars->map->tab[y][x]))
+			if (ft_strchr("NSEW", (char) vars->map->tab[xy[1]][xy[0]]))
 			{
-				vars->pers = init_pers(x * vars->dim + (vars->dim / 2),
-						y * vars->dim + (vars->dim / 2),
-						(char) vars->map->tab[y][x]);
+				vars->pers = init_pers(xy[0] * vars->dim + (vars->dim / 2),
+						xy[1] * vars->dim + (vars->dim / 2),
+						(char) vars->map->tab[xy[1]][xy[0]]);
 				if (!vars->pers)
 					return (print_error("Error : Can not generate a player\n"));
 			}

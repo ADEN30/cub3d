@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:11 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/14 15:44:30 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:36:34 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ int	init_player(t_vars *vars)
 	return (0);
 }
 
+static int	minimap_dimensions(t_vars *vars)
+{
+	mlx_texture_t	*txt;
+
+	txt = vars->style->images->north_texture;
+	if ((vars->map->x * txt->width >= MAX_WIDTH)
+		|| (vars->map->y * txt->height >= MAX_HEIGHT))
+		return (1);
+	return (0);
+}
+
 int	init_graphic(t_vars *vars)
 {
 	t_images	*img;
@@ -69,6 +80,8 @@ int	init_graphic(t_vars *vars)
 		return (print_error("Error : Can not load textures\n"));
 	if (check_dimensions(vars))
 		return (print_error("Error : Textures sizes are not identical\n"));
+	if (minimap_dimensions(vars))
+		return (print_error("Error : Map is too big, it can not be generated\n"));
 	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
 	if (!img->threed)
 		return (print_error("Error : Can not create a new image\n"));

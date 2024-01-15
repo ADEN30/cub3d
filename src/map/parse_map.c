@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:14:15 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/13 16:30:31 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:51:01 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ static void	define_xy(t_vars *vars, char **line)
 	vars->map->fd = -1;
 }
 
+static int	check_first_line(t_vars *vars)
+{
+
+}
+
 int	read_map_file(t_vars *vars, char *argv)
 {
 	char	*line;
@@ -56,6 +61,8 @@ int	read_map_file(t_vars *vars, char *argv)
 	define_xy(vars, &line);
 	if (create_tab(vars, argv))
 		return (print_error("Error : Map's tab could not be created\n"));
+	if (check_first_line(vars))
+		return (print_error("Error : Map is not valid\n"));
 	if (check_map(vars))
 		return (1);
 	return (0);
