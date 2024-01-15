@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:14:15 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 14:51:01 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:44:34 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	define_xy(t_vars *vars, char **line)
 	close(vars->map->fd);
 	vars->map->fd = -1;
 }
-
 
 int	read_map_file(t_vars *vars, char *argv)
 {

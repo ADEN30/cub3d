@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 14:36:26 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:45:22 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static int	minimap_dimensions(t_vars *vars)
 	mlx_texture_t	*txt;
 
 	txt = vars->style->images->north_texture;
-	if ((vars->map->x * txt->width >= MAX_WIDTH)
-		|| (vars->map->y * txt->height >= MAX_HEIGHT))
+	if ((vars->map->x * vars->ratio * txt->width >= MAX_WIDTH)
+		|| (vars->map->y * vars->ratio * txt->height >= MAX_HEIGHT))
 		return (1);
 	return (0);
 }

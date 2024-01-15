@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:15:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/13 16:28:28 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 15:56:04 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static char	*starting_map(t_vars *vars)
 	char	*line;
 
 	line = get_next_line(vars->map->fd);
-	while (*line)
+	while (line)
 	{
 		j = 0;
 		while (line[j] == ' ' || line[j] == '1')
