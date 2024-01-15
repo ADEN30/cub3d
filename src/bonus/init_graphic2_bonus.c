@@ -22,7 +22,7 @@ static void	define_speed(t_vars *vars)
 		vars->spd = 20;
 }
 
-int check_dimensions(t_vars *vars)
+int	check_dimensions(t_vars *vars)
 {
 	t_images	*imgs;
 
@@ -41,5 +41,5 @@ int check_dimensions(t_vars *vars)
 	vars->dim = imgs->north_texture->width;
 	vars->ratio = 0.8215 / vars->dim;
 	define_speed(vars);
-	return (0);	
+	return (0);
 }

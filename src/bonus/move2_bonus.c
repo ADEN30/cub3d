@@ -17,12 +17,12 @@ static int	check_before_collision(t_vars *vars, double *adjust, double x,
 {
 	if (((int) adjust[0] / vars->dim != (int) x / vars->dim)
 		&& ((int) adjust[1] / vars->dim != (int) y / vars->dim))
-		{
-			if ((vars->map->tab[(int) y / vars->dim][(int) adjust[0] /
+	{
+		if ((vars->map->tab[(int) y / vars->dim][(int) adjust[0]
 				vars->dim]) == '1' && (vars->map->tab[(int) adjust[1]
-					/ vars->dim][(int) x / vars->dim]) == '1')
-				return (1);
-		}
+				vars->dim][(int) x / vars->dim]) == '1')
+			return (1);
+	}
 	return (0);
 }
 

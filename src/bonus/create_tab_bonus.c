@@ -74,7 +74,7 @@ static int	**tab_alloc(t_vars *vars)
 	int	i;
 
 	i = 0;
-	tab = malloc(vars->map->y *  sizeof(int *));
+	tab = malloc(vars->map->y * sizeof(int *));
 	if (!tab)
 		return (NULL);
 	while (i < vars->map->y)

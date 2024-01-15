@@ -14,7 +14,7 @@
 
 static void	free_map(t_map *map)
 {
-	int i;
+	int	i;
 
 	i = map->y;
 	if (map->cp_tab)

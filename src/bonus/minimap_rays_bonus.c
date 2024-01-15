@@ -36,14 +36,14 @@ static void	define_sxy(t_vars *vars, int i, int *sxy)
 		sxy[1] = -1;
 }
 
-static void drawrays(t_vars *vars, int x0, int y0, int i)
+static	void	drawrays(t_vars *vars, int x0, int y0, int i)
 {
 	int	dxy[2];
 	int	sxy[2];
 	int	err[2];
 
 	dxy[0] = abs((int) vars->pers->points[i].x - x0);
-	dxy[1] = -abs((int) vars->pers->points[i].y - y0); 
+	dxy[1] = -abs((int) vars->pers->points[i].y - y0);
 	err[0] = dxy[0] + dxy[1];
 	define_sxy(vars, i, sxy);
 	while (1)
@@ -52,7 +52,7 @@ static void drawrays(t_vars *vars, int x0, int y0, int i)
 			y0 / (vars->dim / 8), get_rgba(1, 215, 88, 255));
 		if (x0 == (int) vars->pers->points[i].x
 			&& y0 == (int) vars->pers->points[i].y)
-			break;
+			break ;
 		err[1] = 2 * err[0];
 		if (err[1] >= dxy[1])
 			h_error(err, dxy, &x0, sxy);
@@ -64,7 +64,6 @@ static void drawrays(t_vars *vars, int x0, int y0, int i)
 void	rays_on_minimap(t_vars *vars)
 {
 	int		i;
-	//int32_t	cs;
 
 	i = 0;
 	while (i < MAX_WIDTH)
@@ -72,11 +71,4 @@ void	rays_on_minimap(t_vars *vars)
 		drawrays(vars, vars->pers->x, vars->pers->y, i);
 		i++;
 	}
-	//cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
-	//if (cs == -1)
-	//{
-		//print_error("Error : Can not put pixels on minimap\n");
-		//free_vars(vars);
-		//exit(1);
-	//}
 }

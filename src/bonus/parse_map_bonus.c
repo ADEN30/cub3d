@@ -14,8 +14,8 @@
 
 static void	define_xy(t_vars *vars, char **line)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 	int	xi;
 
 	y = 0;
@@ -47,7 +47,8 @@ int	read_map_file(t_vars *vars, char *argv)
 	if (!line || !ft_strlen(line))
 		return (print_error("Error : Empty file\n"));
 	if (find_all_style(vars, &line))
-		return (print_error("Error : Wrong or No or Multiple information in the file\n"));
+		return (print_error("Error : Wrong or No or Multiple information\
+	 in the file\n"));
 	if (check_assets(vars, &line))
 		return (print_error("Error : Wrong asset(s) path(s)\n"));
 	if (check_next_line(vars, &line))

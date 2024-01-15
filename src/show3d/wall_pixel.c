@@ -12,7 +12,8 @@
 
 #include "../../include/cub3d.h"
 
-uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north, t_point *point, double y)
+uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;
@@ -26,7 +27,8 @@ uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north, t_point *point, dou
 	return (pixel_color);
 }
 
-uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south, t_point *point, double y)
+uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;
@@ -42,7 +44,8 @@ uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south, t_point *point, dou
 	return (pixel_color);
 }
 
-uint8_t	*get_pixel_east(t_vars *vars, mlx_texture_t *east, t_point *point, double y)
+uint8_t	*get_pixel_east(t_vars *vars, mlx_texture_t *east, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;
@@ -56,7 +59,8 @@ uint8_t	*get_pixel_east(t_vars *vars, mlx_texture_t *east, t_point *point, doubl
 	return (pixel_color);
 }
 
-uint8_t	*get_pixel_west(t_vars *vars, mlx_texture_t *west, t_point *point, double y)
+uint8_t	*get_pixel_west(t_vars *vars, mlx_texture_t *west, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;

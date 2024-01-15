@@ -18,6 +18,4 @@ void	mouse(void *param)
 
 	vars = param;
 	(void)vars;
-	//typedef void (*mlx_cursorfunc)(double xpos, double ypos, void* param);
-	//mlx_get_mouse_pos(vars->mlx, &vars->pers->x, &vars->pers->y);
 }

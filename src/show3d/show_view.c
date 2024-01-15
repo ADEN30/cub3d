@@ -41,7 +41,7 @@ void	draw_all(t_vars *vars, int i)
 			mlx_put_pixel(vars->style->images->threed, i, y,
 				vars->style->roof);
 		if (y >= (MAX_HEIGHT / 2 - (point->h / 2))
-				&& y < (MAX_HEIGHT / 2 + (point->h / 2)))
+			&& y < (MAX_HEIGHT / 2 + (point->h / 2)))
 		{
 			if (point->face == '0')
 				mlx_put_pixel(vars->style->images->threed, i, y,
@@ -57,7 +57,6 @@ void	draw_all(t_vars *vars, int i)
 	free(point);
 }
 
-
 static void	calc_height(t_vars *vars, int i)
 {
 	double	ofsangle;
@@ -66,7 +65,7 @@ static void	calc_height(t_vars *vars, int i)
 	vars->pers->points[i].dst = vars->pers->points[i].dst
 		* cos(ofsangle);
 	vars->pers->points[i].h = MAX_HEIGHT
-		/ (vars->pers->points[i].dst * vars->ratio) ;
+		/ (vars->pers->points[i].dst * vars->ratio);
 }
 
 void	show_view(t_vars *vars)

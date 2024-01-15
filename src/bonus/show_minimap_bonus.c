@@ -15,8 +15,8 @@
 static void	put_pixels_dimension(t_vars *vars, int x, int y, uint32_t color)
 {
 	t_images	*img;
-	int xi;
-	int yi;
+	int			xi;
+	int			yi;
 
 	img = vars->style->images;
 	yi = y * vars->dim / (vars->dim / 8);
@@ -49,25 +49,14 @@ static void	which_case(t_vars *vars, int x, int y)
 
 void	show_minimap(t_vars *vars)
 {
-	//int32_t		cs;
-	//t_images	*img;
 	int			x;
 	int			y;
 
 	y = -1;
-	//img = vars->style->images;
 	while (++y < vars->map->y)
 	{
 		x = -1;
 		while (++x < vars->map->x)
 			which_case(vars, x, y);
 	}
-	//cs = mlx_image_to_window(vars->mlx, img->threed, 0, 0);
-	//if (cs == -1)
-	//{
-		//print_error("Error : Can not put pixels on minimap\n");
-		//free_vars(vars);
-		//exit(1);
-	//}
-	//vars->style->images->threed->instances->z = 1;
 }

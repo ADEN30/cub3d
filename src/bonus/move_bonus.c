@@ -14,7 +14,7 @@
 
 static void	move_a(t_vars *vars)
 {
-	double xy[2];
+	double	xy[2];
 
 	if (vars->pers->angle < 0)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;
@@ -36,7 +36,7 @@ static void	move_a(t_vars *vars)
 
 static void	move_d(t_vars *vars)
 {
-	double xy[2];
+	double	xy[2];
 
 	if (vars->pers->angle < 0)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;
@@ -58,14 +58,14 @@ static void	move_d(t_vars *vars)
 
 static void	move_w(t_vars *vars)
 {
-	double xy[2];
+	double	xy[2];
 
 	if (vars->pers->angle < 0)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;
 	else if (vars->pers->angle > 2 * M_PI)
 		vars->pers->angle = vars->pers->angle - 2 * M_PI;
 	xy[0] = vars->pers->x + vars->pers->deltax * vars->spd;
-	xy[1] = vars->pers->y - vars->pers->deltay *vars->spd;
+	xy[1] = vars->pers->y - vars->pers->deltay * vars->spd;
 	if (check_collision(vars, xy[0], xy[1]))
 		return ;
 	if (vars->pers->points)
@@ -78,7 +78,7 @@ static void	move_w(t_vars *vars)
 
 static void	move_s(t_vars *vars)
 {
-	double xy[2];
+	double	xy[2];
 
 	if (vars->pers->angle < 0)
 		vars->pers->angle = 2 * M_PI + vars->pers->angle;

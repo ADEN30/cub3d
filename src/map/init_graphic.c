@@ -56,7 +56,8 @@ int	init_player_textures(t_vars *vars)
 	if (check_dimensions(vars))
 		return (print_error("Error : Textures sizes are not identical\n"));
 	if (minimap_dimensions(vars))
-		return (print_error("Error : Map is too big, it can not be generated\n"));
+		return (print_error("Error : Map is too big,\
+	 it can not be generated\n"));
 	while (++xy[1] < vars->map->y)
 	{
 		xy[0] = -1;

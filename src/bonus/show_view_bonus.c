@@ -65,7 +65,6 @@ static void	calc_height(t_vars *vars, int i)
 void	show_view(t_vars *vars)
 {
 	int		i;
-	//int32_t	cs;
 
 	i = 0;
 	while (i < MAX_WIDTH)
@@ -74,12 +73,4 @@ void	show_view(t_vars *vars)
 		draw_all(vars, i);
 		i++;
 	}
-	//cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
-	//if (cs == -1)
-	//{
-		//print_error("Error : Map can not be generated\n");
-		//free_vars(vars);
-		//exit(1);
-	//}
-	//vars->style->images->threed->instances->z = 0;
 }

@@ -14,7 +14,7 @@
 
 static void	free_split(char **split)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])
@@ -27,7 +27,7 @@ static void	free_split(char **split)
 
 static void	found_color(char **split, t_vars *vars, int *value)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (split[i])

@@ -28,7 +28,7 @@ static char	*define_image_path(char *line)
 static int	found_style_color(t_vars *vars, char *line, int *check, int i)
 {
 	uint32_t	*color;
-	int		 	*define;
+	int			*define;
 
 	if (i == 4)
 	{
@@ -53,7 +53,7 @@ static int	found_style_color(t_vars *vars, char *line, int *check, int i)
 
 static int	found_style_path(t_vars *vars, char *line, int *check, int i)
 {
-	char **path;
+	char	**path;
 
 	if (i == 0)
 		path = &vars->style->north_path;

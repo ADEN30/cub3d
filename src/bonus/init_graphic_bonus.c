@@ -52,7 +52,8 @@ int	init_player(t_vars *vars)
 						y * vars->dim + (vars->dim / 2),
 						(char) vars->map->tab[y][x]);
 				if (!vars->pers)
-					return (print_error("Error : Can not generate a player\n"));
+					return (print_error("Error :\
+					 Can not generate a player\n"));
 			}
 		}
 	}
@@ -81,7 +82,8 @@ int	init_graphic(t_vars *vars)
 	if (check_dimensions(vars))
 		return (print_error("Error : Textures sizes are not identical\n"));
 	if (minimap_dimensions(vars))
-		return (print_error("Error : Map is too big, it can not be generated\n"));
+		return (print_error("Error :\
+		 Map is too big, it can not be generated\n"));
 	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
 	if (!img->threed)
 		return (print_error("Error : Can not create a new image\n"));
