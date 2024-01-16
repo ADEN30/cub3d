@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:57 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/12 11:24:50 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:16:30 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	define_sxy(t_vars *vars, int i, int *sxy)
 		sxy[1] = -1;
 }
 
-static	void	drawrays(t_vars *vars, int x0, int y0, int i)
+static void	drawrays(t_vars *vars, int x0, int y0, int i)
 {
 	int	dxy[2];
 	int	sxy[2];

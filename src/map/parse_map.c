@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:14:15 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 16:44:34 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:47:06 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int	read_map_file(t_vars *vars, char *argv)
 	if (!line || !ft_strlen(line))
 		return (print_error("Error : Empty file\n"));
 	if (find_all_style(vars, &line))
-		return (print_error("Error : Wrong or\
-	 No or Multiple information in the file\n"));
+		return (print_error("Error : Wrong or No or \
+	Multiple information in the file\n"));
 	if (check_assets(vars, &line))
 		return (print_error("Error : Wrong asset(s) path(s)\n"));
 	if (check_next_line(vars, &line))
 		return (print_error("Error : No map definition in file\n"));
-	(void)argv;
 	define_xy(vars, &line);
 	if (create_tab(vars, argv))
 		return (print_error("Error : Map's tab could not be created\n"));
@@ -72,7 +71,7 @@ int	parse_map(int argc, char *argv[], t_vars *vars)
 	vars->style = init_style();
 	if (!vars->map || !vars->style)
 		return (print_error("Error : \
-			Not enough memory for map and/or textures allocation\n"));
+	Not enough memory for map and/or textures allocation\n"));
 	vars->map->fd = open(argv[1], O_RDONLY);
 	if (vars->map->fd < 0)
 		return (print_error("Error : Can not open the map\n"));

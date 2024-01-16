@@ -6,14 +6,14 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:37:09 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/10 15:58:31 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:11:54 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north,
-	t_point *point, double y)
+uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;
@@ -27,8 +27,8 @@ uint8_t	*get_pixel_north(t_vars *vars, mlx_texture_t *north,
 	return (pixel_color);
 }
 
-uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south,
-	t_point *point, double y)
+uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;
@@ -44,8 +44,8 @@ uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south,
 	return (pixel_color);
 }
 
-uint8_t	*get_pixel_east(t_vars *vars, mlx_texture_t *east,
-	t_point *point, double y)
+uint8_t	*get_pixel_east(t_vars *vars, mlx_texture_t *east, t_point *point,
+	double y)
 {
 	double	x_pixel_t;
 	double	y_pixel_t;

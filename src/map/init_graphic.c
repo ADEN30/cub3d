@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 16:45:22 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:41:21 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ static int	init_textures(t_vars *vars)
 
 static int	minimap_dimensions(t_vars *vars)
 {
-	mlx_texture_t	*txt;
-
-	txt = vars->style->images->north_texture;
-	if ((vars->map->x * vars->ratio * txt->width >= MAX_WIDTH)
-		|| (vars->map->y * vars->ratio * txt->height >= MAX_HEIGHT))
+	if (vars->map->x > 50
+		|| vars->map->y > 50)
 		return (1);
 	return (0);
 }
@@ -52,12 +49,12 @@ int	init_player_textures(t_vars *vars)
 
 	xy[1] = -1;
 	if (init_textures(vars))
-		return (print_error("Error : Can not load textures\n"));
+		return (print_error("Error : Can not load textures"));
 	if (check_dimensions(vars))
-		return (print_error("Error : Textures sizes are not identical\n"));
+		return (print_error("Error : Textures sizes are not identical"));
 	if (minimap_dimensions(vars))
 		return (print_error("Error : Map is too big,\
-	 it can not be generated\n"));
+	it can not be generated"));
 	while (++xy[1] < vars->map->y)
 	{
 		xy[0] = -1;
@@ -69,7 +66,7 @@ int	init_player_textures(t_vars *vars)
 						xy[1] * vars->dim + (vars->dim / 2),
 						(char) vars->map->tab[xy[1]][xy[0]]);
 				if (!vars->pers)
-					return (print_error("Error : Can not generate a player\n"));
+					return (print_error("Error : Can not generate a player"));
 			}
 		}
 	}
@@ -84,15 +81,11 @@ int	init_graphic(t_vars *vars)
 	img = vars->style->images;
 	img->threed = mlx_new_image(vars->mlx, MAX_WIDTH, MAX_HEIGHT);
 	if (!img->threed)
-		return (print_error("Error : Can not create a new image\n"));
+		return (print_error("Error : Can not create a new image"));
 	if (init_player_textures(vars))
 		return (1);
 	cs = mlx_image_to_window(vars->mlx, vars->style->images->threed, 0, 0);
 	if (cs == -1)
-	{
-		print_error("Error : Can not print pixels\n");
-		free_vars(vars);
-		exit(1);
-	}
+		return (print_error("Error : Can not print pixels"));
 	return (0);
 }

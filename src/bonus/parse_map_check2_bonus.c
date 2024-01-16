@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:49:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:02:40 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:45:24 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ static int	check_map_floodfill(t_vars *vars)
 			if (ft_strchr("0", (char) vars->map->cp_tab[y][x]))
 			{
 				if (flood_fill(vars, x, y, (int) '*'))
-				{
-					print_error("Error : Map is not closed");
-					return (1);
-				}
+					return(print_error("Error : Map is not closed"));
 			}
 		}
 	}

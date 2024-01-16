@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:45:26 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 16:02:21 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:44:48 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	found_color(char **split, t_vars *vars, int *value)
 		value[i] = ft_atoi(split[i]);
 		if (value[i] < 0 || value[i] > 255)
 		{
-			print_error("Error : Wrong information of color definition\n");
+			print_error("Error : Wrong information of color definition");
 			free_vars(vars);
 			exit(1);
 		}
@@ -55,7 +55,7 @@ uint32_t	define_color(char *line, t_vars *vars)
 	split = ft_split(line, ',');
 	if (!split)
 	{
-		print_error("Error : Malloc failed at color definition\n");
+		print_error("Error : Malloc failed at color definition");
 		free_vars(vars);
 		exit(1);
 	}
@@ -63,7 +63,7 @@ uint32_t	define_color(char *line, t_vars *vars)
 		i++;
 	if (i != 3)
 	{
-		print_error("Error : Wrong information of color definition\n");
+		print_error("Error : Wrong information of color definition");
 		free_vars(vars);
 		exit(1);
 	}

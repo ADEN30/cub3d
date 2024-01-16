@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:54:46 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/14 16:54:09 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:13:23 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ typedef struct s_vars {
 int			print_error(char *str);
 
 /*hook*/
-	/*mouse*/
-void		mouse(void *param);
 	/*move*/
 void		move(void *param);
 	/*move2*/

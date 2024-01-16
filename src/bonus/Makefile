@@ -1,6 +1,5 @@
 SRCSBONUS	= main_bonus.c \
 			print_error_bonus.c \
-			mouse_bonus.c \
 			move_bonus.c \
 			move2_bonus.c \
 			create_tab_bonus.c \

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:45:32 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/07 09:32:35 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 10:47:35 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ uint32_t	value_rgb(char *line, t_vars *vars)
 	value = ft_atoi(line);
 	if (value > 255)
 	{
-		print_error("Incorrect color values\n");
+		print_error("Incorrect color values");
 		free_vars(vars);
 		exit(1);
 	}
