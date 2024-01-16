@@ -29,8 +29,6 @@ OBJSBONUS	= $(SRCSBONUS:.c=.o)
 
 HEAD		= -I ../../include -I ../../MLX42/include/MLX42 -I ../../libft/include
 
-HEADBONUS	= -I ../../MLX42/include/MLX42 -I ../../libft/include
-
 NAMEBONUS	= cub3d_bonus
 
 CC			= gcc
@@ -40,14 +38,17 @@ CFLAGS		= -Wall -Wextra -Werror
 
 LIBS		= ../../libft/libft.a ../../MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-all :	$(NAMEBONUS)
-
 .c.o :
 	$(CC) $(CFLAGS) $(HEAD) -c $< -o $(<:.c=.o)
 
 $(NAMEBONUS) : $(OBJSBONUS)
 	$(MAKE) -C ../../libft
-	$(CC) $(CFLAGS) $(HEAD) $(OBJSBONUS) $(LIBS) -o ../../$(NAMEBONUS)
+	@if [ ! -f "../../cub3d_bonus" ]; then \
+		$(CC) $(CFLAGS) $(HEAD) $(OBJSBONUS) $(LIBS) -o ../../$(NAMEBONUS); \
+	fi
+
+all :	$(NAMEBONUS)
+
 
 debug :
 	$(MAKE) -C ../../libft
