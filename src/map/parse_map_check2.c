@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:49:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/16 10:46:40 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:46:56 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	check_map(t_vars *vars)
 				return (print_error("Error : Wrong map characters detected"));
 		}
 	}
+	if (start != 1) 
+		return (print_error("Error : Wrong number of player(s)"));
 	if (check_map_floodfill(vars))
 		return (1);
 	return (0);

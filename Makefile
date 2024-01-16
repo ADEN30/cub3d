@@ -27,12 +27,11 @@ OBJS		= $(SRCS:.c=.o)
 
 HEAD		= -I include -I MLX42/include/MLX42 -I libft/include
 
-NAME		= cub3d
+NAME		= cub3D
 
 CC			= gcc
 
-#CFLAGS		= -Wall -Wextra -Werror
-CFLAGS		= -Wall -Wextra -Werror -ggdb3 
+CFLAGS		= -Wall -Wextra -Werror
 
 LIBS		= libft/libft.a MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 
@@ -45,7 +44,7 @@ mlx42 :
 	@if [ ! -d "./MLX42" ]; then \
 		git clone https://github.com/codam-coding-college/MLX42.git; \
 	fi
-	@if [ ! -e "MLX42/build/libmlx42.a" ]; then \
+	@if [ ! -f "MLX42/build/libmlx42.a" ]; then \
 		cmake -S ./MLX42 -B ./MLX42/build; \
 		make -C ./MLX42/build -j4; \
 	fi
