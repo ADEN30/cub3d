@@ -1,7 +1,7 @@
-NO assets/north.png
-SO assets/south.png
-WE assets/west.png
-EA assets/east.png
+NO assets/north2.png
+SO assets/south2.png
+WE assets/west2.png
+EA assets/east2.png
 
 F 220 ,   100 ,     0    
 C     225, 999,    0
