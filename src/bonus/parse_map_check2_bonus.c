@@ -47,7 +47,7 @@ static int	check_map_floodfill(t_vars *vars)
 			if (ft_strchr("0", (char) vars->map->cp_tab[y][x]))
 			{
 				if (flood_fill(vars, x, y, (int) '*'))
-					return(print_error("Error : Map is not closed"));
+					return (print_error("Error : Map is not closed"));
 			}
 		}
 	}
