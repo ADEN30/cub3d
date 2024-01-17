@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/02 18:21:19 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/16 10:34:31 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:12:05 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void	put_pixels_dimension(t_vars *vars, int x, int y, uint32_t color)
 	int			yi;
 
 	img = vars->style->images;
-	yi = y * vars->dim / (vars->dim / 8);
-	while (yi < (y * vars->dim + vars->dim) / (vars->dim / 8))
+	yi = y * 4;
+	while (yi < (y + 1) * 4)
 	{
-		xi = x * vars->dim / (vars->dim / 8);
-		while (xi < (x * vars->dim + vars->dim) / (vars->dim / 8))
+		xi = x * 4;
+		while (xi < (x + 1) * 4)
 		{
 			mlx_put_pixel(img->threed, xi, yi, color);
 			xi++;

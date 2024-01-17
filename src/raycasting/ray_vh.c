@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:10 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/12 14:55:53 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:52:57 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs)
 	i = 0;
 	while (i < max_xy(vars->map->x, vars->map->y))
 	{
-		mp[0] = (int)ray[0] / vars->dim;
-		mp[1] = (int)ray[1] / vars->dim;
+		mp[0] = (int)ray[0];
+		mp[1] = (int)ray[1];
 		if (mp[0] >= vars->map->x || mp[1] >= vars->map->y
 			|| mp[0] < 0 || mp[1] < 0)
 		{

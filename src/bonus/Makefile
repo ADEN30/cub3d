@@ -4,7 +4,6 @@ SRCSBONUS	= main_bonus.c \
 			move2_bonus.c \
 			create_tab_bonus.c \
 			init_graphic_bonus.c \
-		  	init_graphic2_bonus.c \
 			parse_map_bonus.c \
 		  	parse_map_check_bonus.c \
 		  	parse_map_check2_bonus.c \

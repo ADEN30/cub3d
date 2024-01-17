@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:00 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/14 16:54:19 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 12:45:52 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_style	*init_style(void)
 	return (style);
 }
 
-t_pers	*init_pers(int x, int y, char c)
+t_pers	*init_pers(double x, double y, char c)
 {
 	t_pers	*pers;
 
@@ -97,8 +97,6 @@ t_vars	*init_vars(void)
 	vars->map = NULL;
 	vars->style = NULL;
 	vars->pers = NULL;
-	vars->dim = 0;
-	vars->spd = 0;
-	vars->ratio = 0;
+	vars->spd = 0.02;
 	return (vars);
 }

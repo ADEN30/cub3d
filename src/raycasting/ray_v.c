@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:05 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/12 15:04:28 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:52:45 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	looking_left(t_vars *vars, double *r, double *ofs, char *face)
 	double	tg;
 
 	tg = tan(vars->pers->angle);
-	r[0] = (((int)vars->pers->x / vars->dim) * vars->dim) - 0.0001;
-	ofs[0] = -vars->dim;
+	r[0] = (int)vars->pers->x - 0.0001;
+	ofs[0] = -1;
 	if (vars->pers->angle == M_PI / 2)
 	{
 		r[1] = vars->pers->y;
@@ -37,8 +37,8 @@ static void	looking_right(t_vars *vars, double *r, double *ofs, char *face)
 	double	tg;
 
 	tg = tan(vars->pers->angle);
-	r[0] = (((int)vars->pers->x / vars->dim) * vars->dim) + vars->dim;
-	ofs[0] = vars->dim;
+	r[0] = (int)vars->pers->x + 1;
+	ofs[0] = 1;
 	if (vars->pers->angle == M_PI / 2)
 	{
 		r[1] = vars->pers->y;

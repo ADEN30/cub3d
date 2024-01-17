@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:02:56 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/16 10:47:38 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:39:34 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	find_wall(t_vars *vars)
 	vars->pers->points = ft_calloc(sizeof(t_point), MAX_WIDTH);
 	if (!vars->pers->points)
 	{
-		print_error("Error : Can not print minimap");
+		print_error("Error\nCan not print minimap");
 		free_vars(vars);
 		exit(1);
 	}

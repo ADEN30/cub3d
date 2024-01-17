@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:57 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 17:16:30 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:01:44 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ static void	v_error(int *err, int *dxy, int *y0, int *sxy)
 
 static void	define_sxy(t_vars *vars, int i, int *sxy)
 {
-	if (vars->pers->x < vars->pers->points[i].x)
+	if (vars->pers->x * 4 < vars->pers->points[i].x * 4)
 		sxy[0] = 1;
 	else
 		sxy[0] = -1;
-	if (vars->pers->y < vars->pers->points[i].y)
+	if (vars->pers->y * 4 < vars->pers->points[i].y * 4)
 		sxy[1] = 1;
 	else
 		sxy[1] = -1;
@@ -42,16 +42,16 @@ static void	drawrays(t_vars *vars, int x0, int y0, int i)
 	int	sxy[2];
 	int	err[2];
 
-	dxy[0] = abs((int) vars->pers->points[i].x - x0);
-	dxy[1] = -abs((int) vars->pers->points[i].y - y0);
+	dxy[0] = abs((int) (vars->pers->points[i].x * 4) - x0);
+	dxy[1] = -abs((int) (vars->pers->points[i].y * 4) - y0);
 	err[0] = dxy[0] + dxy[1];
 	define_sxy(vars, i, sxy);
 	while (1)
 	{
-		mlx_put_pixel(vars->style->images->threed, x0 / (vars->dim / 8),
-			y0 / (vars->dim / 8), get_rgba(1, 215, 88, 255));
-		if (x0 == (int) vars->pers->points[i].x
-			&& y0 == (int) vars->pers->points[i].y)
+		mlx_put_pixel(vars->style->images->threed, x0,
+			y0, get_rgba(1, 215, 88, 255));
+		if (x0 == (int) (vars->pers->points[i].x * 4)
+			&& y0 == (int) (vars->pers->points[i].y * 4))
 			break ;
 		err[1] = 2 * err[0];
 		if (err[1] >= dxy[1])
@@ -68,7 +68,7 @@ void	rays_on_minimap(t_vars *vars)
 	i = 0;
 	while (i < MAX_WIDTH)
 	{
-		drawrays(vars, vars->pers->x, vars->pers->y, i);
+		drawrays(vars, vars->pers->x * 4, vars->pers->y * 4, i);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:30:51 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/12 15:01:49 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 12:04:29 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ int	check_collision(t_vars *vars, double x, double y)
 
 	adjust[0] = vars->pers->x;
 	adjust[1] = vars->pers->y;
-	if (x > (vars->map->x - 1) * vars->dim || y > (vars->map->y - 1)
-		* vars->dim || x < vars->dim || y < vars->dim)
+	if (x > vars->map->x || y > vars->map->y || x < 0 || y < 0)
 	{
-		if (x > vars->dim && x < (vars->map->x - 1) * vars->dim)
+		if (x > 0 && x < vars->map->x)
 			adjust[0] = x;
-		if (y > vars->dim && y < (vars->map->y - 1) * vars->dim)
+		if (y > 0 && y < vars->map->y)
 			adjust[1] = y;
 		if (adjust[0] == vars->pers->x && adjust[1] == vars->pers->y)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 13:47:45 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 17:22:38 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:39:22 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	calc_height(t_vars *vars, int i)
 	vars->pers->points[i].dst = vars->pers->points[i].dst
 		* cos(ofsangle);
 	vars->pers->points[i].h = MAX_HEIGHT
-		/ (vars->pers->points[i].dst * vars->ratio);
+		/ (vars->pers->points[i].dst);
 }
 
 void	show_view(t_vars *vars)

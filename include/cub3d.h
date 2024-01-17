@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:01:30 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/12 15:04:50 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 11:57:55 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ typedef struct s_vars {
 	t_map	*map;
 	t_style	*style;
 	t_pers	*pers;
-	int		dim;
 	double	spd;
-	double	ratio;
 }	t_vars;
 
 /*error*/
@@ -110,8 +108,6 @@ void		delete_images(t_vars *vars);
 int			create_tab(t_vars *vars, char *argv);
 	/*init_graphic*/
 int			init_graphic(t_vars *vars);
-	/*init_graphic2*/
-int			check_dimensions(t_vars *vars);
 	/*parse_map*/
 int			parse_map(int argc, char *argv[], t_vars *vars);
 	/*parse_map_check*/
@@ -158,7 +154,7 @@ void		free_vars(t_vars *vars);
 	/*init struct*/
 t_map		*init_map(void);
 t_style		*init_style(void);
-t_pers		*init_pers(int x, int y, char c);
+t_pers		*init_pers(double x, double y, char c);
 t_vars		*init_vars(void);
 	/*tools*/
 int			line_isprint(char *line);

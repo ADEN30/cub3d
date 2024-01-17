@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:49:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/16 15:46:56 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:09:06 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_map_floodfill(t_vars *vars)
 			if (ft_strchr("0", (char) vars->map->cp_tab[y][x]))
 			{
 				if (flood_fill(vars, x, y, (int) '*'))
-					return (print_error("Error : Map is not closed"));
+					return (print_error("Error\nMap is not closed"));
 			}
 		}
 	}
@@ -58,7 +58,7 @@ static int	startpoint(t_vars *vars, int x, int y, int *start)
 {
 	++(*start);
 	if (*start > 1)
-		return (print_error("Error : Wrong number of player(s)"));
+		return (print_error("Error\nToo many players"));
 	vars->map->cp_tab[y][x] = (int) '0';
 	return (0);
 }
@@ -82,11 +82,11 @@ int	check_map(t_vars *vars)
 					return (1);
 			}
 			else if (!ft_strchr("01NSEW ", (char) vars->map->cp_tab[y][x]))
-				return (print_error("Error : Wrong map characters detected"));
+				return (print_error("Error\nWrong map characters detected"));
 		}
 	}
 	if (start != 1) 
-		return (print_error("Error : Wrong number of player(s)"));
+		return (print_error("Error\nNo player found"));
 	if (check_map_floodfill(vars))
 		return (1);
 	return (0);

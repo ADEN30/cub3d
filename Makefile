@@ -4,7 +4,6 @@ SRCS	= src/main.c \
 		  src/hook/move2.c \
 		  src/map/create_tab.c \
 		  src/map/init_graphic.c \
-		  src/map/init_graphic2.c \
 		  src/map/parse_map.c \
 		  src/map/parse_map_check.c \
 		  src/map/parse_map_check2.c \

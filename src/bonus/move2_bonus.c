@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:30:51 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/15 17:09:43 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/17 12:36:23 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 static int	check_before_collision(t_vars *vars, double *adjust, double x,
 	double y)
 {
-	if (((int) adjust[0] / vars->dim != (int) x / vars->dim)
-		&& ((int) adjust[1] / vars->dim != (int) y / vars->dim))
+	if (((int) adjust[0] != (int) x)
+		&& ((int) adjust[1] != (int) y))
 	{
-		if ((vars->map->tab[(int) y / vars->dim][(int) adjust[0]
-				/ vars->dim]) == '1' && (vars->map->tab[(int) adjust[1]
-				/ vars->dim][(int) x / vars->dim]) == '1')
+		if ((vars->map->tab[(int) y][(int) adjust[0]] == '1'
+			&& (vars->map->tab[(int) adjust[1]][(int) x]) == '1'))
 			return (1);
 	}
 	return (0);
@@ -34,13 +33,11 @@ int	check_collision(t_vars *vars, double x, double y)
 	adjust[1] = vars->pers->y;
 	if (check_before_collision(vars, adjust, x, y))
 		return (1);
-	if (vars->map->tab[(int) y / vars->dim][(int) x / vars->dim] == '1')
+	if (vars->map->tab[(int) y][(int) x] == '1')
 	{
-		if (vars->map->tab[(int) adjust[1] / vars->dim][(int) x
-			/ vars->dim] != '1')
+		if (vars->map->tab[(int) adjust[1]][(int) x] != '1')
 			adjust[0] = x;
-		if (vars->map->tab[(int) y / vars->dim][(int) adjust[0]
-			/ vars->dim] != '1')
+		if (vars->map->tab[(int) y][(int) adjust[0]] != '1')
 			adjust[1] = y;
 		if (adjust[0] == vars->pers->x && adjust[1] == vars->pers->y)
 			return (1);
