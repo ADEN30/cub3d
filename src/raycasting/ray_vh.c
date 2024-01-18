@@ -6,11 +6,32 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:10 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 11:52:57 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 22:22:44 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
+void	check_equal(t_vars *vars, int i, double *dst)
+{
+	if (dst[0] == dst[1] && dst[0] == 0)
+	{
+		if (vars->pers->points[i - 1].face == 'N')
+			vars->pers->points[i].face = 'N';
+		else if (vars->pers->points[i - 1].face == 'S')
+			vars->pers->points[i].face = 'S';
+		if (vars->pers->points[i - 1].face == 'N'
+			|| vars->pers->points[i - 1].face == 'S')
+			dst[0] = vars->pers->points[i - 1].dst;
+		if (vars->pers->points[i - 1].face == 'E')
+			vars->pers->points[i].face = 'E';
+		else if (vars->pers->points[i - 1].face == 'W')
+			vars->pers->points[i].face = 'W';
+		if (vars->pers->points[i - 1].face == 'W'
+			|| vars->pers->points[i - 1].face == 'E')
+			dst[1] = vars->pers->points[i - 1].dst;
+	}
+}
 
 void	never_vh(t_vars *vars, double *r)
 {

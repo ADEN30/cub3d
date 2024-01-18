@@ -43,9 +43,8 @@ all :	$(NAMEBONUS)
 
 $(NAMEBONUS) : $(OBJSBONUS)
 	$(MAKE) -C ../../libft
-	@if [ ! -f "../../cub3D_bonus" ]; then \
-		$(CC) $(CFLAGS) $(HEAD) $(OBJSBONUS) $(LIBS) -o ../../$(NAMEBONUS);\
-	fi
+	$(CC) $(CFLAGS) $(HEAD) $(OBJSBONUS) $(LIBS) -o $(NAMEBONUS)
+	cp $(NAMEBONUS) ../../
 
 debug :
 	$(MAKE) -C ../../libft
@@ -58,6 +57,7 @@ clean :
 fclean :
 	$(MAKE) fclean -C ../../libft
 	$(RM) $(OBJSBONUS)
+	$(RM) $(NAMEBONUS)
 	$(RM) ../../$(NAMEBONUS)
 
 re :	fclean all

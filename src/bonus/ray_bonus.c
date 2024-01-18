@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:02:56 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 12:09:57 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 21:14:31 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static char	check_move(t_vars *vars, double x, double y, int i)
 	dst[1] = dist(vars, v[0], v[1]);
 	vars->pers->points[i].angle = vars->pers->angle;
 	vars->pers->angle = ra;
+	check_equal(vars, i, dst);
 	if ((dst[0] <= dst[1] && dst[0] != 0) || dst[1] == 0)
 		return (change_xy(vars, i, h, dst[0]), face[1]);
 	else if ((dst[1] <= dst[0] && dst[1] != 0) || dst[0] == 0)

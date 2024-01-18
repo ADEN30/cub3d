@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:01:30 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 11:57:55 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 22:23:21 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include "../libft/include/libft.h"
 
 # ifndef MAX_WIDTH
-#  define MAX_WIDTH 800
+#  define MAX_WIDTH 1280
 # endif
 
 # ifndef MAX_HEIGHT
-#  define MAX_HEIGHT 600
+#  define MAX_HEIGHT 760
 # endif
 
 # ifndef FOV
@@ -131,6 +131,7 @@ int			horizontal_intersection(t_vars *vars, double *h, char *face);
 	/*ray_v*/
 int			vertical_intersection(t_vars *vars, double *v, char *face);
 	/*ray_vh*/
+void		check_equal(t_vars *vars, int i, double *dst);
 void		never_vh(t_vars *vars, double *r);
 int			find_wall_vh(t_vars *vars, double *xy, double *ray, double *ofs);
 	/*ray_tools*/

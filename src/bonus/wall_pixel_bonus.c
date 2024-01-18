@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_pixel_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: jmathieu <jmathieu@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:37:09 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 13:00:23 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:05:29 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
