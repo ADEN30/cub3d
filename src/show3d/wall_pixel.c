@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 12:37:09 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 12:28:27 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:39:49 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ uint8_t	*get_pixel_south(t_vars *vars, mlx_texture_t *south, t_point *point,
 	mlx_texture_t	*texture;
 
 	texture = vars->style->images->south_texture;
-	x_pixel_t = ((double)south->height / point->h) * y;
+	x_pixel_t = ((double)south->height / point->h) * y + 1;
 	y_pixel_t = (point->x - (int)point->x) * texture->width;
 	pixel_position_t = ((int)x_pixel_t * south->width - (int)y_pixel_t);
-	if (pixel_position_t < 0)
-		pixel_position_t = pixel_position_t * -1;
 	pixel_color = &((south->pixels)[pixel_position_t * sizeof(uint32_t)]);
 	return (pixel_color);
 }
@@ -75,11 +73,9 @@ uint8_t	*get_pixel_west(t_vars *vars, mlx_texture_t *west, t_point *point,
 	mlx_texture_t	*texture;
 
 	texture = vars->style->images->west_texture;
-	x_pixel_t = ((double)west->height / point->h) * y;
+	x_pixel_t = ((double)west->height / point->h) * y + 1;
 	y_pixel_t = (point->y - (int)point->y) * texture->width;
 	pixel_position_t = ((int)x_pixel_t * west->width) - (int)y_pixel_t;
-	if (pixel_position_t < 0)
-		pixel_position_t = pixel_position_t * -1;
 	pixel_color = &((west->pixels)[pixel_position_t * sizeof(uint32_t)]);
 	return (pixel_color);
 }
