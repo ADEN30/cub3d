@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:00 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 11:52:10 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:58:55 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	looking_down(t_vars *vars, double *r, double *ofs, char *face)
 	double	tg;
 
 	tg = 1 / tan(vars->pers->angle);
-	r[1] = (int)vars->pers->y  + 1;
+	r[1] = (int)vars->pers->y + 1;
 	ofs[1] = 1;
 	if (vars->pers->angle == 3 * M_PI / 2)
 	{

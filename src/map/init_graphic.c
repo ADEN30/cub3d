@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:15:38 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 12:14:06 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:58:29 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_player_textures(t_vars *vars)
 			if (ft_strchr("NSEW", (char) vars->map->tab[xy[1]][xy[0]]))
 			{
 				vars->pers = init_pers((double) xy[0] + 0.5, (double)
-					xy[1] + 0.5, (char) vars->map->tab[xy[1]][xy[0]]);
+						xy[1] + 0.5, (char) vars->map->tab[xy[1]][xy[0]]);
 				if (!vars->pers)
 					return (print_error("Error\nCan not generate a player"));
 			}

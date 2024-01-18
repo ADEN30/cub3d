@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 15:49:49 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 15:08:39 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:57:57 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_map_floodfill(t_vars *vars)
 			if (ft_strchr("0", (char) vars->map->cp_tab[y][x]))
 			{
 				if (flood_fill(vars, x, y, (int) '*'))
-					return(print_error("Error\nMap is not closed"));
+					return (print_error("Error\nMap is not closed"));
 			}
 		}
 	}
@@ -85,7 +85,7 @@ int	check_map(t_vars *vars)
 				return (print_error("Error\nWrong map characters detected"));
 		}
 	}
-	if (start != 1) 
+	if (start != 1)
 		return (print_error("Error\nNo player found"));
 	if (check_map_floodfill(vars))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:59:57 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/17 15:01:44 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:57:20 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ static void	drawrays(t_vars *vars, int x0, int y0, int i)
 	int	sxy[2];
 	int	err[2];
 
-	dxy[0] = abs((int) (vars->pers->points[i].x * 4) - x0);
-	dxy[1] = -abs((int) (vars->pers->points[i].y * 4) - y0);
+	dxy[0] = abs((int)(vars->pers->points[i].x * 4) - x0);
+	dxy[1] = -abs((int)(vars->pers->points[i].y * 4) - y0);
 	err[0] = dxy[0] + dxy[1];
 	define_sxy(vars, i, sxy);
 	while (1)
 	{
 		mlx_put_pixel(vars->style->images->threed, x0,
 			y0, get_rgba(1, 215, 88, 255));
-		if (x0 == (int) (vars->pers->points[i].x * 4)
-			&& y0 == (int) (vars->pers->points[i].y * 4))
+		if (x0 == (int)(vars->pers->points[i].x * 4)
+			&& y0 == (int)(vars->pers->points[i].y * 4))
 			break ;
 		err[1] = 2 * err[0];
 		if (err[1] >= dxy[1])
