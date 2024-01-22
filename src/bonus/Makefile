@@ -32,7 +32,7 @@ NAMEBONUS	= cub3D_bonus
 
 CC			= gcc
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -Ofast
 
 LIBS		= ../../libft/libft.a ../../MLX42/build/libmlx42.a -ldl -lglfw -pthread -lm
 

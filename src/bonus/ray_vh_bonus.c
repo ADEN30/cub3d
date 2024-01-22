@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ray_vh_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmathieu <jmathieu@student.42mulhouse.fr>  +#+  +:+       +#+        */
+/*   By: jmathieu <jmathieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 11:19:10 by jmathieu          #+#    #+#             */
-/*   Updated: 2024/01/18 21:15:10 by jmathieu         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:53:13 by jmathieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d_bonus.h"
 
-void check_equal(t_vars *vars, int i, double *dst)
+void	check_equal(t_vars *vars, int i, double *dst)
 {
 	if (dst[0] == dst[1] && dst[0] == 0)
 	{
